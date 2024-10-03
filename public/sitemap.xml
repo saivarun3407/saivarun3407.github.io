@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://secnotes.fyi/about/</loc>
+    <lastmod>2024-10-03T00:46:14-05:00</lastmod>
+  </url><url>
+    <loc>https://secnotes.fyi/</loc>
+    <lastmod>2024-10-03T00:46:14-05:00</lastmod>
+  </url><url>
     <loc>https://secnotes.fyi/tags/dns-resolution/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
@@ -12,9 +18,6 @@
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
     <loc>https://secnotes.fyi/tags/search-bar/</loc>
-    <lastmod>2024-10-02T15:59:30-05:00</lastmod>
-  </url><url>
-    <loc>https://secnotes.fyi/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
     <loc>https://secnotes.fyi/tags/</loc>
