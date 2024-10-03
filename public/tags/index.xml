@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
+  <channel>
+    <title>Tags on My nice blog</title>
+    <link>https://example.com/tags/</link>
+    <description>Recent content in Tags on My nice blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Some copyright notice - [my license](https://example.com/license)</copyright>
+    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" /><icon>https://example.com/logo.svg</icon>
+    
+    
+    <item>
+      <title>DNS-Resolution</title>
+      <link>https://example.com/tags/dns-resolution/</link>
+      <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
+      
+      <guid>https://example.com/tags/dns-resolution/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Info Sec Basics</title>
+      <link>https://example.com/tags/info-sec-basics/</link>
+      <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
+      
+      <guid>https://example.com/tags/info-sec-basics/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Search Bar</title>
+      <link>https://example.com/tags/search-bar/</link>
+      <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
+      
+      <guid>https://example.com/tags/search-bar/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>URL</title>
+      <link>https://example.com/tags/url/</link>
+      <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
+      
+      <guid>https://example.com/tags/url/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+  </channel>
+</rss>

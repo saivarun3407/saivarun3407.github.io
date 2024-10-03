@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="" lang="en"><head>
+    
+    <meta name="robots" content="noai, noimageai">
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+
+    <link
+    rel="icon"
+    href='/favicon.png'
+/>
+<link
+    rel="shortcut icon"
+    href='/favicon.ico'
+    type="image/x-icon"
+/>
+<link
+    rel="apple-touch-icon"
+    href='/apple-touch-icon.png'
+/>
+
+    <link
+        rel="icon"
+        href='/logo.svg'
+        type="image/svg+xml"
+    />
+
+<title>
+        
+            What Happens When You Type a URL into the Search Bar  &ndash;
+        
+        My nice blog
+    </title>
+
+    
+    <link href="/symbols-nerd-font/symbols-nerd-font.css" rel="stylesheet" />
+    <link href="/jetbrains-mono/jetbrains-mono.css" rel="stylesheet" />
+
+    
+        <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+    
+    
+    <link type="text/css" rel="stylesheet" href=https://example.com/css/styles.abbd6311bb4b6ca58f8e7398140529245ae0f6428b759fcd830742eee2619eabb900ba9914a9affb82aa9a16a9b9ea727bb315315a976a0db0e7513a5f12c504.css integrity="sha512-q71jEbtLbKWPjnOYFAUpJFrg9kKLdZ/NgwdC7uJhnqu5ALqZFKmv&#43;4Kqmhapuepye7MVMVqXag2w51E6XxLFBA==" />
+<meta name="author" content="Gabriele Musco" />
+
+    
+        <meta name="keywords" content='DNS-resolution, info sec basics, search bar, URL' />
+    
+    
+        <meta name="description" content="-when-you-type-a-url-into-the-search-bar&#34;&gt;What Happens When You Type a URL into the Search Bar&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;What is a URL?&lt;/strong&gt; A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains&lt;/p&gt;" />
+    
+
+<meta property="og:site_name"
+    content='My nice blog' />
+
+    <meta property="og:title" content="What Happens When You Type a URL into the Search Bar" />
+    <meta property="og:type" content="article" />
+    
+    <meta
+        property="article:author" content="Gabriele Musco" />
+    <meta
+        property="article:published_time"
+        content='2024-10-02T15:59:30Z-0500' />
+    
+        
+            <meta property="article:tag" content="DNS-resolution" />
+        
+            <meta property="article:tag" content="info sec basics" />
+        
+            <meta property="article:tag" content="search bar" />
+        
+            <meta property="article:tag" content="URL" />
+        
+    
+    <meta property="og:url" content="https://example.com/posts/url-backend/" />
+    
+    
+    <meta property="og:image"
+        content="https://example.com/icon512.png" />
+    
+        <meta property="og:description" content="&lt;h1 id=&#34;what-happens-when-you-type-a-url-into-the-search-bar&#34;&gt;What Happens When You Type a URL into the Search Bar&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;What is a URL?&lt;/strong&gt; A URL" />
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain"
+      content='example.com'
+/>
+<meta property="twitter:url" content="https://example.com/posts/url-backend/" />
+
+
+    <meta name="twitter:title" content="What Happens When You Type a URL into the Search Bar" />
+    
+    
+    
+    <meta name="twitter:image"
+        content="https://example.com/icon512.png" />
+    
+        <meta name="twitter:description" content="&lt;h1 id=&#34;what-happens-when-you-type-a-url-into-the-search-bar&#34;&gt;What Happens When You Type a URL into the Search Bar&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;What is a URL?&lt;/strong&gt; A URL" />
+    
+
+<link rel="manifest" href="/manifest/index.json" />
+</head>
+
+
+<body>
+        <div id="baseContainer"><header class="">
+<div class="titleAndSearchContainer">
+        <div id="titleContainer">
+            
+                <a class="unstyledLink" href="/">
+                    <img src='/logo.svg' alt='Logo'/>
+                </a>
+            
+            <div class="rightOfLogo">
+                <div class="titleAndHamburger">
+                    <h1>
+                        <a class="unstyledLink" href="/">My nice blog</a>
+                        
+                    </h1>
+                    
+                </div>
+                <div id="wide_nav"><nav>
+    
+    <ul id="main-nav">
+        <li><a href="/">Home</a></li>
+        
+            <li><a href="/posts/">Posts</a></li>
+        
+        
+        
+        
+        
+        
+            <li><a href="/about/">About</a></li>
+        
+        
+            <li><a href="/tags/">Tags</a></li>
+        
+        
+    </ul>
+</nav>
+</div>
+            </div>
+        </div>
+        <div class="search">
+    <input id="searchbar" type="text" placeholder='Search' />
+    <span class="nerdlink" onclick="newSearch();">&#xf002;</span>
+</div>
+<script>
+    function newSearch() {
+        let term = searchbar.value.trim();
+        if (!term) return;
+        location.href = `/search/?q=${term}`;
+    }
+    searchbar.onkeyup = (ev) => {if (ev.keyCode == 13) newSearch()};
+</script>
+
+    </div>
+    <div id="links">
+        <a
+    
+        rel="noreferrer"
+    
+    target="_blank"
+    class="nerdlink"
+    href="/index.xml">
+    
+    
+        &#xf09e;
+    
+    <span>
+        RSS
+    </span>
+</a>
+
+        
+        <a
+    
+        rel="noreferrer"
+    
+    target="_blank"
+    class="nerdlink"
+    href="https://gitlab.com/gabmus">
+    
+    
+        &#xf296;
+    
+    <span>
+        GitLab
+    </span>
+</a>
+<a
+    
+        rel="noreferrer"
+    
+    target="_blank"
+    class="nerdlink"
+    href="https://gitlab.gnome.org/gabmus">
+    
+    
+        &#xf361;
+    
+    <span>
+        GNOME GitLab
+    </span>
+</a>
+
+    </div>
+    
+
+</header>
+<div id="contentContainer">
+                <div id="content">
+                    <main>
+<article class="card single">
+    
+        <h1>What Happens When You Type a URL into the Search Bar</h1>
+    
+    
+        <p class="date">
+            <span title='Date'>󰃭 </span>
+    2024-10-02
+
+</p>
+    
+    
+    
+    
+    <div><h1 id="what-happens-when-you-type-a-url-into-the-search-bar">What Happens When You Type a URL into the Search Bar</h1>
+<p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
+<p>as shown in the image below:</p>
+<p><img src="https://www.hubspot.com/hubfs/URL%20Parts_300-02.jpg" alt="URL Parts"></p>
+<h3 id="schemes">Schemes:</h3>
+<ol>
+<li>
+<p><strong>http</strong>: HyperText Transfer Protocol, used for transferring hypertext requests and information on the internet.<br>
+Example: <code>http://www.example.com</code></p>
+</li>
+<li>
+<p><strong>https</strong>: Secure HyperText Transfer Protocol, a secure version of HTTP using encryption via SSL/TLS for security. We will look at encryption in part 2.<br>
+Example: <code>https://www.example.com</code></p>
+</li>
+<li>
+<p><strong>mailto</strong>: Used to open the default mail client and create a new message with the given email address.<br>
+Example: <code>mailto:email@address.com</code></p>
+</li>
+<li>
+<p><strong>file</strong>: Used to access local files on a computer.<br>
+Example: <code>file:///C:/path/to/file.txt</code></p>
+</li>
+</ol>
+<p>These schemes are specified at the beginning of a URL, followed by a colon (<code>:</code>) and, in most cases, double slashes (<code>//</code>), defining how that URL should be accessed or interpreted.</p>
+<h3 id="subdomain">Subdomain:</h3>
+<p>A subdomain is a prefix added to a website&rsquo;s domain name to separate and organize content. Subdomains can be used for a variety of purposes like separating content that may not be critical to the main website, such as an online store, blog, job board, or support platform.<br>
+Example: If a website&rsquo;s domain name is <code>yoursite.com</code>, then <code>blog.yoursite.com</code> or <code>store.yoursite.com</code> are subdomains.</p>
+<h3 id="domainsecond-level-domain">Domain/Second-Level Domain:</h3>
+<p>The second-level domain or domain is essentially the main part of your website&rsquo;s URL.<br>
+Example: <code>https://yoursite.com</code> (here <code>yoursite</code> is the second-level domain or domain).</p>
+<h3 id="top-level-domain">Top-Level Domain:</h3>
+<p>The top-level domain (TLD) is the extension for a domain, similar to file types like <code>.pdf</code>, <code>.docx</code>, <code>.xlsx</code>. For websites, it could be <code>.com</code> (commercial), <code>.gov</code> (government), <code>.edu</code> (educational), <code>.us</code> (United States), or <code>.fyi</code>.<br>
+Example: <code>https://yoursite.com</code> (here <code>.com</code> is the top-level domain).</p>
+<p><img src="https://www.linode.com/docs/guides/introduction-to-dns-on-linux/DNS-Hierarchy.png" alt="DNS Hierarchy"></p>
+<hr>
+<h2 id="dns-resolutionlookup">DNS Resolution/Lookup</h2>
+<p>Let&rsquo;s take a behind-the-scenes look. After entering our URL, such as <code>http://secnotes.fyi</code>, the browser first looks up its cache memory for any data (e.g., IP address) of the URL. If no data is available in the cache, it initiates a process known as <strong>DNS resolution</strong> or <strong>lookup</strong>.</p>
+<h3 id="what-is-dns-resolutionlookup">What is DNS Resolution/Lookup?</h3>
+<p>DNS lookup involves searching for the specific IP address of the webserver where the requested resources are hosted. Computers communicate using IP addresses, so when you type a website name, DNS servers translate it into the corresponding IP address.</p>
+<p>The process of DNS lookup involves the following steps:</p>
+<ol>
+<li>
+<p><strong>Root Name Server Lookup</strong><br>
+The query starts with a lookup at the Root Name Servers, which direct the query to the appropriate Top-Level Domain (TLD) server based on the domain&rsquo;s suffix (e.g., <code>.com</code>, <code>.net</code>, <code>.org</code>).</p>
+</li>
+<li>
+<p><strong>Top-Level Domain (TLD) Server Lookup</strong><br>
+Once the query reaches the correct TLD server (for instance, a <code>.com</code> TLD server for domains ending with <code>.com</code>), this server doesn&rsquo;t hold the actual IP address but knows the location of the authoritative DNS servers for the specific domain.</p>
+</li>
+<li>
+<p><strong>Authoritative DNS Server Lookup</strong><br>
+The TLD server directs the query to the domain’s authoritative DNS server. This server has the final and exact IP address associated with the domain name.</p>
+</li>
+<li>
+<p><strong>Caching</strong><br>
+After retrieving the IP address, it is sent back to your computer. Along the way, each server involved in the process may cache the IP address for future requests to speed up DNS lookups.</p>
+</li>
+</ol>
+<p><img src="https://sookocheff.com/post/networking/how-does-dns-work/assets/dns-resolution.png" alt="DNS Resolution"></p>
+<hr>
+<h2 id="network-connection-types-and-protocols">Network Connection Types and Protocols</h2>
+<p>Once the IP address is determined, a connection with the webserver is established. There are multiple protocols to establish the connection between your computer and the webserver, such as <strong>TCP</strong>, <strong>UDP</strong>, and <strong>ICMP</strong>.</p>
+<h3 id="tcp-transmission-control-protocol">TCP (Transmission Control Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Essential for web browsing (HTTP/HTTPS), email (SMTP/POP/IMAP), and file transfers (FTP).</li>
+<li><strong>Features</strong>: Provides reliable, ordered, and error-checked delivery of data between applications.<br>
+<img src="https://i.imgur.com/CdjvCNr.png" alt="TCP vs UDP"></li>
+</ul>
+<h3 id="udp-user-datagram-protocol">UDP (User Datagram Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Ideal for streaming video or audio, online gaming, and VoIP (Voice over IP).</li>
+<li><strong>Features</strong>: Offers connection-less dispatch of datagrams to other hosts. It is faster but lacks reliability.<br>
+<img src="https://www.colocationamerica.com/wp-content/uploads/2018/12/udp-tcp.jpg" alt="UDP vs TCP"></li>
+</ul>
+<h3 id="icmp-internet-control-message-protocol">ICMP (Internet Control Message Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Used for diagnostic functions and error reporting in network communication.</li>
+</ul>
+<hr>
+<h2 id="http-request-and-response-cycle">HTTP Request and Response Cycle</h2>
+<p>Once a connection is established, the browser sends an <strong>HTTP request</strong> to the server, which contains methods, headers, and the URL. The server processes this request and sends back an <strong>HTTP response</strong> with the requested data.</p>
+<h3 id="common-http-methods">Common HTTP Methods:</h3>
+<ul>
+<li><strong>GET</strong>: Requests data from a specified resource.</li>
+<li><strong>POST</strong>: Submits data to be processed.</li>
+<li><strong>PUT</strong>: Updates a specified resource with supplied data.</li>
+<li><strong>DELETE</strong>: Deletes a specified resource.</li>
+</ul>
+<h3 id="http-response-components">HTTP Response Components:</h3>
+<ul>
+<li><strong>Status Code</strong>: Indicates the result of the request (e.g., 200 OK, 404 Not Found, 500 Internal Server Error).</li>
+<li><strong>Response Headers</strong>: Provide additional information about the response (e.g., content type, caching).</li>
+<li><strong>Body</strong>: Contains the actual data, usually in HTML, JSON, or XML format.</li>
+</ul>
+<p><img src="https://www.researchgate.net/publication/242714677/figure/fig1/AS:644655569973249@1530709273718/Typical-HTTP-response-and-request-headers.png" alt="HTTP Request and Response"></p>
+<hr>
+<p>We got what we needed from the web server, but is it secure? Stay tuned for our next blog to find out.</p>
+<p>Thanks for reading!</p></div>
+</article>
+
+    <hr />
+    <p class="articleTagsContainer">
+        <span> </span>
+        <strong>Tags:</strong>
+        
+            <a
+                
+                href="/tags/dns-resolution/">#DNS-resolution</a>
+        
+            <a
+                
+                href="/tags/info-sec-basics/">#info sec basics</a>
+        
+            <a
+                
+                href="/tags/search-bar/">#search bar</a>
+        
+            <a
+                
+                href="/tags/url/">#URL</a>
+        
+    </p>
+
+
+
+    <script
+        defer
+        src="https://example.com/js/commento.js"
+        data-no-fonts="true"
+    ></script>
+    <div id="commento"></div>
+
+
+<script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+
+<div id="ficurinia-cactus-comments"></div>
+
+<script>
+initComments({
+    node: document.getElementById("ficurinia-cactus-comments"),
+    defaultHomeserverUrl: 'https:\/\/matrix.cactus.chat:8448',
+    serverName: 'cactus.chat',
+    siteName: "example.com",
+    commentSectionId: "6d3292aaadf16a314496c3ceec5ee351"
+})
+</script>
+
+
+
+                    </main><footer>
+    <hr />
+
+<p><small>
+        2024 &copy; Some copyright notice - <a href="https://example.com/license">my license</a>
+    </small></p>
+    <p><small>
+        <a href='https://gitlab.com/gabmus/hugo-ficurinia'>Ficurinia theme</a> for <a href='https://gohugo.io'>Hugo</a> by <a href='https://gabmus.org'>Gabriele Musco</a>. Licensed under <a href='https://www.gnu.org/licenses/agpl-3.0.html'>GNU AGPLv3</a>.
+    </small></p>
+</footer>
+</div>
+            </div>
+        </div>
+    
+        <script
+            async
+            defer
+            data-domain="example.com"
+            src="https://something.com/..."
+        ></script>
+    
+
+
+    
+        <script
+            async
+            defer
+            data-website-id="example-tracking-code"
+            src="https://something.com/..."
+        ></script>
+    
+
+
+</body>
+</html>

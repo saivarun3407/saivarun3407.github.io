@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
+  <channel>
+    <title>Search Bar on My nice blog</title>
+    <link>https://example.com/tags/search-bar/</link>
+    <description>Recent content in Search Bar on My nice blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Some copyright notice - [my license](https://example.com/license)</copyright>
+    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="https://example.com/tags/search-bar/index.xml" rel="self" type="application/rss+xml" /><icon>https://example.com/logo.svg</icon>
+    
+    
+    <item>
+      <title>What Happens When You Type a URL into the Search Bar</title>
+      <link>https://example.com/posts/url-backend/</link>
+      <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
+      
+      <guid>https://example.com/posts/url-backend/</guid>
+      <description><![CDATA[<h1 id="what-happens-when-you-type-a-url-into-the-search-bar">What Happens When You Type a URL into the Search Bar</h1>
+<p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
+<p>as shown in the image below:</p>
+<p><img src="https://www.hubspot.com/hubfs/URL%20Parts_300-02.jpg" alt="URL Parts"></p>
+<h3 id="schemes">Schemes:</h3>
+<ol>
+<li>
+<p><strong>http</strong>: HyperText Transfer Protocol, used for transferring hypertext requests and information on the internet.<br>
+Example: <code>http://www.example.com</code></p>
+</li>
+<li>
+<p><strong>https</strong>: Secure HyperText Transfer Protocol, a secure version of HTTP using encryption via SSL/TLS for security. We will look at encryption in part 2.<br>
+Example: <code>https://www.example.com</code></p>
+</li>
+<li>
+<p><strong>mailto</strong>: Used to open the default mail client and create a new message with the given email address.<br>
+Example: <code>mailto:email@address.com</code></p>
+</li>
+<li>
+<p><strong>file</strong>: Used to access local files on a computer.<br>
+Example: <code>file:///C:/path/to/file.txt</code></p>
+</li>
+</ol>
+<p>These schemes are specified at the beginning of a URL, followed by a colon (<code>:</code>) and, in most cases, double slashes (<code>//</code>), defining how that URL should be accessed or interpreted.</p>
+<h3 id="subdomain">Subdomain:</h3>
+<p>A subdomain is a prefix added to a website&rsquo;s domain name to separate and organize content. Subdomains can be used for a variety of purposes like separating content that may not be critical to the main website, such as an online store, blog, job board, or support platform.<br>
+Example: If a website&rsquo;s domain name is <code>yoursite.com</code>, then <code>blog.yoursite.com</code> or <code>store.yoursite.com</code> are subdomains.</p>
+<h3 id="domainsecond-level-domain">Domain/Second-Level Domain:</h3>
+<p>The second-level domain or domain is essentially the main part of your website&rsquo;s URL.<br>
+Example: <code>https://yoursite.com</code> (here <code>yoursite</code> is the second-level domain or domain).</p>
+<h3 id="top-level-domain">Top-Level Domain:</h3>
+<p>The top-level domain (TLD) is the extension for a domain, similar to file types like <code>.pdf</code>, <code>.docx</code>, <code>.xlsx</code>. For websites, it could be <code>.com</code> (commercial), <code>.gov</code> (government), <code>.edu</code> (educational), <code>.us</code> (United States), or <code>.fyi</code>.<br>
+Example: <code>https://yoursite.com</code> (here <code>.com</code> is the top-level domain).</p>
+<p><img src="https://www.linode.com/docs/guides/introduction-to-dns-on-linux/DNS-Hierarchy.png" alt="DNS Hierarchy"></p>
+<hr>
+<h2 id="dns-resolutionlookup">DNS Resolution/Lookup</h2>
+<p>Let&rsquo;s take a behind-the-scenes look. After entering our URL, such as <code>http://secnotes.fyi</code>, the browser first looks up its cache memory for any data (e.g., IP address) of the URL. If no data is available in the cache, it initiates a process known as <strong>DNS resolution</strong> or <strong>lookup</strong>.</p>
+<h3 id="what-is-dns-resolutionlookup">What is DNS Resolution/Lookup?</h3>
+<p>DNS lookup involves searching for the specific IP address of the webserver where the requested resources are hosted. Computers communicate using IP addresses, so when you type a website name, DNS servers translate it into the corresponding IP address.</p>
+<p>The process of DNS lookup involves the following steps:</p>
+<ol>
+<li>
+<p><strong>Root Name Server Lookup</strong><br>
+The query starts with a lookup at the Root Name Servers, which direct the query to the appropriate Top-Level Domain (TLD) server based on the domain&rsquo;s suffix (e.g., <code>.com</code>, <code>.net</code>, <code>.org</code>).</p>
+</li>
+<li>
+<p><strong>Top-Level Domain (TLD) Server Lookup</strong><br>
+Once the query reaches the correct TLD server (for instance, a <code>.com</code> TLD server for domains ending with <code>.com</code>), this server doesn&rsquo;t hold the actual IP address but knows the location of the authoritative DNS servers for the specific domain.</p>
+</li>
+<li>
+<p><strong>Authoritative DNS Server Lookup</strong><br>
+The TLD server directs the query to the domain’s authoritative DNS server. This server has the final and exact IP address associated with the domain name.</p>
+</li>
+<li>
+<p><strong>Caching</strong><br>
+After retrieving the IP address, it is sent back to your computer. Along the way, each server involved in the process may cache the IP address for future requests to speed up DNS lookups.</p>
+</li>
+</ol>
+<p><img src="https://sookocheff.com/post/networking/how-does-dns-work/assets/dns-resolution.png" alt="DNS Resolution"></p>
+<hr>
+<h2 id="network-connection-types-and-protocols">Network Connection Types and Protocols</h2>
+<p>Once the IP address is determined, a connection with the webserver is established. There are multiple protocols to establish the connection between your computer and the webserver, such as <strong>TCP</strong>, <strong>UDP</strong>, and <strong>ICMP</strong>.</p>
+<h3 id="tcp-transmission-control-protocol">TCP (Transmission Control Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Essential for web browsing (HTTP/HTTPS), email (SMTP/POP/IMAP), and file transfers (FTP).</li>
+<li><strong>Features</strong>: Provides reliable, ordered, and error-checked delivery of data between applications.<br>
+<img src="https://i.imgur.com/CdjvCNr.png" alt="TCP vs UDP"></li>
+</ul>
+<h3 id="udp-user-datagram-protocol">UDP (User Datagram Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Ideal for streaming video or audio, online gaming, and VoIP (Voice over IP).</li>
+<li><strong>Features</strong>: Offers connection-less dispatch of datagrams to other hosts. It is faster but lacks reliability.<br>
+<img src="https://www.colocationamerica.com/wp-content/uploads/2018/12/udp-tcp.jpg" alt="UDP vs TCP"></li>
+</ul>
+<h3 id="icmp-internet-control-message-protocol">ICMP (Internet Control Message Protocol):</h3>
+<ul>
+<li><strong>Use Case</strong>: Used for diagnostic functions and error reporting in network communication.</li>
+</ul>
+<hr>
+<h2 id="http-request-and-response-cycle">HTTP Request and Response Cycle</h2>
+<p>Once a connection is established, the browser sends an <strong>HTTP request</strong> to the server, which contains methods, headers, and the URL. The server processes this request and sends back an <strong>HTTP response</strong> with the requested data.</p>
+<h3 id="common-http-methods">Common HTTP Methods:</h3>
+<ul>
+<li><strong>GET</strong>: Requests data from a specified resource.</li>
+<li><strong>POST</strong>: Submits data to be processed.</li>
+<li><strong>PUT</strong>: Updates a specified resource with supplied data.</li>
+<li><strong>DELETE</strong>: Deletes a specified resource.</li>
+</ul>
+<h3 id="http-response-components">HTTP Response Components:</h3>
+<ul>
+<li><strong>Status Code</strong>: Indicates the result of the request (e.g., 200 OK, 404 Not Found, 500 Internal Server Error).</li>
+<li><strong>Response Headers</strong>: Provide additional information about the response (e.g., content type, caching).</li>
+<li><strong>Body</strong>: Contains the actual data, usually in HTML, JSON, or XML format.</li>
+</ul>
+<p><img src="https://www.researchgate.net/publication/242714677/figure/fig1/AS:644655569973249@1530709273718/Typical-HTTP-response-and-request-headers.png" alt="HTTP Request and Response"></p>
+<hr>
+<p>We got what we needed from the web server, but is it secure? Stay tuned for our next blog to find out.</p>
+<p>Thanks for reading!</p>]]></description>
+      
+    </item>
+    
+    
+  </channel>
+</rss>

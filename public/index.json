@@ -1,0 +1,28 @@
+
+{
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        
+        
+    
+        
+        
+        
+    
+        
+        
+        
+    
+    "articles": [{"date":"2024-10-02","image":"","imageAlt":"","link":"https://example.com/posts/url-backend/","summary":"\u003ch1 id=\"what-happens-when-you-type-a-url-into-the-search-bar\"\u003eWhat Happens When You Type a URL into the Search Bar\u003c/h1\u003e\n\u003cp\u003e\u003cstrong\u003eWhat is a URL?\u003c/strong\u003e A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains\u003c/p\u003e","tags":["DNS-resolution","info sec basics","search bar","URL"],"title":"What Happens When You Type a URL into the Search Bar"},{"date":"0001-01-01","image":"","imageAlt":"","link":"https://example.com/manifest/index.json","summary":"","tags":[],"title":"Manifest"},{"date":"0001-01-01","image":"","imageAlt":"","link":"https://example.com/search/","summary":"","tags":[],"title":"Search"}],
+    "test": "What Happens When You Type a URL into the Search Bar   Manifest   Search   ",
+    "page": "1",
+    "next": ""
+}
+
