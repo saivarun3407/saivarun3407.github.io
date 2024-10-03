@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
   <channel>
-    <title>DNS-Resolution on My nice blog</title>
-    <link>https://example.com/tags/dns-resolution/</link>
-    <description>Recent content in DNS-Resolution on My nice blog</description>
+    <title>DNS-Resolution on SeCnOtEs</title>
+    <link>https://secnotes.fyi/tags/dns-resolution/</link>
+    <description>Recent content in DNS-Resolution on SeCnOtEs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>Some copyright notice - [my license](https://example.com/license)</copyright>
-    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="https://example.com/tags/dns-resolution/index.xml" rel="self" type="application/rss+xml" /><icon>https://example.com/logo.svg</icon>
+    <copyright>Some copyright notice </copyright>
+    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/tags/dns-resolution/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/static/logo.svg</icon>
     
     
     <item>
       <title>What Happens When You Type a URL into the Search Bar</title>
-      <link>https://example.com/posts/url-backend/</link>
+      <link>https://secnotes.fyi/posts/url-backend/</link>
       <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
       
-      <guid>https://example.com/posts/url-backend/</guid>
+      <guid>https://secnotes.fyi/posts/url-backend/</guid>
       <description><![CDATA[<h1 id="what-happens-when-you-type-a-url-into-the-search-bar">What Happens When You Type a URL into the Search Bar</h1>
 <p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
 <p>as shown in the image below:</p>

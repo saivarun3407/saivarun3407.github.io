@@ -1,34 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "My nice blog",
-  "short_name": "My nice blog",
+  "name": "SeCnOtEs",
+  "short_name": "SeCnOtEs",
   "start_url": "/",
   "display": "standalone",
   
   
   
-  "background_color": "#242629",
-  "theme_color": "#db5793"
+  "background_color": "#000000",
+  "theme_color": "#33ff33"
   
     ,
     "description": "A description for my website"
   
-  
-    ,
-    "icons": [
-      {
-        "src": "/icon512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "maskable"
-      },
-      {
-        "src": "/icon512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any"
-      }
-    ]
   
 }
 

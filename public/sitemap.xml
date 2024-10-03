@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/tags/dns-resolution/</loc>
+    <loc>https://secnotes.fyi/tags/dns-resolution/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/info-sec-basics/</loc>
+    <loc>https://secnotes.fyi/tags/info-sec-basics/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/</loc>
+    <loc>https://secnotes.fyi/posts/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/</loc>
+    <loc>https://secnotes.fyi/tags/search-bar/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/search-bar/</loc>
+    <loc>https://secnotes.fyi/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/</loc>
+    <loc>https://secnotes.fyi/tags/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/url/</loc>
+    <loc>https://secnotes.fyi/tags/url/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/url-backend/</loc>
+    <loc>https://secnotes.fyi/posts/url-backend/</loc>
     <lastmod>2024-10-02T15:59:30-05:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/</loc>
+    <loc>https://secnotes.fyi/categories/</loc>
   </url><url>
-    <loc>https://example.com/manifest/index.json</loc>
+    <loc>https://secnotes.fyi/manifest/index.json</loc>
   </url><url>
-    <loc>https://example.com/search/</loc>
+    <loc>https://secnotes.fyi/search/</loc>
   </url>
 </urlset>
