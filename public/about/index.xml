@@ -8,5 +8,18 @@
     <copyright>Some copyright notice </copyright>
     <lastBuildDate>Thu, 03 Oct 2024 00:46:14 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/about/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/android-chrome-512x512.png</icon>
     
+    
+    <item>
+      <title>About</title>
+      <link>https://secnotes.fyi/about/about/</link>
+      <pubDate>Thu, 03 Oct 2024 00:46:14 -0500</pubDate>
+      
+      <guid>https://secnotes.fyi/about/about/</guid>
+      <description><![CDATA[<p>Welcome to SeCnOtEs! Our mission is to make information security accessible to everyone. Whether you&rsquo;re starting out or leveling up, we&rsquo;re here to simplify cybersecurity and inspire you to stay secure in the digital world. Together, let&rsquo;s build a safer online future!</p>
+]]></description>
+      
+    </item>
+    
+    
   </channel>
 </rss>
