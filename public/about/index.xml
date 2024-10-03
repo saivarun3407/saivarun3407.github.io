@@ -6,7 +6,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Some copyright notice </copyright>
-    <lastBuildDate>Thu, 03 Oct 2024 00:46:14 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/about/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/android-chrome-512x512.png</icon>
+    <lastBuildDate>Thu, 03 Oct 2024 01:55:34 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/about/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/android-chrome-512x512.png</icon>
+    
+    
+    <item>
+      <title>About Me</title>
+      <link>https://secnotes.fyi/about/about-me/</link>
+      <pubDate>Thu, 03 Oct 2024 01:55:34 -0500</pubDate>
+      
+      <guid>https://secnotes.fyi/about/about-me/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
     
     
     <item>
