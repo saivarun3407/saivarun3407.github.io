@@ -1,6 +1,6 @@
-baseURL = "https://example.com/"
+baseURL = "https://secnotes.fyi/"
 theme = "hugo-ficurinia"
-title = "My nice blog"
+title = "SeCnOtEs"
 languageCode = "en"
 defaultContentLanguage = "en"
 
@@ -14,7 +14,7 @@ summaryLength = 70  # number of words for article summaries
 
 
 [params]
-    author = "Gabriele Musco"
+    author = "Sai Varun"
     description = "A description for my website"  # this will be added as metadata
 
     posts = "posts"  # content directory where to find home page posts; default searches in "posts" and "post"
@@ -39,7 +39,7 @@ summaryLength = 70  # number of words for article summaries
     logoRightOfTitle = false  # positions the logo to the right of the title; default: false
 
     showTags = true  # show the Tags menu item; default true
-    showRss = true  # show the link for the RSS feed; default true
+    showRss = false  # show the link for the RSS feed; default true
 
     imageInArticlePreview = false  # show images in article preview; default false
     fitImageInArticlePreview = false  # make article preview images fit the article preview instead of getting cropped
