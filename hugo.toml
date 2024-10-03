@@ -33,7 +33,7 @@ summaryLength = 70  # number of words for article summaries
     favicon = "/favicon-16x16.png"  # 32x32
     faviconIco = "/favicon.ico"  # 32x32
     appletouch = "/apple-touch-icon.png"  # 180x180
-    svgicon = "/logo.svg"
+    svgicon = "/favicon-32x32.png"
    # icon512 = "/icon512.png"  # 512x512 png image
 
     logoRightOfTitle = false  # positions the logo to the right of the title; default: false
