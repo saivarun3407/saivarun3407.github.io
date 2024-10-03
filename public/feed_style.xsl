@@ -59,7 +59,7 @@
           </div>
           <div class="head">
             <div class="avatar">
-              <img class="logo" src="static/logo.svg" alt="Site Logo"/>
+              <img class="logo" src="/favicon.png" alt="Site Logo"/>
             </div>
             <div class="description">
               <p><xsl:value-of select="/rss/channel/description"/></p>

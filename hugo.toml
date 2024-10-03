@@ -29,12 +29,12 @@ summaryLength = 70  # number of words for article summaries
     homeSinglePage = "/home"
 
     # It's best to put these icons in the "static" folder of your site
-    logo = "static/logo.svg"
-    favicon = "static/favicon.png"  # 32x32
-    faviconIco = "static/favicon.ico"  # 32x32
-    appletouch = "static/apple-touch-icon.png"  # 180x180
-    svgicon = "static/logo.svg"
-   # icon512 = "static/icon512.png"  # 512x512 png image
+    logo = "/favicon.png"
+    favicon = "/favicon.png"  # 32x32
+    faviconIco = "/favicon.ico"  # 32x32
+    appletouch = "/apple-touch-icon.png"  # 180x180
+    svgicon = "/logo.svg"
+   # icon512 = "/icon512.png"  # 512x512 png image
 
     logoRightOfTitle = false  # positions the logo to the right of the title; default: false
 
