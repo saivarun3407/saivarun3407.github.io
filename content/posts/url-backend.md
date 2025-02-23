@@ -4,7 +4,7 @@ date = 2024-10-02T15:59:30-05:00
 tags = ["URL", "DNS-resolution", "search bar", "info sec basics"]
 draft = false
 +++
-# What Happens When You Type a URL into the Search Bar
+
 
 **What is a URL?** A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains <!--more--> as shown in the image below:
 

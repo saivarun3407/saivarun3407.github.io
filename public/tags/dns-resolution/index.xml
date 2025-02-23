@@ -15,8 +15,7 @@
       <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
       
       <guid>https://secnotes.fyi/posts/url-backend/</guid>
-      <description><![CDATA[<h1 id="what-happens-when-you-type-a-url-into-the-search-bar">What Happens When You Type a URL into the Search Bar</h1>
-<p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
+      <description><![CDATA[<p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
 <p>as shown in the image below:</p>
 <p><img src="https://www.hubspot.com/hubfs/URL%20Parts_300-02.jpg" alt="URL Parts"></p>
 <h3 id="schemes">Schemes:</h3>
