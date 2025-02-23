@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
   <channel>
     <title>Search Bar on SeCnOtEs</title>
-    <link>https://secnotes.fyi/tags/search-bar/</link>
+    <link>http://localhost:1313/tags/search-bar/</link>
     <description>Recent content in Search Bar on SeCnOtEs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Some copyright notice </copyright>
-    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/tags/search-bar/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/android-chrome-512x512.png</icon>
+    <lastBuildDate>Wed, 02 Oct 2024 15:59:30 -0500</lastBuildDate><atom:link href="http://localhost:1313/tags/search-bar/index.xml" rel="self" type="application/rss+xml" /><icon>http://localhost:1313/android-chrome-512x512.png</icon>
     
     
     <item>
       <title>What Happens When You Type a URL into the Search Bar</title>
-      <link>https://secnotes.fyi/posts/url-backend/</link>
+      <link>http://localhost:1313/posts/url-backend/</link>
       <pubDate>Wed, 02 Oct 2024 15:59:30 -0500</pubDate>
       
-      <guid>https://secnotes.fyi/posts/url-backend/</guid>
+      <guid>http://localhost:1313/posts/url-backend/</guid>
       <description><![CDATA[<p><strong>What is a URL?</strong> A URL, or Uniform Resource Locator, is essentially an address used to pinpoint a specific resource on the internet. URLs can have strings and characters, but they follow a standard format, which includes different components like schemes and subdomains</p>
 <p>as shown in the image below:</p>
 <p><img src="https://www.hubspot.com/hubfs/URL%20Parts_300-02.jpg" alt="URL Parts"></p>

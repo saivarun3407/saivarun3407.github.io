@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
   <channel>
     <title>Abouts on SeCnOtEs</title>
-    <link>https://secnotes.fyi/about/</link>
+    <link>http://localhost:1313/about/</link>
     <description>Recent content in Abouts on SeCnOtEs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Some copyright notice </copyright>
-    <lastBuildDate>Thu, 03 Oct 2024 01:55:34 -0500</lastBuildDate><atom:link href="https://secnotes.fyi/about/index.xml" rel="self" type="application/rss+xml" /><icon>https://secnotes.fyi/android-chrome-512x512.png</icon>
+    <lastBuildDate>Thu, 03 Oct 2024 01:55:34 -0500</lastBuildDate><atom:link href="http://localhost:1313/about/index.xml" rel="self" type="application/rss+xml" /><icon>http://localhost:1313/android-chrome-512x512.png</icon>
     
     
     <item>
       <title>About Me</title>
-      <link>https://secnotes.fyi/about/about-me/</link>
+      <link>http://localhost:1313/about/about-me/</link>
       <pubDate>Thu, 03 Oct 2024 01:55:34 -0500</pubDate>
       
-      <guid>https://secnotes.fyi/about/about-me/</guid>
+      <guid>http://localhost:1313/about/about-me/</guid>
       <description><![CDATA[<p>Hi, I&rsquo;m passionate about exploring and sharing knowledge in the field of Information Security. SecNotes is my platform where I aim to provide straightforward and practical insights for anyone interested in the cybersecurity space. My goal is to help others by breaking down complex concepts and offering hands-on knowledge from my experiences. Whether you&rsquo;re just starting out or looking to dive deeper into security, I hope you find valuable takeaways here. Happy Learning.</p>
 ]]></description>
       
@@ -24,10 +24,10 @@
     
     <item>
       <title>About</title>
-      <link>https://secnotes.fyi/about/about/</link>
+      <link>http://localhost:1313/about/about/</link>
       <pubDate>Thu, 03 Oct 2024 00:46:14 -0500</pubDate>
       
-      <guid>https://secnotes.fyi/about/about/</guid>
+      <guid>http://localhost:1313/about/about/</guid>
       <description><![CDATA[<p>Welcome to SeCnOtEs! Our mission is to make information security accessible to everyone. Whether you&rsquo;re starting out or leveling up, we&rsquo;re here to simplify cybersecurity and inspire you to stay secure in the digital world. Together, let&rsquo;s build a safer online future!</p>
 ]]></description>
       

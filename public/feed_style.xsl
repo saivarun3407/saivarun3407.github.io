@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         <meta charset="UTF-8"/>
         
-        <link type="text/css" rel="stylesheet" href="https://secnotes.fyi/css/styles.7c148af730c645a3307eb27e225ad818027f925ac9b841357e89c3e1a6d6a180e6f46f37500f7f2eff4d1d6ed985d1cc99e94e5b3c68c52f90ade5a6d1450f32.css" integrity="sha512-fBSK9zDGRaMwfrJ+IlrYGAJ/klrJuEE1fonD4abWoYDm9G83UA9/Lv9NHW7ZhdHMmelOWzxoxS+QreWm0UUPMg==" />
+        <link type="text/css" rel="stylesheet" href="http://localhost:1313/css/styles.7c148af730c645a3307eb27e225ad818027f925ac9b841357e89c3e1a6d6a180e6f46f37500f7f2eff4d1d6ed985d1cc99e94e5b3c68c52f90ade5a6d1450f32.css" integrity="sha512-fBSK9zDGRaMwfrJ+IlrYGAJ/klrJuEE1fonD4abWoYDm9G83UA9/Lv9NHW7ZhdHMmelOWzxoxS+QreWm0UUPMg==" />
         <style>
           .aboutfeeds {
             margin: 24px 0; padding: 12px;
