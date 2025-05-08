@@ -1,6 +1,6 @@
 +++
 title = 'What Happens When You Type a URL into the Search Bar'
-date = 2025-02-07T22:28:35-05:00
+date = 2024-02-07T22:28:35-05:00
 tags = ["URL", "DNS-resolution", "search bar", "info sec basics"]
 draft = false
 +++

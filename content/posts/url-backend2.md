@@ -1,6 +1,6 @@
 +++
 title = 'Part2 - What Happens When You Type a URL into the Search Bar'
-date = 2025-05-07T22:28:35-05:00
+date = 2024-05-07T22:28:35-05:00
 draft = false
 +++
 
