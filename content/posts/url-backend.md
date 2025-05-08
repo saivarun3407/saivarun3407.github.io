@@ -106,5 +106,5 @@ Once a connection is established, the browser sends an **HTTP request** to the s
 
 We got what we needed from the web server, but is it secure? Stay tuned for our next blog to find out.
 
-Thanks for reading!
+Thanks for reading sai varun!
 
