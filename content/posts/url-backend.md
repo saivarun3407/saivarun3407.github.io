@@ -100,7 +100,7 @@ Once a connection is established, the browser sends an **HTTP request** to the s
 - **Response Headers**: Provide additional information about the response (e.g., content type, caching).
 - **Body**: Contains the actual data, usually in HTML, JSON, or XML format.
 
-![HTTP Request and Response](https://www.researchgate.net/publication/242714677/figure/fig1/AS:644655569973249@1530709273718/Typical-HTTP-response-and-request-headers.png)
+![HTTP Request and Response](https://www.researchgate.net/profile/Mostafa-Sedighizadeh/publication/242714677/figure/fig1/AS:644655569973249@1530709273718/Typical-HTTP-response-and-request-headers.png)
 
 ---
 
