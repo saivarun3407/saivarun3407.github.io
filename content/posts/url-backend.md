@@ -1,6 +1,6 @@
 +++
 title = 'What Happens When You Type a URL into the Search Bar'
-date = 2024-10-02T15:59:30-05:00
+date = 2025-02-07T22:28:35-05:00
 tags = ["URL", "DNS-resolution", "search bar", "info sec basics"]
 draft = false
 +++
@@ -106,5 +106,5 @@ Once a connection is established, the browser sends an **HTTP request** to the s
 
 We got what we needed from the web server, but is it secure? Stay tuned for our next blog to find out.
 
-Thanks for reading sai varun!
+Thanks for reading !
 
