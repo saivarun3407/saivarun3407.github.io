@@ -62,10 +62,10 @@
  --check-ease-path: cubic-bezier(0.22, 1, 0.36, 1);
 
  /* transitions.dev - page-side-by-side (adapted for card enter/exit) */
- --page-slide-dur: 250ms;
- --page-fade-dur: 250ms;
- --page-slide-distance: 18px;
- --page-blur: 3px;
+ --page-slide-dur: 420ms;
+ --page-fade-dur: 420ms;
+ --page-slide-distance: 42%;
+ --page-blur: 6px;
  --page-stagger: 0ms;
  --page-exit-enabled: 1;
  --page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -241,6 +241,15 @@
  .card-slot {
  position: relative;
  width: 100%;
+ perspective: 1400px;
+ perspective-origin: 50% 45%;
+ transform-style: flat;
+ overflow: hidden;
+ }
+ .card-pane {
+ transform-style: preserve-3d;
+ backface-visibility: hidden;
+ will-change: transform, opacity, filter;
  }
 
  /* card-resize */
@@ -364,43 +373,79 @@
  color: var(--cyan);
  }
 
- /* Card enter/exit (page-side-by-side spirit) */
+ /* Card roll — transitions.dev page-slide + 3D roll for Inshorts-like deck feel */
  .card-pane {
  width: 100%;
  }
  .card-pane.is-enter-next {
- animation: pane-in-next var(--page-slide-dur) var(--page-slide-ease) both;
+ animation: card-roll-in-next var(--page-slide-dur) var(--page-slide-ease) both;
  }
  .card-pane.is-enter-prev {
- animation: pane-in-prev var(--page-slide-dur) var(--page-slide-ease) both;
+ animation: card-roll-in-prev var(--page-slide-dur) var(--page-slide-ease) both;
  }
  .card-pane.is-exit-next {
  position: absolute;
  inset: 0;
- animation: pane-out-next var(--page-slide-dur) var(--page-slide-ease) both;
+ width: 100%;
+ animation: card-roll-out-next var(--page-slide-dur) var(--page-slide-ease) both;
  pointer-events: none;
  }
  .card-pane.is-exit-prev {
  position: absolute;
  inset: 0;
- animation: pane-out-prev var(--page-slide-dur) var(--page-slide-ease) both;
+ width: 100%;
+ animation: card-roll-out-prev var(--page-slide-dur) var(--page-slide-ease) both;
  pointer-events: none;
  }
- @keyframes pane-in-next {
- from { opacity: 0; transform: translateX(var(--page-slide-distance)); filter: blur(var(--page-blur)); }
- to { opacity: 1; transform: translateX(0); filter: blur(0); }
+ @keyframes card-roll-in-next {
+ from {
+   opacity: 0;
+   transform: translateX(28%) rotateY(-28deg) scale(0.94);
+   filter: blur(var(--page-blur));
  }
- @keyframes pane-in-prev {
- from { opacity: 0; transform: translateX(calc(var(--page-slide-distance) * -1)); filter: blur(var(--page-blur)); }
- to { opacity: 1; transform: translateX(0); filter: blur(0); }
+ 55% { opacity: 1; filter: blur(1px); }
+ to {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
  }
- @keyframes pane-out-next {
- from { opacity: 1; transform: translateX(0); filter: blur(0); }
- to { opacity: 0; transform: translateX(calc(var(--page-slide-distance) * -1)); filter: blur(var(--page-blur)); }
  }
- @keyframes pane-out-prev {
- from { opacity: 1; transform: translateX(0); filter: blur(0); }
- to { opacity: 0; transform: translateX(var(--page-slide-distance)); filter: blur(var(--page-blur)); }
+ @keyframes card-roll-in-prev {
+ from {
+   opacity: 0;
+   transform: translateX(-28%) rotateY(28deg) scale(0.94);
+   filter: blur(var(--page-blur));
+ }
+ 55% { opacity: 1; filter: blur(1px); }
+ to {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ }
+ @keyframes card-roll-out-next {
+ from {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ to {
+   opacity: 0;
+   transform: translateX(-32%) rotateY(32deg) scale(0.92);
+   filter: blur(var(--page-blur));
+ }
+ }
+ @keyframes card-roll-out-prev {
+ from {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ to {
+   opacity: 0;
+   transform: translateX(32%) rotateY(-32deg) scale(0.92);
+   filter: blur(var(--page-blur));
+ }
  }
 
  /* - Actions - */
@@ -690,7 +735,7 @@
  .card-pane.is-enter-next,
  .card-pane.is-enter-prev,
  .card-pane.is-exit-next,
- .card-pane.is-exit-prev { animation: none !important; }
+ .card-pane.is-exit-prev { animation: none !important; transform: none !important; filter: none !important; }
  .sheet, .backdrop { transition: none !important; }
  }
 
