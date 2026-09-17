@@ -722,11 +722,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
   border: 1px solid #4f4f4f !important;
   border-radius: 999px !important;
 }
-.t-tabs-pill {
-  background: #4f4f4f !important;
-  box-shadow: none !important;
-  border-radius: 999px !important;
-}
+.t-tabs-pill { display: none !important; }
 .t-tab {
   font-weight: 700 !important;
   color: #000 !important;
@@ -735,8 +731,8 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
   z-index: 1;
 }
 .t-tab[aria-selected="true"] {
-  color: #fff !important;
-  background: transparent !important; /* pill shows grey behind */
+  background: #3f3 !important;
+  color: #000 !important;
 }
 /* When pill slides under selected, unselected tabs stay green chips */
 .t-tab[aria-selected="false"] {
@@ -773,9 +769,9 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
   font-weight: 700 !important;
 }
 .sheet-filters button[aria-pressed="true"] {
-  background: #4f4f4f !important;
-  color: #fff !important;
-  border-color: #4f4f4f !important;
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
 }
 
 .card {
@@ -784,21 +780,74 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
 }
 
 
-/* clearer tab selected/unselected (user: green+black, selected grey) */
-.t-tabs { gap: 6px; padding: 4px; }
-.t-tabs-pill { opacity: 0 !important; pointer-events: none !important; }
+
+/* Mode tabs: no grey highlight — both green; selected = solid green + black, unselected = dimmer outline green */
+.t-tabs {
+  background: transparent !important;
+  border: none !important;
+  gap: 8px !important;
+  padding: 0 !important;
+}
+.t-tabs-pill {
+  display: none !important;
+  opacity: 0 !important;
+}
 .t-tab {
-  background: #3f3 !important;
-  color: #000 !important;
+  background: transparent !important;
+  color: #3f3 !important;
   border: 1px solid #3f3 !important;
+  border-radius: 999px !important;
   padding: 8px 16px !important;
+  font-weight: 700 !important;
 }
 .t-tab[aria-selected="true"] {
-  background: #4f4f4f !important;
-  color: #fff !important;
-  border-color: #4f4f4f !important;
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
 }
-.metric-num { color: #ff2a2a !important; }
+.t-tab[aria-selected="false"] {
+  background: transparent !important;
+  color: #3f3 !important;
+}
+.t-tab[aria-selected="false"]:hover {
+  background: rgba(51, 255, 51, 0.12) !important;
+}
+
+/* Sheet filters: same idea — no grey pressed state */
+.sheet-filters button {
+  background: transparent !important;
+  color: #3f3 !important;
+  border: 1px solid #3f3 !important;
+}
+.sheet-filters button[aria-pressed="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+}
+
+/* Secondary actions: dark outline, not grey slab */
+.btn-secondary {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid #4f4f4f !important;
+}
+
+
+/* FINAL: kill grey mode highlight */
+#modeTabs.t-tabs { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+#tabsPill { display: none !important; }
+#modeTabs .t-tab {
+  background: transparent !important;
+  color: #3f3 !important;
+  border: 1px solid #3f3 !important;
+  box-shadow: none !important;
+}
+#modeTabs .t-tab[aria-selected="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+  box-shadow: none !important;
+}
 
 </style>
 </head>
@@ -817,7 +866,8 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
 
  <div class="shell mode-row">
  <div class="t-tabs" role="tablist" aria-label="Mode" id="modeTabs">
- <span class="t-tabs-pill" aria-hidden="true" id="tabsPill"></span>
+<span id="tabsPill" class="t-tabs-pill" hidden aria-hidden="true"></span>
+ 
  <button type="button" class="t-tab" role="tab" id="tabTraining" data-mode="training" aria-selected="true">Training</button>
  <button type="button" class="t-tab" role="tab" id="tabResearch" data-mode="research" aria-selected="false">Research</button>
  </div>
