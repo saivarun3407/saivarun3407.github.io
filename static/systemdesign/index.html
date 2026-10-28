@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>secnotes - System design</title>
+<meta name="description" content="One-card-at-a-time reader: one article a day on how real systems are designed, scaled and kept running." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+ :root {
+ --bg: #000000;
+ --fg: #ffffff;
+ --muted: rgba(255, 255, 255, 0.55);
+ --muted-2: rgba(255, 255, 255, 0.50);
+ --faint: rgba(255, 255, 255, 0.08);
+ --faint-2: rgba(255, 255, 255, 0.14);
+ --card: #0a0a0a;
+ --cyan: #ff2a2a;
+ --acid: #ff2a2a;
+ --ink: #000;
+ --radius: 28px;
+ --shell: 40rem;
+ --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+ /* transitions.dev - card-resize */
+ --resize-dur: 300ms;
+ --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+ /* transitions.dev - tabs-sliding (secnotes dark) */
+ --tabs-dur: 250ms;
+ --tabs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+ --tabs-text-muted: rgba(255, 255, 255, 0.55);
+ --tabs-text-active: #000000;
+ --tabs-bar-bg: rgba(255, 255, 255, 0.08);
+ --tabs-pill-bg: #ffffff;
+
+ /* transitions.dev - toast */
+ --toast-open: 350ms;
+ --toast-close: 250ms;
+ --toast-distance: 16px;
+ --toast-blur: 2px;
+ --toast-scale: 0.97;
+ --toast-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+ /* transitions.dev - success-check */
+ --check-opacity-dur: 500ms;
+ --check-rotate-dur: 500ms;
+ --check-rotate-from: 80deg;
+ --check-bob-dur: 500ms;
+ --check-y-amount: 40px;
+ --check-blur-dur: 500ms;
+ --check-blur-from: 10px;
+ --check-path-dur: 500ms;
+ --check-path-delay: 80ms;
+ --check-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+ --check-ease-opacity: cubic-bezier(0.22, 1, 0.36, 1);
+ --check-ease-rotate: cubic-bezier(0.22, 1, 0.36, 1);
+ --check-ease-bob: cubic-bezier(0.34, 1.35, 0.64, 1);
+ --check-ease-path: cubic-bezier(0.22, 1, 0.36, 1);
+
+ /* transitions.dev - page-side-by-side (adapted for card enter/exit) */
+ --page-slide-dur: 420ms;
+ --page-fade-dur: 420ms;
+ --page-slide-distance: 42%;
+ --page-blur: 6px;
+ --page-stagger: 0ms;
+ --page-exit-enabled: 1;
+ --page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+ --page-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+ /* transitions.dev - texts-reveal */
+ --stagger-dur: 500ms;
+ --stagger-distance: 12px;
+ --stagger-stagger: 40ms;
+ --stagger-blur: 3px;
+ --stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+ }
+
+ *, *::before, *::after { box-sizing: border-box; }
+ html, body { height: 100%; }
+ body {
+ margin: 0;
+ background: var(--bg);
+ color: var(--fg);
+ font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ -webkit-font-smoothing: antialiased;
+ text-rendering: optimizeLegibility;
+ line-height: 1.5;
+ }
+ ::selection { background: rgba(0, 174, 239, 0.4); color: #fff; }
+ button { font: inherit; color: inherit; }
+ a { color: var(--cyan); text-decoration: none; }
+ a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+ .app {
+ min-height: 100%;
+ display: flex;
+ flex-direction: column;
+ padding:
+ max(1.25rem, env(safe-area-inset-top))
+ max(1.25rem, env(safe-area-inset-right))
+ max(1.25rem, env(safe-area-inset-bottom))
+ max(1.25rem, env(safe-area-inset-left));
+ }
+ .shell {
+ width: 100%;
+ max-width: var(--shell);
+ margin: 0 auto;
+ }
+
+ /* - Header - */
+ .top {
+ display: flex;
+ align-items: flex-start;
+ justify-content: space-between;
+ gap: 1rem;
+ padding-top: 0.5rem;
+ }
+ .brand { display: flex; flex-direction: column; gap: 0.35rem; }
+ .wordmark {
+ font-size: 1.05rem;
+ font-weight: 600;
+ letter-spacing: -0.03em;
+ color: #fff;
+ }
+ .eyebrow {
+ margin: 0;
+ font-size: 11px;
+ font-weight: 500;
+ text-transform: uppercase;
+ letter-spacing: 0.28em;
+ color: rgba(255, 255, 255, 0.5);
+ }
+ .ghost-link {
+ appearance: none;
+ border: 0;
+ background: transparent;
+ color: rgba(255,255,255,0.55);
+ font-size: 0.875rem;
+ font-weight: 500;
+ cursor: pointer;
+ padding: 0.5rem 0.25rem;
+ transition: color 200ms var(--ease);
+ }
+ .ghost-link:hover { color: var(--cyan); }
+ .ghost-link:focus-visible {
+ outline: 2px solid var(--cyan);
+ outline-offset: 3px;
+ border-radius: 6px;
+ }
+
+ /* - Mode tabs (transitions.dev tabs-sliding) - */
+ .mode-row {
+ display: flex;
+ flex-wrap: wrap;
+ align-items: center;
+ justify-content: space-between;
+ gap: 1.25rem;
+ margin-top: 2.25rem;
+ }
+ .t-tabs {
+ position: relative;
+ display: inline-flex;
+ align-items: center;
+ gap: 3px;
+ padding: 3px;
+ border-radius: 48px;
+ background: var(--tabs-bar-bg);
+ }
+ .t-tab {
+ position: relative;
+ appearance: none;
+ border: 0;
+ background: transparent;
+ height: 34px;
+ padding: 4px 16px;
+ color: var(--tabs-text-muted);
+ cursor: pointer;
+ border-radius: 48px;
+ z-index: 1;
+ font-size: 0.875rem;
+ font-weight: 500;
+ transition: color var(--tabs-dur) var(--tabs-ease);
+ }
+ .t-tab:not([aria-selected="true"]):hover,
+ .t-tab[aria-selected="true"] {
+ color: var(--tabs-text-active);
+ }
+ .t-tab[aria-selected="true"] { color: var(--tabs-text-active); }
+ .t-tabs-pill {
+ position: absolute;
+ top: 3px;
+ left: 0;
+ height: 34px;
+ width: 0;
+ background: var(--tabs-pill-bg);
+ border-radius: 48px;
+ transform: translateX(0);
+ transition:
+ transform var(--tabs-dur) var(--tabs-ease),
+ width var(--tabs-dur) var(--tabs-ease);
+ will-change: transform, width;
+ z-index: 0;
+ pointer-events: none;
+ }
+ /* Active tab sits on white pill → black text; inactive stay muted.
+ When pill is white, selected should be black - already set.
+ Cyan accent variant: when research active we can tint pill via JS? Keep white like secnotes primary. */
+
+ /* - Progress metric (secnotes GiantMetric craft) - */
+ .metric {
+ display: flex;
+ align-items: baseline;
+ gap: 0.45rem;
+ flex-wrap: wrap;
+ }
+ .metric-num {
+ font-size: clamp(2.5rem, 8vw, 3.75rem);
+ font-weight: 500;
+ letter-spacing: -0.04em;
+ line-height: 1;
+ color: var(--cyan);
+ }
+ .metric-rest {
+ font-size: 0.95rem;
+ font-weight: 500;
+ color: rgba(255,255,255,0.5);
+ letter-spacing: -0.01em;
+ }
+
+ /* - Main stage - */
+ .stage {
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ margin-top: 2rem;
+ }
+ .card-slot {
+ position: relative;
+ width: 100%;
+ perspective: 1400px;
+ perspective-origin: 50% 45%;
+ transform-style: flat;
+ overflow: hidden;
+ }
+ .card-pane {
+ transform-style: preserve-3d;
+ backface-visibility: hidden;
+ will-change: transform, opacity, filter;
+ }
+
+ /* card-resize */
+ .t-resize {
+ transition:
+ width var(--resize-dur) var(--resize-ease),
+ height var(--resize-dur) var(--resize-ease);
+ will-change: width, height;
+ overflow: hidden;
+ }
+
+ .card {
+ position: relative;
+ border-radius: var(--radius);
+ border: 1px solid var(--faint);
+ background: var(--card);
+ padding: 1.75rem 1.5rem 1.5rem;
+ }
+ @media (min-width: 640px) {
+ .card { padding: 2.25rem 2rem 1.75rem; }
+ }
+
+ .chips {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.5rem;
+ margin-bottom: 1.25rem;
+ }
+ .chip {
+ display: inline-flex;
+ align-items: center;
+ height: 26px;
+ padding: 0 0.7rem;
+ border-radius: 999px;
+ font-size: 11px;
+ font-weight: 500;
+ letter-spacing: 0.04em;
+ border: 1px solid var(--faint);
+ color: rgba(255,255,255,0.65);
+ background: transparent;
+ }
+ .chip-kind-practice { color: rgba(255,255,255,0.75); }
+ .chip-kind-lab { color: rgba(255,255,255,0.75); }
+ .chip-kind-paper { color: rgba(255,255,255,0.75); }
+ .chip-unread {
+ border-color: rgba(0, 174, 239, 0.35);
+ color: var(--cyan);
+ background: rgba(0, 174, 239, 0.08);
+ }
+ .chip-read {
+ color: rgba(255,255,255,0.45);
+ }
+ .chip-acid {
+ border-color: rgba(200, 245, 66, 0.35);
+ color: var(--acid);
+ }
+
+ /* texts-reveal */
+ .t-stagger-line {
+ display: block;
+ opacity: 0;
+ transform: translateY(var(--stagger-distance));
+ filter: blur(var(--stagger-blur));
+ transition:
+ opacity var(--stagger-dur) var(--stagger-ease),
+ transform var(--stagger-dur) var(--stagger-ease),
+ filter var(--stagger-dur) var(--stagger-ease);
+ will-change: transform, opacity, filter;
+ }
+ .t-stagger-line--2 { transition-delay: var(--stagger-stagger); }
+ .t-stagger.is-shown .t-stagger-line {
+ opacity: 1;
+ transform: translateY(0);
+ filter: blur(0);
+ }
+ .t-stagger.is-hiding .t-stagger-line {
+ opacity: 0;
+ transform: translateY(0);
+ filter: blur(0);
+ transition:
+ opacity 200ms ease,
+ transform 0s linear,
+ filter 0s linear;
+ transition-delay: 0s;
+ }
+
+ .headline {
+ margin: 0;
+ font-size: clamp(1.65rem, 4.2vw, 2.35rem);
+ font-weight: 500;
+ letter-spacing: -0.03em;
+ line-height: 1.12;
+ text-wrap: balance;
+ color: #fff;
+ }
+ .lede {
+ margin: 1.25rem 0 0;
+ max-width: 38rem;
+ font-size: 1.05rem;
+ line-height: 1.7;
+ color: var(--muted);
+ }
+ .cite {
+ margin-top: 1.75rem;
+ padding-top: 1.25rem;
+ border-top: 1px solid var(--faint);
+ display: flex;
+ flex-direction: column;
+ gap: 0.35rem;
+ }
+ .cite-label {
+ font-size: 11px;
+ font-weight: 500;
+ text-transform: uppercase;
+ letter-spacing: 0.28em;
+ color: rgba(255,255,255,0.45);
+ }
+ .cite a {
+ font-size: 0.95rem;
+ font-weight: 500;
+ color: var(--cyan);
+ }
+
+ /* Card roll — transitions.dev page-slide + 3D roll for Inshorts-like deck feel */
+ .card-pane {
+ width: 100%;
+ }
+ .card-pane.is-enter-next {
+ animation: card-roll-in-next var(--page-slide-dur) var(--page-slide-ease) both;
+ }
+ .card-pane.is-enter-prev {
+ animation: card-roll-in-prev var(--page-slide-dur) var(--page-slide-ease) both;
+ }
+ .card-pane.is-exit-next {
+ position: absolute;
+ inset: 0;
+ width: 100%;
+ animation: card-roll-out-next var(--page-slide-dur) var(--page-slide-ease) both;
+ pointer-events: none;
+ }
+ .card-pane.is-exit-prev {
+ position: absolute;
+ inset: 0;
+ width: 100%;
+ animation: card-roll-out-prev var(--page-slide-dur) var(--page-slide-ease) both;
+ pointer-events: none;
+ }
+ @keyframes card-roll-in-next {
+ from {
+   opacity: 0;
+   transform: translateX(28%) rotateY(-28deg) scale(0.94);
+   filter: blur(var(--page-blur));
+ }
+ 55% { opacity: 1; filter: blur(1px); }
+ to {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ }
+ @keyframes card-roll-in-prev {
+ from {
+   opacity: 0;
+   transform: translateX(-28%) rotateY(28deg) scale(0.94);
+   filter: blur(var(--page-blur));
+ }
+ 55% { opacity: 1; filter: blur(1px); }
+ to {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ }
+ @keyframes card-roll-out-next {
+ from {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ to {
+   opacity: 0;
+   transform: translateX(-32%) rotateY(32deg) scale(0.92);
+   filter: blur(var(--page-blur));
+ }
+ }
+ @keyframes card-roll-out-prev {
+ from {
+   opacity: 1;
+   transform: translateX(0) rotateY(0deg) scale(1);
+   filter: blur(0);
+ }
+ to {
+   opacity: 0;
+   transform: translateX(32%) rotateY(-32deg) scale(0.92);
+   filter: blur(var(--page-blur));
+ }
+ }
+
+ /* - Actions - */
+ .actions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.75rem;
+ margin-top: 1.75rem;
+ align-items: center;
+ }
+ .btn-primary {
+ appearance: none;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.5rem;
+ border: 0;
+ border-radius: 999px;
+ background: #fff;
+ color: #000;
+ padding: 0.9rem 1.65rem;
+ font-size: 0.9rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: background 300ms var(--ease), color 300ms var(--ease), transform 200ms var(--ease);
+ }
+ .btn-primary:hover { background: var(--cyan); color: #000; }
+ .btn-primary:active { transform: scale(0.98); }
+ .btn-primary:disabled {
+ opacity: 0.4;
+ cursor: not-allowed;
+ transform: none;
+ }
+ .btn-primary:focus-visible {
+ outline: 2px solid var(--cyan);
+ outline-offset: 3px;
+ }
+ .btn-secondary {
+ appearance: none;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.4rem;
+ border-radius: 999px;
+ border: 1px solid rgba(255,255,255,0.25);
+ background: transparent;
+ color: #fff;
+ padding: 0.9rem 1.35rem;
+ font-size: 0.9rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: border-color 300ms var(--ease), background 300ms var(--ease);
+ }
+ .btn-secondary:hover {
+ border-color: rgba(255,255,255,0.5);
+ background: rgba(255,255,255,0.06);
+ }
+ .btn-secondary:disabled {
+ opacity: 0.35;
+ cursor: not-allowed;
+ }
+ .btn-secondary:focus-visible {
+ outline: 2px solid var(--cyan);
+ outline-offset: 3px;
+ }
+ .btn-check {
+ display: inline-flex;
+ width: 1.1rem;
+ height: 1.1rem;
+ align-items: center;
+ justify-content: center;
+ }
+
+ .hint {
+ margin-top: 1.25rem;
+ font-size: 0.8rem;
+ color: rgba(255,255,255,0.35);
+ }
+ .hint kbd {
+ font: inherit;
+ font-size: 0.75rem;
+ padding: 0.1rem 0.35rem;
+ border-radius: 6px;
+ border: 1px solid rgba(255,255,255,0.12);
+ color: rgba(255,255,255,0.5);
+ }
+
+ /* - Toast (transitions.dev) - */
+ .toast-wrap {
+ position: fixed;
+ left: 50%;
+ bottom: max(1.5rem, env(safe-area-inset-bottom));
+ transform: translateX(-50%);
+ z-index: 60;
+ pointer-events: none;
+ }
+ .t-toast {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.65rem;
+ padding: 0.85rem 1.15rem;
+ border-radius: 999px;
+ background: #0a0a0a;
+ border: 1px solid var(--faint-2);
+ color: #fff;
+ font-size: 0.9rem;
+ font-weight: 500;
+ opacity: 0;
+ transform: translateY(var(--toast-distance)) scale(var(--toast-scale));
+ filter: blur(var(--toast-blur));
+ will-change: transform, opacity, filter;
+ transition:
+ opacity var(--toast-close) var(--toast-ease),
+ transform var(--toast-close) var(--toast-ease),
+ filter var(--toast-close) var(--toast-ease);
+ }
+ .t-toast.is-open {
+ opacity: 1;
+ transform: translateY(0) scale(1);
+ filter: blur(0);
+ transition:
+ opacity var(--toast-open) var(--toast-ease),
+ transform var(--toast-open) var(--toast-ease),
+ filter var(--toast-open) var(--toast-ease);
+ }
+
+ /* success-check */
+ .t-success-check {
+ display: inline-block;
+ transform-origin: center;
+ opacity: 0;
+ will-change: transform, opacity, filter;
+ width: 1.35rem;
+ height: 1.35rem;
+ }
+ .t-success-check svg { display: block; overflow: visible; width: 100%; height: 100%; }
+ .t-success-check svg path {
+ stroke-dasharray: 24;
+ stroke-dashoffset: 24;
+ }
+ .t-success-check[data-state="in"] {
+ animation:
+ t-check-fade var(--check-opacity-dur) var(--check-ease-opacity) forwards,
+ t-check-rotate var(--check-rotate-dur) var(--check-ease-rotate) forwards,
+ t-check-blur var(--check-blur-dur) var(--check-ease-out) forwards,
+ t-check-bob var(--check-bob-dur) var(--check-ease-bob) forwards;
+ }
+ .t-success-check[data-state="in"] svg path {
+ animation: t-check-draw var(--check-path-dur) var(--check-ease-path) var(--check-path-delay, 0ms) forwards;
+ }
+ @keyframes t-check-fade { from { opacity: 0; } to { opacity: 1; } }
+ @keyframes t-check-rotate {
+ from { transform: rotate(var(--check-rotate-from)); }
+ to { transform: rotate(0deg); }
+ }
+ @keyframes t-check-blur {
+ from { filter: blur(var(--check-blur-from)); }
+ to { filter: blur(0); }
+ }
+ @keyframes t-check-bob {
+ from { translate: 0 var(--check-y-amount); }
+ to { translate: 0 0; }
+ }
+ @keyframes t-check-draw { to { stroke-dashoffset: 0; } }
+
+ /* - Drawer / progress sheet - */
+ .backdrop {
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.55);
+ opacity: 0;
+ pointer-events: none;
+ transition: opacity 280ms var(--ease);
+ z-index: 40;
+ }
+ .backdrop.open { opacity: 1; pointer-events: auto; }
+ .sheet {
+ position: fixed;
+ top: 0;
+ right: 0;
+ height: 100%;
+ width: min(26rem, 100%);
+ background: #050505;
+ border-left: 1px solid var(--faint);
+ transform: translateX(100%);
+ transition: transform 320ms var(--ease);
+ z-index: 50;
+ display: flex;
+ flex-direction: column;
+ padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+ }
+ .sheet.open { transform: translateX(0); }
+ .sheet-head {
+ display: flex;
+ align-items: flex-start;
+ justify-content: space-between;
+ gap: 1rem;
+ margin-bottom: 1.25rem;
+ }
+ .sheet-title {
+ margin: 0.35rem 0 0;
+ font-size: 1.5rem;
+ font-weight: 500;
+ letter-spacing: -0.03em;
+ }
+ .sheet-filters {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.4rem;
+ margin-bottom: 1rem;
+ }
+ .sheet-filters button {
+ appearance: none;
+ border: 1px solid var(--faint);
+ background: transparent;
+ color: rgba(255,255,255,0.55);
+ border-radius: 999px;
+ padding: 0.35rem 0.75rem;
+ font-size: 0.75rem;
+ font-weight: 500;
+ cursor: pointer;
+ }
+ .sheet-filters button[aria-pressed="true"] {
+ background: #fff;
+ color: #000;
+ border-color: #fff;
+ }
+ .sheet-list {
+ overflow: auto;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 0.35rem;
+ padding-right: 0.25rem;
+ }
+ .sheet-item {
+ appearance: none;
+ width: 100%;
+ text-align: left;
+ border: 1px solid transparent;
+ background: transparent;
+ border-radius: 16px;
+ padding: 0.85rem 0.9rem;
+ cursor: pointer;
+ transition: background 200ms var(--ease), border-color 200ms var(--ease);
+ }
+ .sheet-item:hover {
+ background: rgba(255,255,255,0.04);
+ border-color: var(--faint);
+ }
+ .sheet-item.is-current {
+ border-color: rgba(0,174,239,0.35);
+ background: rgba(0,174,239,0.07);
+ }
+ .sheet-item .t {
+ display: block;
+ font-size: 0.92rem;
+ font-weight: 500;
+ letter-spacing: -0.015em;
+ color: #fff;
+ }
+ .sheet-item .m {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.35rem;
+ margin-top: 0.35rem;
+ font-size: 0.75rem;
+ color: rgba(255,255,255,0.45);
+ }
+ .sheet-item .m .dot-unread { color: var(--cyan); }
+
+ .sr-only {
+ position: absolute;
+ width: 1px; height: 1px;
+ padding: 0; margin: -1px;
+ overflow: hidden; clip: rect(0,0,0,0);
+ white-space: nowrap; border: 0;
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+ .t-resize { transition: none !important; }
+ .t-tabs-pill, .t-tab { transition: none !important; }
+ .t-toast { transition: none !important; }
+ .t-success-check { animation: none !important; opacity: 1; }
+ .t-success-check svg path { animation: none !important; stroke-dashoffset: 0 !important; }
+ .t-stagger-line { transition: none !important; opacity: 1; transform: none; filter: none; }
+ .card-pane.is-enter-next,
+ .card-pane.is-enter-prev,
+ .card-pane.is-exit-next,
+ .card-pane.is-exit-prev { animation: none !important; transform: none !important; filter: none !important; }
+ .sheet, .backdrop { transition: none !important; }
+ }
+
+
+
+/* —— Responsive (phones / small tablets) —— */
+html, body {
+  min-height: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+.app {
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+.shell { max-width: min(var(--shell), 100%); }
+img, svg, video { max-width: 100%; height: auto; }
+.card, .card-pane, .body, .lede, .title { word-wrap: break-word; overflow-wrap: anywhere; }
+
+@media (max-width: 720px) {
+  .app {
+    padding:
+      max(0.85rem, env(safe-area-inset-top))
+      max(0.85rem, env(safe-area-inset-right))
+      max(0.85rem, env(safe-area-inset-bottom))
+      max(0.85rem, env(safe-area-inset-left));
+  }
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .top .ghost-link { align-self: flex-start; min-height: 44px; }
+  .brand-logo { width: 32px; height: 32px; }
+  .logo-word { font-size: 1.05rem !important; }
+  .eyebrow { letter-spacing: 0.18em !important; font-size: 10px !important; }
+  .mode-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+  .t-tabs { width: 100%; display: flex !important; }
+  .t-tab {
+    flex: 1;
+    height: 44px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .metrics { width: 100%; justify-content: space-between; }
+  .metric-num { font-size: clamp(1.75rem, 12vw, 2.5rem) !important; }
+  .stage { margin-top: 1rem; }
+  .card {
+    padding: 1.15rem 1rem 1.1rem !important;
+    border-radius: 16px;
+  }
+  .title {
+    font-size: clamp(1.25rem, 6.5vw, 1.7rem) !important;
+    line-height: 1.25 !important;
+  }
+  .lede, .body {
+    font-size: 0.95rem !important;
+    max-width: none !important;
+  }
+  .chips { gap: 0.4rem; flex-wrap: wrap; }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    margin-top: 1.1rem;
+  }
+  .actions .btn,
+  .actions button {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
+  .progress-line, .hint-row {
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .sheet {
+    max-height: min(88dvh, 100%);
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .t-tab { font-size: 0.72rem; padding: 4px 8px; }
+  .title { font-size: 1.15rem !important; }
+  .lede, .body { font-size: 0.9rem !important; }
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  .app { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .card { padding: 1.75rem 1.5rem 1.5rem !important; }
+  .title { font-size: clamp(1.5rem, 3vw, 2rem) !important; }
+}
+
+@media (max-height: 700px) and (orientation: landscape) {
+  .app { padding-top: max(0.5rem, env(safe-area-inset-top)); }
+  .mode-row { margin-top: 0.75rem; }
+  .card { padding: 1rem 1.1rem !important; }
+  .metric-num { font-size: 1.75rem !important; }
+  .actions { flex-direction: row; flex-wrap: wrap; }
+  .actions .btn, .actions button { width: auto; flex: 1 1 auto; min-height: 44px; }
+}
+
+/* secnotes parent theme */
+@import url("https://secnotes.fyi/jetbrains-mono/jetbrains-mono.css");
+:root {
+  --bg: #000;
+  --hl: #34363b;
+  --fg: #fff;
+  --accent-red: #ff2a2a;
+  --accent-green: #3f3;
+  --stroke: #4f4f4f;
+  --muted: rgba(255,255,255,.55);
+}
+body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.brand-block { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+.brand { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; color: inherit; }
+.brand-logo { width: 36px; height: 36px; border-radius: 8px; display: block; background: #111; }
+.logo-word { color: #3f3 !important; font-weight: 700; font-size: 1.2rem; letter-spacing: .04em; }
+.eyebrow { color: var(--muted) !important; text-transform: uppercase; letter-spacing: .28em; font-size: 11px; }
+.metric-num, .chip-unread, .cite a, a.cite, .lede a { color: #ff2a2a !important; }
+.chip { border-color: var(--stroke) !important; }
+.chip-acid { color: #ff2a2a !important; border-color: rgba(255,42,42,.45) !important; background: rgba(255,42,42,.08) !important; }
+
+/* Mode tabs: unselected = green/black, selected = grey */
+.t-tabs {
+  background: #121211 !important;
+  border: 1px solid #4f4f4f !important;
+  border-radius: 999px !important;
+}
+.t-tabs-pill { display: none !important; }
+.t-tab {
+  font-weight: 700 !important;
+  color: #000 !important;
+  background: #3f3 !important;
+  border-radius: 999px !important;
+  z-index: 1;
+}
+.t-tab[aria-selected="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+}
+/* When pill slides under selected, unselected tabs stay green chips */
+.t-tab[aria-selected="false"] {
+  background: #3f3 !important;
+  color: #000 !important;
+}
+
+/* Primary CTA green / black */
+.btn-primary {
+  background: #3f3 !important;
+  color: #000 !important;
+  border: 1px solid #3f3 !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+}
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-primary .btn-check { color: #000 !important; }
+
+/* Secondary grey outline */
+.btn-secondary {
+  background: #34363b !important;
+  color: #fff !important;
+  border: 1px solid #4f4f4f !important;
+  border-radius: 999px !important;
+}
+.ghost-link { color: #fff !important; }
+
+/* Sheet filter buttons */
+.sheet-filters button {
+  background: #3f3 !important;
+  color: #000 !important;
+  border: 1px solid #3f3 !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+.sheet-filters button[aria-pressed="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+}
+
+.card {
+  background: #0a0a0a !important;
+  border: 1px solid #4f4f4f !important;
+}
+
+
+
+/* Mode tabs: no grey highlight — both green; selected = solid green + black, unselected = dimmer outline green */
+.t-tabs {
+  background: transparent !important;
+  border: none !important;
+  gap: 8px !important;
+  padding: 0 !important;
+}
+.t-tabs-pill {
+  display: none !important;
+  opacity: 0 !important;
+}
+.t-tab {
+  background: transparent !important;
+  color: #3f3 !important;
+  border: 1px solid #3f3 !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  font-weight: 700 !important;
+}
+.t-tab[aria-selected="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+}
+.t-tab[aria-selected="false"] {
+  background: transparent !important;
+  color: #3f3 !important;
+}
+.t-tab[aria-selected="false"]:hover {
+  background: rgba(51, 255, 51, 0.12) !important;
+}
+
+/* Sheet filters: same idea — no grey pressed state */
+.sheet-filters button {
+  background: transparent !important;
+  color: #3f3 !important;
+  border: 1px solid #3f3 !important;
+}
+.sheet-filters button[aria-pressed="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+}
+
+/* Secondary actions: dark outline, not grey slab */
+.btn-secondary {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid #4f4f4f !important;
+}
+
+
+/* FINAL: kill grey mode highlight */
+#modeTabs.t-tabs { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+#tabsPill { display: none !important; }
+#modeTabs .t-tab {
+  background: transparent !important;
+  color: #3f3 !important;
+  border: 1px solid #3f3 !important;
+  box-shadow: none !important;
+}
+#modeTabs .t-tab[aria-selected="true"] {
+  background: #3f3 !important;
+  color: #000 !important;
+  border-color: #3f3 !important;
+  box-shadow: none !important;
+}
+
+</style>
+</head>
+<body>
+ <div class="app">
+ <header class="shell top">
+  <div class="brand-block">
+    <a class="brand" href="https://secnotes.fyi/" aria-label="SeCnOtEs home">
+      <img class="brand-logo" src="https://secnotes.fyi/android-chrome-512x512.png" alt="" width="36" height="36"/>
+      <span class="logo-word">SeCnOtEs</span>
+    </a>
+    <p class="eyebrow">System design</p>
+  </div>
+  <button type="button" class="ghost-link" id="openSheet" aria-haspopup="dialog">Progress</button>
+</header>
+
+ <div class="shell mode-row">
+ <div class="t-tabs" role="tablist" aria-label="Mode" id="modeTabs">
+<span id="tabsPill" class="t-tabs-pill" hidden aria-hidden="true"></span>
+ 
+ <button type="button" class="t-tab" role="tab" id="tabTraining" data-mode="training" aria-selected="false" hidden>Training</button>
+ <button type="button" class="t-tab" role="tab" id="tabResearch" data-mode="research" aria-selected="true">Articles</button>
+ </div>
+ <div class="metric" aria-live="polite">
+ <span class="metric-num" id="metricRead">0</span>
+ <span class="metric-rest" id="metricRest">/ 3 articles</span>
+ </div>
+ </div>
+
+ <main class="shell stage">
+ <div class="card-slot t-resize" id="cardSlot" aria-live="polite">
+ <!-- card mounted by JS -->
+ </div>
+
+ <div class="actions">
+ <button type="button" class="btn-primary" id="markBtn">
+ <span class="btn-check" aria-hidden="true">
+ <svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M10 24.5L20 34.5L38 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ </span>
+ Mark as read
+ </button>
+ <button type="button" class="btn-secondary" id="nextBtn">Next</button>
+ <button type="button" class="btn-secondary" id="prevBtn">Prev</button>
+ </div>
+ <p class="hint"><kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>Enter</kbd> mark as read</p>
+ </main>
+ </div>
+
+ <div class="toast-wrap" aria-live="polite">
+ <div class="t-toast" id="toast" data-open="false">
+ <span class="t-success-check" id="toastCheck" data-state="out" aria-hidden="true">
+ <svg viewBox="0 0 48 48" fill="none">
+ <path d="M10 24.5L20 34.5L38 14" stroke="#ff2a2a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+ </svg>
+ </span>
+ <span id="toastText">Marked read</span>
+ </div>
+ </div>
+
+ <div class="backdrop" id="backdrop" hidden></div>
+ <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+ <div class="sheet-head">
+ <div>
+ <p class="eyebrow">All cards</p>
+ <h2 class="sheet-title" id="sheetTitle">Progress</h2>
+ </div>
+ <button type="button" class="ghost-link" id="closeSheet">Close</button>
+ </div>
+ <div class="sheet-filters" id="sheetFilters" role="group" aria-label="Filter cards">
+ <button type="button" data-filter="all" aria-pressed="true">All</button>
+ <button type="button" data-filter="unread" aria-pressed="false">Unread</button>
+ <button type="button" data-filter="read" aria-pressed="false">Read</button>
+ <button type="button" data-filter="training" aria-pressed="false" hidden>Training</button>
+ <button type="button" data-filter="research" aria-pressed="false">Articles</button>
+ </div>
+ <div class="sheet-list" id="sheetList"></div>
+ </aside>
+
+ <div class="sr-only" id="live" aria-live="polite"></div>
+
+<script>
+const STORAGE_KEY = 'secnotes-systemdesign-read-v1';
+const CARDS = [{"id": "systemdesign-2026-10-27-aws-retries-backoff-jitter", "mode": "research", "day": null, "category": "SystemDesign", "kind": "post", "kindLabel": "Practitioner write-up", "title": "Timeouts, retries, and backoff with jitter", "headline": "Timeouts, retries, and backoff with jitter", "body": "Amazon's engineers say retries are \"selfish\": a client spends more of the server's time to raise its own odds of success. That is fine for rare, short failures, but it can keep an overloaded service down. Their rules: put a timeout on every remote call, back off between retries, add random jitter so clients don't retry together, and retry at one layer only. Three retries at each of five layers can multiply database load 243x. A local token bucket can also cap retries. Takeaway: name the one layer that owns retries in your system and remove them everywhere else.", "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter", "sourceLabel": "Amazon Builders' Library", "date": "2026-10-27", "practice": "Name the one layer that owns retries in your system and remove them everywhere else."}, {"id": "systemdesign-2026-10-27-discord-trillions-of-messages", "mode": "research", "day": null, "category": "SystemDesign", "kind": "post", "kindLabel": "Case study", "title": "How Discord Stores Trillions of Messages", "headline": "How Discord Stores Trillions of Messages", "body": "Discord's message store grew from 12 Cassandra nodes in 2017 to 177 nodes holding trillions of messages, and hot partitions kept paging on-call. A new database alone was not the fix. They added Rust data services that coalesce identical concurrent reads into one query, with consistent-hash routing by channel ID so the same channel reaches the same instance. Then they migrated to ScyllaDB. Result: 72 nodes instead of 177, and historical-message p99 latency fell from 40-125 ms to 15 ms. Takeaway: shield a hot key by collapsing duplicate reads before they reach the database.", "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages", "sourceLabel": "Discord Engineering", "date": "2026-10-27", "practice": "Shield a hot key by collapsing duplicate reads before they reach the database."}, {"id": "systemdesign-2026-10-27-figma-multiplayer", "mode": "research", "day": null, "category": "SystemDesign", "kind": "post", "kindLabel": "Case study", "title": "How Figma's multiplayer technology works", "headline": "How Figma's multiplayer technology works", "body": "Figma skipped operational transforms, the algorithm behind Google Docs, because it was overkill and hard to implement correctly. Its design is inspired by CRDTs but simplified, because a central server can set the order of events. A document is a map from object ID to properties, and the last value the server receives for a property wins. Clients apply their own edits at once and ignore conflicting server updates until acknowledged, which avoids flicker. The cost: two people editing the same text end with AB or BC, never ABC. Takeaway: pick the simplest consistency model your product can live with.", "url": "https://www.figma.com/blog/how-figmas-multiplayer-technology-works/", "sourceLabel": "Figma", "date": "2026-10-27", "practice": "Pick the simplest consistency model your product can honestly live with."}];
+
+const state = {
+ mode: 'research',
+ index: 0,
+ read: {},
+ animating: false,
+ drawerFilter: 'all',
+ touchStartX: null,
+ touchStartY: null,
+};
+
+function loadRead() {
+ try {
+ const raw = localStorage.getItem(STORAGE_KEY);
+ state.read = raw ? JSON.parse(raw) : {};
+ if (typeof state.read !== 'object' || state.read === null || Array.isArray(state.read)) state.read = {};
+ } catch (e) {
+ state.read = {};
+ }
+}
+function saveRead() {
+ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.read));
+}
+function isRead(id) {
+ return !!(state.read[id] && state.read[id].readAt);
+}
+function markRead(id) {
+ if (!isRead(id)) {
+ state.read[id] = { readAt: new Date().toISOString() };
+ saveRead();
+ return true;
+ }
+ return false;
+}
+
+/** Unread-first within mode; stable relative order from CARDS. */
+function modeCards() {
+ const list = CARDS.filter(c => c.mode === state.mode);
+ const unread = list.filter(c => !isRead(c.id));
+ const read = list.filter(c => isRead(c.id));
+ return unread.concat(read);
+}
+
+function counts() {
+ const train = CARDS.filter(c => c.mode === 'training');
+ const res = CARDS.filter(c => c.mode === 'research');
+ return {
+ train: train.length,
+ res: res.length,
+ trainRead: train.filter(c => isRead(c.id)).length,
+ resRead: res.filter(c => isRead(c.id)).length,
+ total: CARDS.length,
+ readN: CARDS.filter(c => isRead(c.id)).length,
+ };
+}
+
+function escapeHtml(s) {
+ return String(s).replace(/[&<>"']/g, c => ({
+ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+ }[c]));
+}
+function escapeAttr(s) {
+ return escapeHtml(s).replace(/`/g, '&#96;');
+}
+
+function kindChipClass(kind) {
+ if (kind === 'lab') return 'chip-kind-lab';
+ if (kind === 'practice') return 'chip-kind-practice';
+ return 'chip-kind-paper';
+}
+
+function buildCardHTML(card) {
+ const read = isRead(card.id);
+ const citeLabel = card.sourceLabel || 'Source';
+ const linkText = citeLabel === 'Read the paper' ? 'Read the paper ↗' : 'Open primary source ↗';
+ return `
+ <article class="card" data-id="${escapeAttr(card.id)}" aria-label="${escapeAttr(card.title)}">
+ <div class="chips">
+ <span class="chip ${kindChipClass(card.kind)}">${escapeHtml(card.kindLabel)}</span>
+ <span class="chip ${read ? 'chip-read' : 'chip-unread'}">${read ? 'Read' : 'Unread'}</span>
+ ${card.date ? `<span class="chip">${escapeHtml(card.date)}</span>` : ''}
+ ${card.mode === 'training' && card.day ? `<span class="chip chip-acid">Day ${card.day}</span>` : ''}
+ </div>
+ <div class="t-stagger" data-stagger>
+ <h2 class="headline t-stagger-line t-stagger-line--1">${escapeHtml(card.headline || card.title)}</h2>
+ <p class="lede t-stagger-line t-stagger-line--2">${escapeHtml(card.body)}</p>
+ </div>
+ <div class="cite">
+ <span class="cite-label">${escapeHtml(citeLabel)}</span>
+ <a href="${escapeAttr(card.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(linkText)}</a>
+ </div>
+ </article>
+ `;
+}
+
+function syncTabsPill(animate) {
+ const bar = document.getElementById('modeTabs');
+ const pill = document.getElementById('tabsPill');
+ const tabs = [...bar.querySelectorAll('.t-tab')];
+ const active = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+ if (!animate) {
+ const prev = pill.style.transition;
+ pill.style.transition = 'none';
+ pill.style.transform = `translateX(${active.offsetLeft}px)`;
+ pill.style.width = `${active.offsetWidth}px`;
+ void pill.offsetWidth;
+ pill.style.transition = prev;
+ } else {
+ pill.style.transform = `translateX(${active.offsetLeft}px)`;
+ pill.style.width = `${active.offsetWidth}px`;
+ }
+}
+
+function updateChrome() {
+ const list = modeCards();
+ const c = counts();
+ const modeRead = state.mode === 'training' ? c.trainRead : c.resRead;
+ const modeTotal = state.mode === 'training' ? c.train : c.res;
+ document.getElementById('metricRead').textContent = String(modeRead);
+ document.getElementById('metricRest').textContent =
+ `/ ${modeTotal} ${state.mode === 'training' ? 'training' : 'articles'}`;
+
+ const markBtn = document.getElementById('markBtn');
+ const cur = list[state.index];
+ if (cur && isRead(cur.id)) {
+ markBtn.textContent = 'Already read';
+ markBtn.disabled = true;
+ } else {
+ markBtn.innerHTML = `<span class="btn-check" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M10 24.5L20 34.5L38 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Mark as read`;
+ markBtn.disabled = state.animating || !cur;
+ }
+ document.getElementById('prevBtn').disabled = state.animating || state.index <= 0;
+ document.getElementById('nextBtn').disabled = state.animating || !cur || state.index >= list.length - 1;
+
+ document.getElementById('tabTraining').setAttribute('aria-selected', state.mode === 'training' ? 'true' : 'false');
+ document.getElementById('tabResearch').setAttribute('aria-selected', state.mode === 'research' ? 'true' : 'false');
+
+ document.getElementById('live').textContent =
+ `${modeRead} of ${modeTotal} articles read. Showing card ${state.index + 1} of ${list.length}.`;
+}
+
+function setSlotHeight(el) {
+ const slot = document.getElementById('cardSlot');
+ if (!el) { slot.style.height = 'auto'; return; }
+ const h = el.offsetHeight;
+ slot.style.height = h + 'px';
+}
+
+function revealStagger(root) {
+ const block = root.querySelector('[data-stagger]');
+ if (!block) return;
+ block.classList.remove('is-hiding', 'is-shown');
+ void block.offsetHeight;
+ block.classList.add('is-shown');
+}
+
+function showToast(msg) {
+ const t = document.getElementById('toast');
+ const check = document.getElementById('toastCheck');
+ document.getElementById('toastText').textContent = msg;
+ check.setAttribute('data-state', 'out');
+ void check.offsetWidth;
+ check.setAttribute('data-state', 'in');
+ t.classList.add('is-open');
+ clearTimeout(showToast._timer);
+ showToast._timer = setTimeout(() => {
+ t.classList.remove('is-open');
+ setTimeout(() => check.setAttribute('data-state', 'out'), 280);
+ }, 1600);
+}
+
+function mountCard(direction) {
+ const list = modeCards();
+ if (!list.length) return;
+ if (state.index < 0) state.index = 0;
+ if (state.index >= list.length) state.index = list.length - 1;
+ const card = list[state.index];
+ const slot = document.getElementById('cardSlot');
+
+ const pane = document.createElement('div');
+ pane.className = 'card-pane';
+ pane.innerHTML = buildCardHTML(card);
+
+ const prev = slot.querySelector('.card-pane:not(.is-exit-next):not(.is-exit-prev)');
+
+ if (prev && direction) {
+ state.animating = true;
+ updateChrome();
+ const exitClass = direction === 'prev' ? 'is-exit-prev' : 'is-exit-next';
+ const enterClass = direction === 'prev' ? 'is-enter-prev' : 'is-enter-next';
+ prev.classList.add(exitClass);
+ pane.classList.add(enterClass);
+ slot.appendChild(pane);
+
+ // Measure incoming content for height morph
+ requestAnimationFrame(() => {
+ setSlotHeight(pane);
+ revealStagger(pane);
+ });
+
+ const done = () => {
+ prev.remove();
+ pane.classList.remove(enterClass);
+ state.animating = false;
+ updateChrome();
+ setSlotHeight(pane);
+ };
+ prev.addEventListener('animationend', done, { once: true });
+ setTimeout(done, 320);
+ } else {
+ slot.innerHTML = '';
+ slot.appendChild(pane);
+ // First paint: set height without fighting layout
+ slot.style.height = 'auto';
+ requestAnimationFrame(() => {
+ setSlotHeight(pane);
+ revealStagger(pane);
+ });
+ updateChrome();
+ }
+}
+
+function goNext(mark) {
+ if (state.animating) return;
+ const list = modeCards();
+ const cur = list[state.index];
+ if (!cur) return;
+
+ // Enter / Mark on an already-read card just advances (no toast)
+ if (mark && isRead(cur.id)) {
+ if (state.index < list.length - 1) {
+ state.index += 1;
+ mountCard('next');
+ }
+ return;
+ }
+
+ if (mark) {
+ const newly = markRead(cur.id);
+ if (newly) showToast('Marked read');
+ const nextList = modeCards();
+ // Current card just moved into the read section; land on first unread
+ const nextUnread = nextList.findIndex(c => !isRead(c.id));
+ if (nextUnread >= 0) {
+ state.index = nextUnread;
+ mountCard('next');
+ } else {
+ state.index = Math.max(0, nextList.length - 1);
+ mountCard(null);
+ if (newly) showToast('Marked read · end of list');
+ }
+ return;
+ }
+
+ if (state.index < list.length - 1) {
+ state.index += 1;
+ mountCard('next');
+ }
+}
+
+function goPrev() {
+ if (state.animating || state.index <= 0) return;
+ state.index -= 1;
+ mountCard('prev');
+}
+
+function setMode(mode) {
+ if (mode === state.mode) return;
+ state.mode = mode;
+ state.index = 0;
+ syncTabsPill(true);
+ mountCard('next');
+}
+
+function openSheet() {
+ const backdrop = document.getElementById('backdrop');
+ const sheet = document.getElementById('sheet');
+ backdrop.hidden = false;
+ sheet.hidden = false;
+ requestAnimationFrame(() => {
+ backdrop.classList.add('open');
+ sheet.classList.add('open');
+ });
+ renderSheet();
+}
+function closeSheet() {
+ const backdrop = document.getElementById('backdrop');
+ const sheet = document.getElementById('sheet');
+ backdrop.classList.remove('open');
+ sheet.classList.remove('open');
+ setTimeout(() => {
+ backdrop.hidden = true;
+ sheet.hidden = true;
+ }, 300);
+}
+
+function renderSheet() {
+ const list = document.getElementById('sheetList');
+ const f = state.drawerFilter;
+ let items = CARDS.slice();
+ if (f === 'unread') items = items.filter(c => !isRead(c.id));
+ else if (f === 'read') items = items.filter(c => isRead(c.id));
+ else if (f === 'training') items = items.filter(c => c.mode === 'training');
+ else if (f === 'research') items = items.filter(c => c.mode === 'research');
+ else if (f === 'post') items = items.filter(c => c.kind === f);
+
+ const cur = modeCards()[state.index];
+ list.innerHTML = items.map(c => `
+ <button type="button" class="sheet-item${cur && cur.id === c.id ? ' is-current' : ''}" data-id="${escapeAttr(c.id)}">
+ <span class="t">${escapeHtml(c.title)}</span>
+ <span class="m">
+ <span>${c.mode === 'training' ? 'Training' : 'Article'}</span>
+ <span>· ${escapeHtml(c.kindLabel)}</span>
+ <span class="${isRead(c.id) ? '' : 'dot-unread'}">· ${isRead(c.id) ? 'Read' : 'Unread'}</span>
+ </span>
+ </button>
+ `).join('') || '<p style="padding:1rem;color:rgba(255,255,255,0.45)">No cards match.</p>';
+}
+
+function jumpTo(id) {
+ const card = CARDS.find(c => c.id === id);
+ if (!card) return;
+ state.mode = card.mode;
+ syncTabsPill(true);
+ const list = modeCards();
+ const idx = list.findIndex(c => c.id === id);
+ state.index = Math.max(0, idx);
+ closeSheet();
+ mountCard('next');
+}
+
+/* Events */
+document.getElementById('markBtn').addEventListener('click', () => goNext(true));
+document.getElementById('nextBtn').addEventListener('click', () => goNext(false));
+document.getElementById('prevBtn').addEventListener('click', goPrev);
+document.getElementById('tabTraining').addEventListener('click', () => setMode('training'));
+document.getElementById('tabResearch').addEventListener('click', () => setMode('research'));
+document.getElementById('openSheet').addEventListener('click', openSheet);
+document.getElementById('closeSheet').addEventListener('click', closeSheet);
+document.getElementById('backdrop').addEventListener('click', closeSheet);
+
+document.getElementById('sheetFilters').addEventListener('click', (e) => {
+ const btn = e.target.closest('button[data-filter]');
+ if (!btn) return;
+ state.drawerFilter = btn.dataset.filter;
+ document.querySelectorAll('#sheetFilters button').forEach(b =>
+ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false')
+ );
+ renderSheet();
+});
+document.getElementById('sheetList').addEventListener('click', (e) => {
+ const item = e.target.closest('[data-id]');
+ if (item) jumpTo(item.dataset.id);
+});
+
+document.addEventListener('keydown', (e) => {
+ if (e.target.matches('input, textarea, select')) return;
+ if (e.key === 'ArrowRight') { e.preventDefault(); goNext(false); }
+ else if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+ else if (e.key === 'Enter') { e.preventDefault(); goNext(true); }
+ else if (e.key === 'Escape') closeSheet();
+});
+
+/* Optional swipe: left = next, right = prev */
+const slot = document.getElementById('cardSlot');
+slot.addEventListener('touchstart', (e) => {
+ if (!e.touches[0]) return;
+ state.touchStartX = e.touches[0].clientX;
+ state.touchStartY = e.touches[0].clientY;
+}, { passive: true });
+slot.addEventListener('touchend', (e) => {
+ if (state.touchStartX == null) return;
+ const t = e.changedTouches[0];
+ if (!t) return;
+ const dx = t.clientX - state.touchStartX;
+ const dy = t.clientY - state.touchStartY;
+ state.touchStartX = null;
+ state.touchStartY = null;
+ if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+ if (dx < 0) goNext(false);
+ else goPrev();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+ syncTabsPill(false);
+ const pane = document.querySelector('#cardSlot .card-pane');
+ if (pane) setSlotHeight(pane);
+});
+
+loadRead();
+requestAnimationFrame(() => {
+ syncTabsPill(false);
+ mountCard(null);
+ updateChrome();
+});
+</script>
+</body>
+</html>
