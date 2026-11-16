@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 18 cards</span>
+ <span class="metric-rest" id="metricRest">/ 40 cards</span>
  </div>
  </div>
 
@@ -2136,8 +2136,8 @@ function jumpTo(id) {
 document.getElementById('markBtn').addEventListener('click', () => goNext(true));
 document.getElementById('nextBtn').addEventListener('click', () => goNext(false));
 document.getElementById('prevBtn').addEventListener('click', goPrev);
-document.getElementById('tabTraining').addEventListener('click', () => setMode('training'));
-document.getElementById('tabResearch').addEventListener('click', () => setMode('research'));
+document.getElementById('tabTraining')?.addEventListener('click', () => setMode('training'));
+document.getElementById('tabResearch')?.addEventListener('click', () => setMode('research'));
 document.getElementById('openSheet').addEventListener('click', openSheet);
 document.getElementById('closeSheet').addEventListener('click', closeSheet);
 document.getElementById('backdrop').addEventListener('click', closeSheet);
