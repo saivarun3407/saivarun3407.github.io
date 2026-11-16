@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 46 research</span>
+ <span class="metric-rest" id="metricRest">/ 96 research</span>
  </div>
  </div>
 
@@ -2479,6 +2479,51 @@ const CARDS = [
   "sourceLabel": "Cloudflare",
   "date": "2026-11-13",
   "practice": "Find every non-expiring account-level token in CI and add an expiry, an IP restriction, and narrow scopes."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-16-mitiga-forge",
+  "kindLabel": "Team practice",
+  "title": "Many narrow agents, one human merge",
+  "headline": "Many narrow agents, one human merge",
+  "body": "Mitiga's FORGE builds detections in stages. It plans around coverage gaps, has many agents draft one detector per task in parallel, drops duplicates, and runs two independent adversarial review passes against a written rulebook. A red-team pass lists the benign activity that would trigger each candidate, and a reachability stage checks it fires on real customer telemetry within noise limits. The output is a PR that a human reviews and merges, never an auto-deploy. Lessons: the plumbing between agents matters, deterministic load checks should come before costly runs, and repairing a rejected candidate beats discarding it. Mitiga reports more than 1,000 validated detections shipped over several months; live attack simulation is still in progress.",
+  "url": "https://www.mitiga.io/blog/automated-detection-engineering-forge",
+  "sourceLabel": "Mitiga",
+  "date": "2026-08-10",
+  "practice": "Write your detection quality bar as checkable rules, then gate every AI-drafted rule on real data and a human merge."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-16-semgrep-wfx-phantom",
+  "kindLabel": "Practitioner write-up",
+  "title": "A green build can be the breach",
+  "headline": "A green build can be the breach",
+  "body": "WFX Phantom (Nov 10-12) used GitHub tokens that were stolen earlier and never rotated. It pushed a secret stealer into existing workflows, scripts CI already runs, new workflow files, and package install hooks. Semgrep counts at least 1,800 repos that ran it, counting only those where evidence survived. Branch protection matched required checks by name unless they were pinned to an app, so forged statuses passed. A bot account allowed to bypass protection was used, and deleted runs left gaps in the run numbers. The fixes: rotate stolen tokens, audit what bots can write and bypass, look for cloud persistence (AWS roles with wildcard trust principals, Azure federated identity credentials), and allowlist CI egress.",
+  "url": "https://semgrep.dev/blog/2026/seconds-from-disaster-wfx-phantom-and-the-ci-pipeline-nobody-was-watching/",
+  "sourceLabel": "Semgrep",
+  "date": "2026-11-12",
+  "practice": "List every token and bot that can write to CI, and rotate or narrow the ones nobody owns."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-16-plaid-service-auth",
+  "kindLabel": "Team practice",
+  "title": "Default-deny between services, without the outages",
+  "headline": "Default-deny between services, without the outages",
+  "body": "Plaid stopped trusting everything inside its VPC. At startup, a service swaps its Kubernetes service-account token (or a signed AWS GetCallerIdentity request) for a Plaid STS identity token. Each gRPC call carries that token plus a short-lived, locally signed token, and server middleware verifies both, then checks default-deny allowRules, with no network call on the request path. To avoid outages, PR linters prompt for rules when new gRPC methods appear, mocked clients enforce policy in unit tests, and deploys roll back automatically when authorization errors spike.",
+  "url": "https://engineering.plaid.com/how-we-secure-service-to-service-communication-at-plaid-8f5257c8237c",
+  "sourceLabel": "Plaid Engineering",
+  "date": "2026-06-02",
+  "practice": "Put authz policy checks into unit tests and deploy rollback, not just production."
  }
 ];
 
