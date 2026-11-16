@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 40 cards</span>
+ <span class="metric-rest" id="metricRest">/ 43 cards</span>
  </div>
  </div>
 
@@ -1525,6 +1525,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h23-sorensen-validator",
+  "kindLabel": "Architecture",
+  "title": "A validator whose job is to say no",
+  "headline": "A validator whose job is to say no",
+  "body": "Philip Sørensen's bug bounty hackbot runs in Claude Code with three roles. An orchestrator decides what to pursue and never runs a tool itself. Recon workers take one target each and can't mark anything confirmed. A validator tries to disprove each candidate before it can be reported. Scope is a per-program YAML gate that fails closed, starts with every tool off, and enforces rate limits that can only be tightened. Per-program SQLite stores let it diff what changed between runs. Over 96 programs: 2,441 flagged, 2,244 thrown out, 54 confirmed, 24 reported, plus 36 real bugs that were duplicates. Passwords stay out of the agent's context.",
+  "steal": "A fail-closed scope gate with tools off by default, plus a separate disprover agent before anything is reported.",
+  "url": "https://philipsoerensen.com/blog/building-a-bug-bounty-hackbot",
+  "sourceLabel": "Philip Sørensen",
+  "date": "2026-10-14",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h25-local-agents-repro",
+  "kindLabel": "Evaluation",
+  "title": "The hypothesis is easy, the proof is hard",
+  "headline": "The hypothesis is easy, the proof is hard",
+  "body": "Researchers ran 12 configurations of local open-weight models (three generations, two architectures, three quantization levels) on 10 CyberGym vulnerability-reproduction tasks, 3 runs each, in one harness, and released the artefact. Every configuration, down to 4B, solved most of the 6 easier tasks; the 4 harder ones needed the 27B model. Quantization changed how fast models got there, not which tasks they solved. In almost every run the authors examined, failures included, the agent named the vulnerable function and the correct hypothesis. What decided success was turning that hypothesis into a working input.",
+  "steal": "Measure and improve the hypothesis-to-proof step, not just the bug-spotting step.",
+  "url": "https://arxiv.org/abs/2611.06257",
+  "sourceLabel": "arXiv 2611.06257 (García-Carrasco et al.)",
+  "date": "2026-11-04",
+  "level": "Intermediate",
+  "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -1808,6 +1842,23 @@ const CARDS = [
   "date": "2026-04-07",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h24-dognavy-exploit",
+  "kindLabel": "Research paper",
+  "title": "Milestones, parallel routes, evidence-gated progress",
+  "headline": "Milestones, parallel routes, evidence-gated progress",
+  "body": "DoGNAVY-Exploit is a multi-agent harness that helps open-weight models stay on track through long exploitation tasks. Configurable milestones turn the work into short steps that can each be verified, and each stage sees only the expert knowledge relevant to it. Inside a milestone, a planner proposes several routes, executors try them in parallel, and a controller accepts progress only when runtime evidence supports it. Shared structured memory keeps verified facts, artifacts, replay steps and failed routes across branches. Ablations show the stage-aware orchestration, expert knowledge, parallel exploration and memory each help. Results are from controlled benchmarks only (Cybench, CVE-Bench, ExploitGym).",
+  "steal": "Accept a step as done only with runtime evidence, and log failed routes so other branches don't repeat them.",
+  "url": "https://arxiv.org/abs/2611.04196",
+  "sourceLabel": "arXiv 2611.04196 (Wang et al.)",
+  "date": "2026-11-03",
+  "level": "Advanced",
+  "topic": "Research paper"
  }
 ];
 
