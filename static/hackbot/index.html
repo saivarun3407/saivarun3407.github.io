@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 53 cards</span>
+ <span class="metric-rest" id="metricRest">/ 55 cards</span>
  </div>
  </div>
 
@@ -1247,6 +1247,23 @@ const CARDS = [
   "date": "2026-11-11",
   "level": "Basic",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h36-haddix-micro-scoping",
+  "kindLabel": "Concepts",
+  "title": "One agent, one job, one context pack",
+  "headline": "One agent, one job, one context pack",
+  "body": "Jason Haddix's notes from building hackbots argue that context engineering makes or breaks them. He seeds system prompts with a \"Related Research Terms\" section to steer the model, and gives each agent its own curated RAG pack of normalized write-ups and test strings, with all data cleaned, deduped and tagged first. Agents get a single mission (enumeration, triage, reporting), and vulnerability agents are micro-scoped to one sub-type of a bug class. Repeatable work stays in ordinary automation; AI is for analysis and synthesis, with JavaScript parsing an exception. His caveats: long runs mean hallucinations and token burn, so use kill switches, verify everything, and expect to steer the bot by hand sometimes.",
+  "steal": "Split agents by narrow bug sub-type, each with its own cleaned knowledge pack, and keep grunt work in plain scripts.",
+  "url": "https://arcanum-sec.com/blog/hackbots/",
+  "sourceLabel": "Jason Haddix, Arcanum Security",
+  "date": "2025-09-05",
+  "level": "Basic",
+  "topic": "Concepts"
  },
  {
   "mode": "research",
@@ -2029,6 +2046,23 @@ const CARDS = [
   "date": "2026-04-22",
   "level": "Advanced",
   "topic": "Research paper"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h37-vast-verifiable-ranges",
+  "kindLabel": "Evaluation",
+  "title": "Separate the bug from the workflow when you grade agents",
+  "headline": "Separate the bug from the workflow when you grade agents",
+  "body": "VAST is a declarative range compiler that keeps vulnerability scenarios apart from a compiler-added workflow-hardening layer, so workflow difficulty can be varied on a six-rung ladder. Each instance is checked by four gates (benign, reference-exploit, negative and patch-toggle paths), and failures get labels. The main benchmark keeps 1,387 instances across 81 topics. Three models solved 12/90 instances with the bare contract and 14/90 with a generic hint, but 76/90 when given the shared workflow protocol. The author is careful about limits: identifier re-randomization is not a measured contamination defense, containment is Python-level rather than kernel-enforced, and the code audit was done after the runs.",
+  "steal": "Grade our bot on ranges where workflow difficulty is a separate dial from the bug, and label why each run failed.",
+  "url": "https://arxiv.org/abs/2611.19465",
+  "sourceLabel": "arXiv 2611.19465 (Zhen Wan, Scantist)",
+  "date": "2026-11-14",
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
