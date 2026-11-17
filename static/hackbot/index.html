@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 50 cards</span>
+ <span class="metric-rest" id="metricRest">/ 53 cards</span>
  </div>
  </div>
 
@@ -1678,6 +1678,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h33-garnier-fresh-sessions",
+  "kindLabel": "Architecture",
+  "title": "Fresh sessions, external memory, budgets in code",
+  "headline": "Fresh sessions, external memory, budgets in code",
+  "body": "Jake Garnier's unattended bug-bounty agent loops indefinitely across several targets. Each iteration is a brand-new session that reads a working-memory file first and rewrites it after every objective. State lives in a task board, the working-memory file, an encrypted credential store and a knowledge vault, so killing a session loses almost nothing. A deliberately dumb bash loop launches, watches and kills sessions. Soft limits failed (asked for about 5 objectives, it did 26), so caps on objectives, re-sent context, turns and wall-clock time are enforced outside the model, with context as the primary cap. A verifier in a fresh session on a different model is prompted to refute findings.",
+  "steal": "Enforce budgets from outside the model, and verify findings in a fresh session on a different model.",
+  "url": "https://jakegarnier.com/blog/hackbot-architecture",
+  "sourceLabel": "Jake Garnier",
+  "date": null,
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h34-tahr-agentops",
+  "kindLabel": "Evaluation",
+  "title": "Versioned, signed, evaluated pentest skills",
+  "headline": "Versioned, signed, evaluated pentest skills",
+  "body": "Tahr's offensive security team shares agents and skills as \"capabilities\" through AgentOps. It checks each package and its digest, signs the release details, and keeps a published version fixed; projects install it through a lockfile and can roll back. An observer records traces (model calls, tool calls, retries, child sessions) but only live events, so gaps are marked incomplete. To change a skill they read the trace, save a candidate, install it in a separate workspace, run a fresh authorized test, run evaluation checks, and publish if required checks pass. Checks must run on fresh sessions recorded with the candidate's digest. Effect on findings or speed hasn't been measured.",
+  "steal": "Version our skills with digests and lockfiles, and promote a change only after it passes checks on fresh runs.",
+  "url": "https://blog.tahr.one/posts/how-we-build-test-and-share-offensive-ai-capabilities",
+  "sourceLabel": "zilbon, Tahr",
+  "date": "2026-11-05",
+  "level": "Intermediate",
+  "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -1976,6 +2010,23 @@ const CARDS = [
   "url": "https://arxiv.org/abs/2611.04196",
   "sourceLabel": "arXiv 2611.04196 (Wang et al.)",
   "date": "2026-11-03",
+  "level": "Advanced",
+  "topic": "Research paper"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h35-agentflow-harness-search",
+  "kindLabel": "Research paper",
+  "title": "Search the harness, not just the model",
+  "headline": "Search the harness, not just the model",
+  "body": "The paper notes that with the model held fixed, changing only the harness can change success rates several-fold on public agent benchmarks. AgentFlow writes the harness (roles, prompts, tools, communication topology, coordination protocol) as a typed graph DSL. An outer loop reads runtime signals from the target program to diagnose which part of the harness caused a failure, then rewrites that part. It reports 84.3% on TerminalBench-2 with Claude Opus 4.6, and ten previously unknown Chrome vulnerabilities with Kimi K2.5, including two Critical sandbox escapes. All ten were accepted through Chrome's VRP, and the Chrome-specific configuration is withheld.",
+  "steal": "Treat the harness as typed config we can diff and tune, and blame failures on a specific part using runtime signals.",
+  "url": "https://arxiv.org/abs/2604.20801",
+  "sourceLabel": "arXiv 2604.20801 (Liu et al.)",
+  "date": "2026-04-22",
   "level": "Advanced",
   "topic": "Research paper"
  }
