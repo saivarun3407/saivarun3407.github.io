@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 96 research</span>
+ <span class="metric-rest" id="metricRest">/ 100 research</span>
  </div>
  </div>
 
@@ -2524,6 +2524,66 @@ const CARDS = [
   "sourceLabel": "Plaid Engineering",
   "date": "2026-06-02",
   "practice": "Put authz policy checks into unit tests and deploy rollback, not just production."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-17-rudderstack-artemis",
+  "kindLabel": "Team practice",
+  "title": "A hostile verifier and a fix-commit scoreboard",
+  "headline": "A hostile verifier and a fix-commit scoreboard",
+  "body": "RudderStack's Project Artemis is a four-role agent red team (Scout, Analyst, Operator, and an independent Adjudicator that flags decisions needing a human) seeded from the team's own inventory of internet-facing endpoints. Each pipeline stage writes its output to disk, so a failed stage can be replayed without redoing the rest. A local copy of the platform, defined as code, lets agents reproduce bugs without touching live systems. Campaign 1 ran about a week: 112 findings, 93 valid, 80 fully exploited, for about $100 of subscription usage. The most frequent problem was stale commit pointers, and re-deriving locations from symbols fixed more than any prompt change. Re-finding old bugs proved nothing, so they now count false positives on fix commits.",
+  "url": "https://www.rudderstack.com/blog/project-artemis-how-we-hunt-bugs-in-our-own-code/",
+  "sourceLabel": "RudderStack",
+  "date": "2026-11-12",
+  "practice": "Benchmark your AI reviewer on the commit that fixed each known bug, where the right answer is silence."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-17-nefs-agent-runs-as-you",
+  "kindLabel": "Practitioner write-up",
+  "title": "Your coding agent runs as you",
+  "headline": "Your coding agent runs as you",
+  "body": "A coding agent on your laptop runs as you, so it can read your SSH keys, cloud and cluster credentials, and logged-in browser profile. That gives it all three parts of Simon Willison's \"lethal trifecta\" by default. Anthropic's numbers: users accept 93% of permission prompts, and in Anthropic's internal usage turning the sandbox on cut prompts by 84%. A prompt is not a wall; a sandbox is. The post walks through five places to run agents (OS sandbox, Docker, VM, CI runner, Kubernetes, which rates high only with gVisor or Kata), asking what each can read, reach and hold. In his team's CI pipeline, a localhost Caddy proxy adds the real API key only on allowed paths, so the agent never sees it.",
+  "url": "https://roaldnefs.com/posts/2026/11/your-coding-agent-runs-as-you/",
+  "sourceLabel": "Roald Nefs",
+  "date": "2026-11-12",
+  "practice": "Sandbox agents by default and deny reads of ~/.ssh and ~/.aws; let the agent use a key through a proxy, never hold it."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-17-redhat-omnigent-openshell",
+  "kindLabel": "Practitioner write-up",
+  "title": "Credential injection at the proxy for third-party agents",
+  "headline": "Credential injection at the proxy for third-party agents",
+  "body": "Omnigent puts one UI over agent harnesses such as Codex, Claude Code, Pi and Goose, and on OpenShift each session gets its own OpenShell sandbox. OpenShell providers bring in a credential plus policy rules. Inside the sandbox, tokens and API keys are masked, and the OpenShell network proxy swaps in the real values when a call goes out. Filesystem and external network access are denied by default, processes run as a sandbox user, and denied connections show up as violations that can be approved live. Only environment variables cross from Omnigent to OpenShell, so config files are baked into the image, and BubbleWrap adds a second isolation layer. Omnigent is a community project, not part of the Red Hat AI roadmap.",
+  "url": "https://developers.redhat.com/articles/2026/11/17/omnigent-case-study-securing-third-party-ai-agents-on-red-hat-ai-with-openshell",
+  "sourceLabel": "Sean Condon, Red Hat Developer",
+  "date": "2026-11-17",
+  "practice": "Keep real secrets out of the agent's sandbox; inject them at an egress proxy that enforces policy."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-17-skyscrapers-component-hardening",
+  "kindLabel": "Team practice",
+  "title": "Least privilege for the components you run in customer clusters",
+  "headline": "Least privilege for the components you run in customer clusters",
+  "body": "Skyscrapers, a managed-Kubernetes provider, hardened its own components in customer clusters as a precaution, with no signs of exploitation. Internet-facing WireGuard gave up privileged mode for two network capabilities, its own user namespace and a read-only root filesystem. Flux, cert-manager, Grafana, Velero and others now run as non-root, can't escalate privileges, and use the default seccomp profile. Pods that never call the Kubernetes API get no ServiceAccount token, and several components moved secrets from env vars to mounted files. On their test cluster, open container-hardening findings went from 84 to 0: most were fixed, and the rest are marked accepted with a reason. Admission control is next.",
+  "url": "https://docs.skyscrapers.eu/changelog/2026-11-09-platform-component-hardening/",
+  "sourceLabel": "Skyscrapers",
+  "date": "2026-11-09",
+  "practice": "Strip API tokens from pods that don't need them and read secrets from files, not env vars."
  }
 ];
 
