@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 100 research</span>
+ <span class="metric-rest" id="metricRest">/ 104 research</span>
  </div>
  </div>
 
@@ -2584,6 +2584,66 @@ const CARDS = [
   "sourceLabel": "Skyscrapers",
   "date": "2026-11-09",
   "practice": "Strip API tokens from pods that don't need them and read secrets from files, not env vars."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-18-zeabur-rotated-key-backup",
+  "kindLabel": "Team practice",
+  "title": "A rotated key is only new if the backup didn't copy it",
+  "headline": "A rotated key is only new if the backup didn't copy it",
+  "body": "Zeabur's preliminary report on its October 14-15 breach says the attacker used long-lived admin tokens and cloud keys stored in plaintext in a private config repo. The shared cluster's admin interface was open to the internet and the tokens had no expiry. More than 16 hours of activity on October 14 raised no alert, and a user report started the investigation. The attacker read about 3.2M environment-variable records and 321,810 accounts, and ran commands in 865 database services, though not every command worked. During the response, a new backup key issued at 15:40 UTC was captured by the 16:00 daily backup and used at 20:30. How the attacker first got the credentials is still unconfirmed, and the report is marked ongoing.",
+  "url": "https://zeabur.com/blogs/october-2026-security-incident",
+  "sourceLabel": "Zeabur (Yuanlin Lin)",
+  "date": "2026-10-19",
+  "practice": "Keep backup keys out of the backups, put admin interfaces behind private access, and alert on admin use and bulk secret reads."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-18-curl-anthropic-oss-scanner",
+  "kindLabel": "Practitioner write-up",
+  "title": "45 AI-found vulnerabilities, five confirmed",
+  "headline": "45 AI-found vulnerabilities, five confirmed",
+  "body": "Anthropic's OSS Scanner sent curl 45 claimed vulnerabilities (one Medium, 44 Low) plus 23 ordinary bugs, each with a reproducer and many with suggested patches. curl confirmed 5 (11.1%), all Low, including the one rated Medium. Of the rest, 36 were just bugs, 3 were not bugs, and 1 was wrong in a way that would have added the flaw it warned about. Daniel Stenberg calls the reports high quality but too eager to label things vulnerabilities, and far too long. Patches were sometimes nearly right but more often needed human work. curl files each report as a public issue in an ASSESS state, is raising the bar for Low, and says it may reconsider taking part if this continues.",
+  "url": "https://daniel.haxx.se/blog/2026/11/18/curl-on-oss-scanner/",
+  "sourceLabel": "Daniel Stenberg, daniel.haxx.se",
+  "date": "2026-11-18",
+  "practice": "Triage AI reports against a written severity rubric with a public ASSESS state, and review any suggested patch before merging it."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-18-wiz-black-october",
+  "kindLabel": "Practitioner write-up",
+  "title": "A stolen AI key gets tested within 30 minutes",
+  "headline": "A stolen AI key gets tested within 30 minutes",
+  "body": "Wiz counted at least nine AI developer platforms that disclosed incidents in October, with later updates adding more. Public reports show attackers hunting stored environment variables, especially ones that grant AI access. In two enterprise cases Wiz ties to a vendor breach, the first misuse was a single model call within 30 minutes of the reported credential access, followed by a low-rate checker and then floods. A key allowing global inference profiles made about 800k Bedrock calls in 30 hours, about 90% successful. A key limited to US profiles still made about 1.7M calls in 13 hours, over a million successful, and regional quotas throttled most of the rest. Wiz estimates the two cases likely cost over $100k at list price.",
+  "url": "https://www.wiz.io/blog/black-october-for-ai-developer-platforms",
+  "sourceLabel": "Wiz (Benjamin Read, Rami McCarthy)",
+  "date": "2026-10-30",
+  "practice": "Scope model keys to the regions and profiles they need, set quotas, and alert on a key's first use from a new IP."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-18-apigee-implicit-redirect-uri",
+  "kindLabel": "Practitioner write-up",
+  "title": "Validate the value you use, not the parameter name",
+  "headline": "Validate the value you use, not the parameter name",
+  "body": "Nikita Markevich found that Apigee's OAuth implicit grant read a repeated redirect_uri parameter two ways. One path returned the first value, which passed strict callback validation. A second parser kept the last value, and the redirect was built from that one, so a live access token could go to a callback that was never checked. Swapping the order made Apigee reject the request, which confirmed the split. Exploiting it needed specific proxy settings and a victim completing login. The bug was reported in April 2026, marked patched, and earned a $5,000 bounty. The lesson is that a check protects one value parsed one way, so trust only travels if that same value does.",
+  "url": "https://bugs.exposed/posts/apigee-implicit-redirect-uri-token-theft",
+  "sourceLabel": "Nikita Markevich, bugs.exposed",
+  "date": "2026-11-15",
+  "practice": "Reject duplicate OAuth parameters, and pass the validated value forward instead of re-parsing raw input after a check."
  }
 ];
 
