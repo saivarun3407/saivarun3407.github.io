@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 58 cards</span>
+ <span class="metric-rest" id="metricRest">/ 61 cards</span>
  </div>
  </div>
 
@@ -1281,6 +1281,23 @@ const CARDS = [
   "date": "2026-03-31",
   "level": "Basic",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h41-detectify-tiny-boring-tools",
+  "kindLabel": "Tooling",
+  "title": "Tiny, boring tools for the agent, with a log it can't edit",
+  "headline": "Tiny, boring tools for the agent, with a log it can't edit",
+  "body": "Luke (hakluke) Stephens argues that a hacking agent should hand deterministic work to small Unix-style tools and keep the model for judgement. He cites a study where cosmetic code edits flipped GPT-4's answer 17% of the time and PaLM 2's 26%, and says Detectify customers report roughly 80% of AI-driven SAST findings are noise. The tools sit behind MCP with typed inputs, one tool per workflow rather than per flag, lean output, and purpose prefixes so thirty tools stay distinguishable. The key rule: the tool writes the record of what was sent and received, somewhere the agent can't edit, and the model only adds its verdict, so a 'confirmed' finding can be audited. The post is on a vendor blog and ends with a pitch for Detectify's own MCP tooling.",
+  "steal": "Wrap whole workflows as typed, lean tools, and keep an append-only log written by the tools so 'confirmed' can be checked against what actually happened.",
+  "url": "https://blog.detectify.com/best-practices/why-im-building-my-hacking-agent-out-of-tiny-boring-tools/",
+  "sourceLabel": "Luke (hakluke) Stephens, Detectify",
+  "date": "2026-11-12",
+  "level": "Basic",
+  "topic": "Tooling"
  },
  {
   "mode": "research",
@@ -1763,6 +1780,23 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h42-centaur-stochastic-trap",
+  "kindLabel": "Architecture",
+  "title": "Don't give the model jobs that have right answers",
+  "headline": "Don't give the model jobs that have right answers",
+  "body": "Jay Hawkins draws on building ARCHER, a local pentest agent (qwen3:14b, tested against Metasploitable2), to argue that failures come from putting a probabilistic model in deterministic roles. Three cases: output format drift, where the bash-block extractor grew from 8 to 33 lines; routing errors, where a keyword router got 54.5% of 235 ambiguous task phrasings right; and failure to stop, where 9.1% of 44 baseline 'objective achieved' claims (4 sessions) failed a code-layer ground-truth check. His split: the model interprets messy output and proposes next steps, while code owns routing, halting, safety limits, logging and success verification. This is one author's self-reported lab work. The post says the fix for routing has not yet been measured on a held-out set. It is a technical report whose page says only '2026'; the site's feed dates it May 12, 2026.",
+  "steal": "Keep routing, halting, logging and success checks in code, and verify every 'objective achieved' claim against real target state.",
+  "url": "https://centaursecuritylabs.com/research/stochastic-trap/",
+  "sourceLabel": "Jay Hawkins, Centaur Security Labs",
+  "date": "2026-05-12",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2112,6 +2146,23 @@ const CARDS = [
   "url": "https://www.ijcai.org/proceedings/2026/725",
   "sourceLabel": "IJCAI 2026 (Sheng et al.)",
   "date": null,
+  "level": "Advanced",
+  "topic": "Research paper"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h43-stopping-is-not-the-limit",
+  "kindLabel": "Research paper",
+  "title": "When the agent says it's done, make it keep going",
+  "headline": "When the agent says it's done, make it keep going",
+  "body": "Kang, Gwon and Park study exploit agents on ExploitBench using DeepSeek-V4-Flash-0731 and MiMo-V2.6-Pro. Agents often stop with budget left, and continuing past the first stop still yields additional verified gains, though they shrink over longer runs. Less productive continuation goes with a rising share of stop responses and with summaries that keep 'impossible' judgments about goals not yet reached. Their SCoRe method compacts context when stops pile up and marks those judgments as unproven. With SCoRe, MiMo reaches 67.0% capability coverage at 2,000 turns, against 32.4% under its original stopping policy and 58.6% that the authors computed for GPT-5.5 from ExploitBench's 300-turn reference results. This is a preprint (Nov 17, 2026) and uses benchmark tasks only.",
+  "steal": "Don't treat the first 'I'm done' as final, and when summarizing context for a restart, label earlier 'can't be done' conclusions as unproven.",
+  "url": "https://arxiv.org/abs/2611.22888",
+  "sourceLabel": "arXiv 2611.22888 (Kang et al.)",
+  "date": "2026-11-17",
   "level": "Advanced",
   "topic": "Research paper"
  }
