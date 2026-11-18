@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 55 cards</span>
+ <span class="metric-rest" id="metricRest">/ 58 cards</span>
  </div>
  </div>
 
@@ -1264,6 +1264,23 @@ const CARDS = [
   "date": "2025-09-05",
   "level": "Basic",
   "topic": "Concepts"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h39-deriv-security-swarm",
+  "kindLabel": "Architecture",
+  "title": "Static leads become dynamic tests",
+  "headline": "Static leads become dynamic tests",
+  "body": "Deriv describes a four-agent offensive security swarm. HAL, built on OpenClaw, orchestrates and picks skills. John reviews code and returns structured results (severity, CWE, file), so dynamic testing starts where John flagged. Sade tests LLM agents by talking to them in Slack. Harry triages HackerOne reports and passes high-confidence ones to HAL for live validation. Slack serves as both interface and audit trail, and an internal SafeSkill layer sandboxes the security agent itself. On an internal test app, the first grey-box phase took 18 minutes and surfaced 6 issues, 3 of them critical; an earlier human test took most of a day and found 4 of the same 6. These figures are company-reported.",
+  "steal": "Pass structured findings between stages, require a second agent to confirm before escalating, and lock down the security agent itself.",
+  "url": "https://derivai.substack.com/p/ai-agent-security-offensive-security-swarm",
+  "sourceLabel": "Rajesh TV, Deriv (Fortress AI)",
+  "date": "2026-03-31",
+  "level": "Basic",
+  "topic": "Architecture"
  },
  {
   "mode": "research",
@@ -1729,6 +1746,23 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h38-monad-bugfinder",
+  "kindLabel": "Architecture",
+  "title": "The finder makes leads, the triager treats them as allegations",
+  "headline": "The finder makes leads, the triager treats them as allegations",
+  "body": "Monad Foundation's internal Bugfinder splits discovery from validation. The finder ranks files, modules and seams from 1 to 5, then runs minimally prompted hunters in isolated containers, and writes each lead to an append-only Postgres database with strict enums. The triager treats every lead as an allegation: a verifier-first review splits it into claims and looks for explanations that contradict it, then a witness ladder escalates from module to component, boundary, full node and cluster, and adjudication ends in one of four states. Per-bug-class proof gates were the biggest precision gain, and two model providers must agree or the lead stays undetermined. The funnel is about 100 leads to 10 confirmed to 1 reported, at roughly $100 per confirmed issue and $1k per report. The post is from May 2026.",
+  "steal": "Set a proof gate per bug class, default disagreement to undetermined, and never count 'it built' as reproduction.",
+  "url": "https://monad.xyz/blog/monad-bugfinder",
+  "sourceLabel": "Antonio Viggiano, Monad Foundation",
+  "date": "2026-05-24",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2063,6 +2097,23 @@ const CARDS = [
   "date": "2026-11-14",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h40-pentestllmagent",
+  "kindLabel": "Research paper",
+  "title": "A task graph, a context slice and a vetted command library",
+  "headline": "A task graph, a context slice and a vetted command library",
+  "body": "From 130 logs of 10 LLMs on AutoPentest-Bench (13 VulnHub targets, 93 sub-tasks), the paper names three failure modes: rigid strategy, contextual forgetting and command hallucination. PentestLLMAgent answers with a task dependency graph with priority scoring and backtracking, an orchestrator that hands each expert agent only a slice of context and takes back compressed results, and about 500 pre-validated, non-interactive commands that are retrieved rather than generated. With qwen-max it reaches 77% end to end, against 46% for PentestGPT. Averaged over 10 models, success is 55.6% in full, 19.9% without the graph, 27.1% without the hierarchy and 9.3% without the command library. Results are on lab targets only.",
+  "steal": "Plan as a graph with backtracking, and use a pre-vetted command library as an allowlist instead of letting the model write commands.",
+  "url": "https://www.ijcai.org/proceedings/2026/725",
+  "sourceLabel": "IJCAI 2026 (Sheng et al.)",
+  "date": null,
+  "level": "Advanced",
+  "topic": "Research paper"
  }
 ];
 
