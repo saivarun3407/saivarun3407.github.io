@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 104 research</span>
+ <span class="metric-rest" id="metricRest">/ 109 research</span>
  </div>
  </div>
 
@@ -2644,6 +2644,81 @@ const CARDS = [
   "sourceLabel": "Nikita Markevich, bugs.exposed",
   "date": "2026-11-15",
   "practice": "Reject duplicate OAuth parameters, and pass the validated value forward instead of re-parsing raw input after a check."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-19-ardor-build-config",
+  "kindLabel": "Team practice",
+  "title": "User files must never become build config",
+  "headline": "User files must never become build config",
+  "body": "Ardor's incident report says that on Nov 6 and 8 attackers with ordinary accounts submitted application files that were written outside the source directory, into the build root, where Vite loaded them as its configuration and ran them. The build ran inside the API process, whose environment held platform secrets and a broad Kubernetes service account, so one upload reached other customers' records, internal systems and, through a separate container-builder path, individual hosts. Ardor rebuilt production on a new cluster, moved builds into isolated sandboxes with no cloud identity, narrowed service permissions, rotated credentials, checked that the old ones were rejected, and added Kubernetes audit logging. The report separates confirmed disclosure from possible access, and some build and deploy features are still restricted. It was updated Nov 17.",
+  "url": "https://ardor.cloud/blog/security-incident-november-2026",
+  "sourceLabel": "Ardor",
+  "date": "2026-11-17",
+  "practice": "Run untrusted builds in a sandbox that holds no platform credentials, and prove a rotation worked by checking that the old keys fail."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-19-cyber-centre-detection-pipeline",
+  "kindLabel": "Team practice",
+  "title": "A purple-team loop that writes and attacks its own detections",
+  "headline": "A purple-team loop that writes and attacks its own detections",
+  "body": "The Canadian Centre for Cyber Security's Frontier AI Lab describes a two-agent detection pipeline. A blue agent (Opus 4.8) reads a public threat article and drafts detection logic. A red agent (Mythos) writes an attack plan, provisions a lab with the same security stack as production, runs several variants of the technique and looks for bypasses. The blue agent validates the analytic against lab and real operational data and refines it, and analysts approve or change the result before it is merged. One test case produced 8 production rules, each tested against more than 5 variants of the technique to find durable behaviour. The Centre says this work usually takes hours to a week and the pipeline did it in under an hour. Next it plans to turn validated false positives into tuning recommendations. The article was published Jul 30, 2026.",
+  "url": "https://www.cyber.gc.ca/en/guidance/canadian-centre-cyber-security-used-frontier-ai-accelerate-detection-engineering",
+  "sourceLabel": "Canadian Centre for Cyber Security",
+  "date": "2026-07-30",
+  "practice": "Don't ship a detection until it has fired on detonated telemetry from several variants of the technique."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-19-tines-threat-hunting-agent",
+  "kindLabel": "Team practice",
+  "title": "An hourly hunt from a hypothesis library, tuned by analyst verdicts",
+  "headline": "An hourly hunt from a hypothesis library, tuned by analyst verdicts",
+  "body": "Andrew Katz of Tines describes an agent that runs every hour on a small SecOps team. It picks a hypothesis from the open-source HEARTH collection or from about 10 written in-house, with context about the company's AWS, Google Workspace and Slack setup. It investigates through MCP tools (Panther, JumpCloud, VirusTotal, GreyNoise, CrowdStrike, Jira) and opens a case if something needs attention. Analyst verdicts (benign, suspicious, malicious) and steering notes shape later hunts, and the agent flags logs it was missing. Over five months it found four or five issues that needed action, and the AI cost for the whole system was under $164 in September 2026. This is a vendor writing about its own product, so the results are self-reported.",
+  "url": "https://www.tines.com/blog/security-threat-hunting-agent/",
+  "sourceLabel": "Andrew Katz, Tines",
+  "date": "2026-11-18",
+  "practice": "Write hunts as hypotheses tied to your environment, and feed every analyst verdict back into the next run."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-19-near-ai-sglang-incident",
+  "kindLabel": "Team practice",
+  "title": "The enclave protects you from the host, not from your own software",
+  "headline": "The enclave protects you from the host, not from your own software",
+  "body": "NEAR AI's incident report says an attacker used a remote code execution bug in SGLang, the open-source inference engine, to get code execution on one inference server and then reach more of its infrastructure. Confirmed exposure: account details (email, name, and for some accounts plan and balance) for about 100 users, and 18 agents on a legacy deployment that ran outside the confidential-computing environment. On Nov 8 the attacker could also have seen requests being processed on that server, including confidential-mode ones. Two Cloud customers' API keys were exposed in logs and revoked. NEAR found no sign that stored Private Chat conversations or uploaded files were accessed. It fixed SGLang everywhere, rotated credentials, reported the bug upstream, and now reviews the inference software and the services around the enclave as rigorously as the enclave itself.",
+  "url": "https://near.ai/blog/security-incident-report-sglang-vulnerability",
+  "sourceLabel": "NEAR AI",
+  "date": "2026-11-09",
+  "practice": "Put the inference server and its logs inside your threat model and patch cycle, and keep secrets out of logs."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-19-lit-bb-hack-tools",
+  "kindLabel": "Project",
+  "title": "Small pipe-friendly tools for recon lists",
+  "headline": "Small pipe-friendly tools for recon lists",
+  "body": "lit-bb-hack-tools by edoardottt is a collection of 26 small Go command-line tools for web bug bounty work. Most read a list on stdin and print a result on stdout: they pull hosts, paths, parameters and extensions out of URL lists, extract endpoints from JS files and paths from robots.txt, and list CNAME records for takeover checks. Two (bbscope, genscope) filter items against a Burp scope configuration or build one. Some tools contact targets or third-party services, so check what each does before running it. It is GPL-3.0, has CI and about 400 stars. The project dates from 2021; the latest commit was Nov 13, 2026, a small CI-config change.",
+  "url": "https://github.com/edoardottt/lit-bb-hack-tools",
+  "sourceLabel": "edoardottt (GitHub)",
+  "date": "2026-11-13",
+  "practice": "Put a scope filter in the pipeline before any tool that touches the target."
  }
 ];
 
