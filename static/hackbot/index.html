@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 65 cards</span>
+ <span class="metric-rest" id="metricRest">/ 67 cards</span>
  </div>
  </div>
 
@@ -1842,6 +1842,40 @@ const CARDS = [
   "date": "2026-10-08",
   "level": "Intermediate",
   "topic": "Safety & control"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h48-t3mp3st-teardown",
+  "kindLabel": "Architecture",
+  "title": "What makes an offensive harness work, from a T3MP3ST teardown",
+  "headline": "What makes an offensive harness work, from a T3MP3ST teardown",
+  "body": "Ilya Kabanov reads Pliny's T3MP3ST, a roughly 34,000-line offensive framework, and compares it with eight maintained open-source pentest frameworks. Its web-pentest arm follows a seven-phase kill chain with one specialist agent per phase, fixed seed tasks, up to 15 turns each and at most three agents in parallel; two phases never run. The exploit phase can only send stateless HTTP requests and nothing verifies that an exploit worked, so success just means a finding was written. He lists what he thinks matters: a strong model, tight context with a ruled-out ledger, long-term memory, a stateful execution environment, and an oracle that proves impact from the target's own behaviour. Benchmark claims are Pliny's or the author's: a reported 90.1% on 104 XBEN challenges from a single agent, not the kill chain, and 92 versus 82 when swapping GLM-5.2 for gpt-5.5.",
+  "steal": "Give the bot an oracle that proves impact from the target's behaviour, and keep a ledger of ruled-out leads so it doesn't repeat them.",
+  "url": "https://theweatherreport.ai/posts/t3mp3st-pliny-bug-hunting-harness/",
+  "sourceLabel": "Ilya Kabanov, The Weather Report",
+  "date": "2026-07-13",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h49-neo-verification-docs",
+  "kindLabel": "Verification",
+  "title": "A finder that is never allowed to confirm its own finding",
+  "headline": "A finder that is never allowed to confirm its own finding",
+  "body": "ProjectDiscovery's Neo documentation describes verification as the architecture, not an add-on. A verification agent with no execution tools acts as judge and, for each finding, hands it to a separate verifier that tries to reproduce it with its own testing. Up to five verifier instances run in parallel, so a batch isn't checked one by one. A verifier starts from the position that the finding is a false positive and returns one of four verdicts: confirmed, false positive (with a documented reason), needs retry (for example when rate limiting or auth blocks a conclusion) or informational. Confirmed findings carry proof artifacts. A re-run loop can send incomplete work back for another pass, and code-review findings go through a separate proof gate. This is vendor documentation with no publication date (the page was last modified May 2, 2026), and the claims are not independently tested.",
+  "steal": "Make the verifier a separate agent that starts from 'false positive', has a retry verdict for blocked tests, and must attach proof to anything it confirms.",
+  "url": "https://docs.neo.projectdiscovery.io/concepts/verification",
+  "sourceLabel": "ProjectDiscovery Neo docs (vendor documentation)",
+  "date": null,
+  "level": "Intermediate",
+  "topic": "Verification"
  },
  {
   "mode": "research",
