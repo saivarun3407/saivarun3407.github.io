@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 61 cards</span>
+ <span class="metric-rest" id="metricRest">/ 65 cards</span>
  </div>
  </div>
 
@@ -1298,6 +1298,23 @@ const CARDS = [
   "date": "2026-11-12",
   "level": "Basic",
   "topic": "Tooling"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h46-bronxi-start-from-a-working-method",
+  "kindLabel": "Case study",
+  "title": "Start from a method that already works",
+  "headline": "Start from a method that already works",
+  "body": "Bug bounty hunter Bronxi rebuilt a working Bash workflow for finding information disclosure in indexed PDF and spreadsheet files as four CrewAI agents: URL discovery, a file scraper, a compliance agent and a report writer. It flagged dozens of 'leaks', almost all false positives, such as files that only mentioned words like password or confidential. After comparing each step with the original script, only report writing stayed with an agent. His conclusion is that AI amplifies a methodology that already works rather than replacing one, and that you should pick the model per task. He also says AI has helped him with code review and IDOR findings. This is a guest post on Bugcrowd's blog from June 1, 2026.",
+  "steal": "Benchmark each agent step against the deterministic script it replaces, and keep the agent only where it wins.",
+  "url": "https://www.bugcrowd.com/blog/what-i-learned-building-ai-agents-for-bug-bounty-hunting/",
+  "sourceLabel": "Bronxi, Bugcrowd (guest post)",
+  "date": "2026-06-01",
+  "level": "Basic",
+  "topic": "Case study"
  },
  {
   "mode": "research",
@@ -1797,6 +1814,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h44-datadog-threat-packs",
+  "kindLabel": "Architecture",
+  "title": "Threat packs: give the hunting agent the invariants",
+  "headline": "Threat packs: give the hunting agent the invariants",
+  "body": "Datadog's hunting system starts from threat packs, human-reviewed documents of usually about 300 lines (system summary, security invariants, review priorities, compensating controls) plus versioned YAML metadata. The authors say they have built hundreds. The pipeline separates discovery from reproduction and sends each task to the cheapest capable model. A judge agent keeps a finding only if it names a declared invariant, a reachable entry point and the path that breaks the invariant. A proof of concept is then tried in staging or locally, and the finding stays unverified if that isn't possible. For regression checks, the initial August 2026 benchmark froze 43 validated vulnerabilities across nine packs, hidden from the hunting agent, and scored union detection against stable detection, currently found in at least 7 of 10 runs, which they call a working threshold. It's a vendor post.",
+  "steal": "Require every finding to cite an invariant and an entry point before reproduction, and track stable detection across repeated runs.",
+  "url": "https://www.datadoghq.com/blog/datadogs-agentic-vulnerability-hunting-system/",
+  "sourceLabel": "Lankford, Meen and Peronnet, Datadog",
+  "date": "2026-11-18",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h45-rootzero-scope-guardrails",
+  "kindLabel": "Safety & control",
+  "title": "Scope is enforced by a proxy, not a prompt",
+  "headline": "Scope is enforced by a proxy, not a prompt",
+  "body": "rootzero's research note (published Oct 8, revised Nov 3, 2026) starts from the premise that the model is not a security boundary. The agent has no direct network access. A mandatory outbound proxy checks every request against a versioned scope file derived from the written authorisation, and a controller the agent can't reach holds the scope, issues short-lived leases and carries the kill switch. It covers pitfalls such as hostname comparison, URL parser differences, DNS rebinding and redirects, and target content that asks the agent to test other domains. It also covers rate limits, graded action classes, a hash-chained audit log and tests for the guardrails themselves. The note proposes an architecture and says it does not describe a deployed proxy. The class scale and lease design are still being tested.",
+  "steal": "Put the agent behind a scope proxy that fails closed with a revocable lease, and test it with redirect and rebinding cases.",
+  "url": "https://rootzero.eu/en/research/offensive-agents-scope-guardrails/",
+  "sourceLabel": "rootzero",
+  "date": "2026-10-08",
+  "level": "Intermediate",
+  "topic": "Safety & control"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2163,6 +2214,23 @@ const CARDS = [
   "url": "https://arxiv.org/abs/2611.22888",
   "sourceLabel": "arXiv 2611.22888 (Kang et al.)",
   "date": "2026-11-17",
+  "level": "Advanced",
+  "topic": "Research paper"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h47-cybiasbench",
+  "kindLabel": "Research paper",
+  "title": "Hacking agents have favourite attack families",
+  "headline": "Hacking agents have favourite attack families",
+  "body": "CyBiasBench ran 630 sessions across five offensive agents, three targets, four prompt conditions and ten attack families. Each agent showed its own attack-selection bias, in which families it tried and how concentrated its effort was, and these patterns stayed relatively stable across prompt variations. The authors also report a 'bias momentum' effect: agents resisted explicit steering toward families that conflicted with their bias, and forcing the shift did not measurably improve attack performance. The bias gives information beyond aggregate success rates, within the evaluated environments. Accepted to the NeurIPS 2026 Evaluations and Datasets Track. First posted May 8, 2026 (revised Nov 17), with a public dashboard and evaluation scripts.",
+  "steal": "Log which attack families the bot actually attempts, and measure coverage, not just success rate.",
+  "url": "https://arxiv.org/abs/2605.07830",
+  "sourceLabel": "arXiv 2605.07830 (Lim et al.)",
+  "date": "2026-05-08",
   "level": "Advanced",
   "topic": "Research paper"
  }
