@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 109 research</span>
+ <span class="metric-rest" id="metricRest">/ 112 research</span>
  </div>
  </div>
 
@@ -2719,6 +2719,51 @@ const CARDS = [
   "sourceLabel": "edoardottt (GitHub)",
   "date": "2026-11-13",
   "practice": "Put a scope filter in the pipeline before any tool that touches the target."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-20-lyceum-old-public-code",
+  "kindLabel": "Team practice",
+  "title": "Old public code is still your attack surface",
+  "headline": "Old public code is still your attack surface",
+  "body": "Lyceum shut down its platform on Nov 9 after spotting an attack it identifies as coming from an autonomous, agent-based system. Entry came from combining information in the source code of an outdated version of Lyceum's own open-source tool with a vulnerability at an external database provider. That reached part of its internal systems and the user database, so Lyceum treats registration data (emails, contact names, company addresses, optional phone numbers) as compromised. Payment card and bank details and Lyceum API keys were not affected. It reported the flaw to the provider, removed all old versions of the tool, notified the Berlin data protection authority under GDPR, and restored all products on Nov 12. Fixes: credential rotation, automated checks of every release, separating customer workloads from the internal network, a login on every internal tool, full request logging, and continuous penetration testing of its own infrastructure with security models.",
+  "url": "https://lyceum.technology/blog/november-2026-security-incident/",
+  "sourceLabel": "Max Niroomand, Lyceum",
+  "date": "2026-11-13",
+  "practice": "Review old releases of your public tools for internal details and remove the ones that leak."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-20-packagist-zizmor",
+  "kindLabel": "Team practice",
+  "title": "Workflow files are code holding production credentials",
+  "headline": "Workflow files are code holding production credentials",
+  "body": "Steven Rombauts describes how the Composer and Packagist team hardened its GitHub Actions with zizmor, running it as a blocking check in the strictest ('pedantic') mode. He recommends pinning actions to commit SHAs and letting Dependabot or Renovate propose updates. Pitfalls: turning off credential persistence on checkout can break later steps that push or tag. A job with no permissions block can inherit a write-scoped token set at the organization level. Each maintained branch, such as Composer's 2.2 LTS, has its own workflow copy and needs its own fix. And suppressing findings in bulk defeats the point. zizmor would not have caught the May 2026 leak of GitHub tokens into Composer's CI logs, but a read-only token limits that kind of damage.",
+  "url": "https://blog.packagist.com/securing-our-github-actions-workflows-with-zizmor/",
+  "sourceLabel": "Steven Rombauts, Packagist",
+  "date": "2026-07-23",
+  "practice": "Set permissions: {} at the workflow level and grant scopes per job."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-20-mnemonic-agentic-detection",
+  "kindLabel": "Team practice",
+  "title": "Give the agent your detection inventory, keep the merge button",
+  "headline": "Give the agent your detection inventory, keep the merge button",
+  "body": "mnemonic says its 2023 attempt at using language models on threat reports failed: models invented MITRE techniques, could not take long reports, and gave inconsistent answers. Its 2026 workflow uses output schemas, MCP and reusable skills. An agent turns a threat report into structured detection opportunities. A second step checks each one against mnemonic's detection inventory through an MCP server to see whether it is already covered. An orchestrator skill then drives specialist skills (detection patterns, taxonomy placement, event selection, scaffolding, linting, and a separate one for tests) to draft a rule. Every draft is treated as unverified, and an analyst validates it before it is merged. The post has no publication date.",
+  "url": "https://www.mnemonic.io/resources/blog/agentic-detection-engineering-turning-threat-reports-into-detections/",
+  "sourceLabel": "mnemonic",
+  "date": null,
+  "practice": "Expose your detection catalogue to agents so they can check coverage before drafting, and keep a human approving every merge."
  }
 ];
 
