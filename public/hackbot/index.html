@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 70 cards</span>
+ <span class="metric-rest" id="metricRest">/ 72 cards</span>
  </div>
  </div>
 
@@ -1916,6 +1916,23 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h53-trustedsec-volume-of-fire",
+  "kindLabel": "Safety & control",
+  "title": "Running an LLM pentest framework: scope outside the prompt",
+  "headline": "Running an LLM pentest framework: scope outside the prompt",
+  "body": "Justin Elze of TrustedSec writes about LLM-driven pentest frameworks such as ARTEX, which Google and Microsoft reporting shows attackers using; PentAGI, HexStrike AI and Cairn are only named as appearing in the same reporting. His framing: the model supplies reasoning and proposed actions, the framework supplies tools, execution, state and permissions, and the deployment supplies the actual access, so a framework's name says little about a run. For anyone running one, he advises a disposable VM and a lab network whose outbound policy denies unrelated destinations, since a prompt instruction is not enforcement. He cites WorkOS, where a researcher's ARTEX benchmark run reached a real third party, though the account does not show a container escape. He also warns that third-party copies of a framework can ship backdoored images, to pin what you run by digest, and that a long report or long runtime is not coverage. Much of the post is defensive advice.",
+  "steal": "Enforce scope with network policy rather than prompts, run the bot on a disposable isolated host, and record each run's model, permissions and interventions.",
+  "url": "https://trustedsec.com/blog/accuracy-through-volume-of-fire",
+  "sourceLabel": "Justin Elze, TrustedSec",
+  "date": "2026-11-19",
+  "level": "Intermediate",
+  "topic": "Safety & control"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2318,6 +2335,23 @@ const CARDS = [
   "date": "2026-11-19",
   "level": "Advanced",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h54-snyk-evo-harness",
+  "kindLabel": "Evaluation",
+  "title": "Same model, different harness: Snyk's vendor benchmark",
+  "headline": "Same model, different harness: Snyk's vendor benchmark",
+  "body": "Snyk's team compared its experimental Evo Code Scanning Agent harness with Claude Security and Codex Security, giving each pair the same off-the-shelf model and the same compute budget. On 14 applications, scored against 1,426 known vulnerabilities, Evo found 57% versus 32% against Claude Security, and 66% versus 43% against Codex Security. The lab tools were more precise: 94% versus 65% on the Claude pair and 97.5% versus 90% on the Codex pair. Each lab tool still found vulnerabilities Evo missed (111 and 84). A general coding agent with one prompt found 13%, but that comparison changes both model and harness. Caveats: it is Snyk's own internal benchmark. The answer key includes vulnerabilities confirmed from any scanner's findings, and AI reviewers labelled the findings with no human review. Snyk calls the results early.",
+  "steal": "Hold the model fixed when comparing harnesses, report recall and precision together at equal compute, and be careful when the answer key comes from the tools being scored.",
+  "url": "https://snyk.io/blog/why-harness-matters-evo-code-scanning-agent/",
+  "sourceLabel": "Clark, Meier and Bolignano, Snyk",
+  "date": "2026-11-19",
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
