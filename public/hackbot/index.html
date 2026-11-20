@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 67 cards</span>
+ <span class="metric-rest" id="metricRest">/ 70 cards</span>
  </div>
  </div>
 
@@ -1882,6 +1882,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h50-shopify-cyber-chaos-monkey",
+  "kindLabel": "Architecture",
+  "title": "A judge that fails closed",
+  "headline": "A judge that fails closed",
+  "body": "Dan Scofield describes Shopify's Cyber Chaos Monkey, an agentic bug-bounty researcher that attacks Shopify's production using test shops. Discovery refines a hypothesis against source and config, then sends structured leads to Sandbox agents that make live requests and read production logs. A state-machine orchestrator runs each engagement as a Kubernetes job. The agent gets only ephemeral credentials it can read but not change, outside calls pass through a credential proxy that swaps placeholder headers for real ones, and egress is limited to an allowlist. A judge agent on a different model reads every executor event in real time and kills the run on a Rules of Engagement breach. If the judge crashes or goes silent, the run ends. Shopify reports tens of thousands of engagements with no outage or incident, which is self-reported.",
+  "steal": "Use a judge on a different model with a heartbeat, and keep real credentials behind a proxy, never inside the agent.",
+  "url": "https://shopify.engineering/cyber-chaos-monkey",
+  "sourceLabel": "Dan Scofield, Shopify",
+  "date": "2026-11-12",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h52-alioth-risk-priced-actions",
+  "kindLabel": "Concepts",
+  "title": "Price operational risk into every action",
+  "headline": "Price operational risk into every action",
+  "body": "ALIoTh, from the University of Calabria, is a LangGraph multi-agent framework for IoT penetration testing. Specialist agents use Self-RAG over device documentation and tool manuals and share findings on a common board. The planner picks each action by weighing its payoff against a tunable penalty for operational risk (such as service disruption): success probability times CVSS-based impact, minus lambda times risk, with lambda between 0 and 1. High-impact or ambiguous steps go to a human, and a deterministic kill switch stops disruptive techniques. The testbed is three vulnerable smart-home devices. The paper defines its metrics, but the experimental campaign is still ongoing, so there are no results yet.",
+  "steal": "Score each action on both value and disruption risk, with an adjustable caution setting for each engagement.",
+  "url": "https://arxiv.org/abs/2611.25809",
+  "sourceLabel": "arXiv 2611.25809 (Pironti et al.)",
+  "date": "2026-11-19",
+  "level": "Intermediate",
+  "topic": "Concepts"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2267,6 +2301,23 @@ const CARDS = [
   "date": "2026-05-08",
   "level": "Advanced",
   "topic": "Research paper"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h51-chainagent-exploit-graph",
+  "kindLabel": "Architecture",
+  "title": "Search from the goal, not from the bug list",
+  "headline": "Search from the goal, not from the bug list",
+  "body": "ChainAgent builds on a study of 386 real-world web exploit chains. It describes vulnerabilities and 'functional gadgets' (intended behaviours that can be repurposed) by what they need and what they give. An evolving exploit graph decides what code to read next: backward from unmet needs to find what supplies them, and forward from abilities already found to find what uses them. On 15 PHP apps across three LLM backends it reached 42.02%-44.63% recall for goal-reaching components and recovered up to 4.4 times as many correct goal-reaching dependency edges as Codex. On 30 real-world PHP apps it found 20 vulnerabilities and 13 exploit chains, nine of them reaching remote code execution. This is a preprint.",
+  "steal": "Store findings as needs-and-gives nodes in a graph, and let the graph's open needs pick the bot's next task.",
+  "url": "https://arxiv.org/abs/2611.25412",
+  "sourceLabel": "arXiv 2611.25412 (Wang et al.)",
+  "date": "2026-11-19",
+  "level": "Advanced",
+  "topic": "Architecture"
  }
 ];
 
