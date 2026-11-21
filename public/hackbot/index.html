@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 75 cards</span>
+ <span class="metric-rest" id="metricRest">/ 79 cards</span>
  </div>
  </div>
 
@@ -1967,6 +1967,57 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h58-lara-beazley-harness",
+  "kindLabel": "Case study",
+  "title": "What an AI attack harness wrote down",
+  "headline": "What an AI attack harness wrote down",
+  "body": "Beazley Security Labs, investigating an incident in September 2026, recovered a portion of the memory files from a multi-agent attack harness that called itself LARA. The files show a central operator and two support agents, about 270 attack scripts, and a task-code system for tracking objectives, findings and stolen credentials. In the recovered logs, about a dozen known-flaw exploit attempts all failed against patched systems, so the harness switched to misconfigurations: a custom web application and a weak service password. It then took source code, private keys and databases. Multi-factor authentication, limited password reuse and network segmentation kept it from spreading further. The authors present this as a first-hand record of how a working offensive agent organised itself.",
+  "steal": "Keep structured shared memory and task codes in the harness, and assume a bot will switch to misconfigurations when known-flaw exploits fail.",
+  "url": "https://labs.beazley.security/articles/lara-what-an-ai-attack-harness-wrote-down",
+  "sourceLabel": "Beazley Security Labs",
+  "date": "2026-11-16",
+  "level": "Intermediate",
+  "topic": "Case study"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h59-edgescan-atomic-harness",
+  "kindLabel": "Architecture",
+  "title": "Many small agents, one strict harness",
+  "headline": "Many small agents, one strict harness",
+  "body": "Michael Devlin describes how Edgescan built Atomic, its web-app pentest agent, after testing open-source tools on the same apps repeatedly. Those tools lost context, drifted out of scope, repeated each other's work, gave inconsistent results and used more tokens than the work needed; in their tests, a plain frontier model with its stock harness did better. Atomic uses narrow specialist agents that do not talk to each other. Ordinary code (the harness) hands out the work, stores evidence, enforces scope on every tool call, and decides whether a finding exists; the model is left to judge severity and meaning. Recon comes first, then specialists, then a separate verification team, so the agent that raised a lead is not the one that confirms it. Stronger models are used for planning and smaller ones for routine work. People set limits before a scan, can watch and stop it, and review the evidence afterwards. This is Edgescan's account of its own product.",
+  "steal": "Keep agents narrow with no agent-to-agent chat, put scope and confirmation in ordinary code, and don't let the agent that raised a lead be the one that confirms it.",
+  "url": "https://www.edgescan.com/many-small-agents-one-strict-harness-how-atomic-is-built/",
+  "sourceLabel": "Michael Devlin, Edgescan",
+  "date": "2026-10-12",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h60-b52-xbow-104",
+  "kindLabel": "Evaluation",
+  "title": "104 of 104 on XBOW, reported by the vendor",
+  "headline": "104 of 104 on XBOW, reported by the vendor",
+  "body": "Yash K of B-52 Security reports that, from 1 to 4 November 2026, B-52 completed all 104 challenges in XBOW's validation suite with no human steering after each target URL was supplied, and with no hints, source or answer keys. The vendor says each build had a fresh flag, a separate referee accepted a solve only when that flag appeared in captured evidence, and a 20-challenge control set reserved by a fixed every-fifth rule was also completed (20 of 20, and 84 of 84 in the main set). Three solves are described at a high level: a login that trusted user input in a query, a registration flow whose encrypted captcha answers leaked through different server responses, and a template that evaluated user input and exposed a secret key. The 104 of 104 result, the measurement conditions and the claim that nothing was tuned to the suite are B-52's own account and have not been checked independently.",
+  "steal": "When reading a perfect benchmark score, ask who marked the work, whether any challenges were held out, and whether anyone outside the vendor has checked the run.",
+  "url": "https://b52security.com/blog/ai-pentest-benchmark-104-of-104/",
+  "sourceLabel": "Yash K, B-52 Security",
+  "date": "2026-11-05",
+  "level": "Intermediate",
+  "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2403,6 +2454,23 @@ const CARDS = [
   "date": "2026-11-05",
   "level": "Advanced",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h61-cybergym-evaluation-reliability",
+  "kindLabel": "Evaluation",
+  "title": "A passing proof is not always the intended bug",
+  "headline": "A passing proof is not always the intended bug",
+  "body": "Yule Ding and Hongzhen Wu audit all 1,507 CyberGym tasks. CyberGym treats a proof-of-concept as a pass when it crashes a vulnerable program version but not a fixed version. After a stratified blind review that corrected two labels, the authors assign inconsistency labels to 338 tasks (22.4%), mainly coverage inconsistencies (205) and descriptions and patches that jointly point to another defect (110); they call these audit outcomes, not an independently certified count. They also assessed the final proofs from one complete Level-1 GLM-5.3 run. Of 1,286 differential passes, they assign 89 non-target and 10 insufficient-evidence verdicts, which lowers the pass rate from 85.3% to 78.8%. Non-target verdicts also appear in 39 of 1,052 passes (3.7%) on tasks where the material audit found no inconsistency. The identity verdicts have no independent human validation, and the results are from one model and one run. This is a preprint.",
+  "steal": "Don't treat a differential crash as proof the intended bug was hit; check task materials and proof identity separately.",
+  "url": "https://arxiv.org/abs/2611.25790",
+  "sourceLabel": "arXiv 2611.25790 (Ding and Wu)",
+  "date": "2026-11-19",
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
