@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 72 cards</span>
+ <span class="metric-rest" id="metricRest">/ 75 cards</span>
  </div>
  </div>
 
@@ -1933,6 +1933,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h55-belt-configuration-beats-capability",
+  "kindLabel": "Architecture",
+  "title": "Configuration beats capability",
+  "headline": "Configuration beats capability",
+  "body": "Elliot Belt (the alias of Felix Billières) writes notes on a live bug-bounty pipeline he is still changing, and says they are not implementation advice. His thesis: the setup around the model matters more than the model. He organizes the work into six areas: a deterministic validator kept separate from the detector; context discipline; a four-layer harness (advisory config, deterministic hooks including scope guards, auto-triggered skills, and isolated subagents), with MCP servers as the tool layer; a workflow funnel; cost discipline with model routing; and hardening the pipeline's own defensive surface.",
+  "steal": "Keep the validator as separate deterministic code the detecting model can't influence, and route each task to the model that fits it.",
+  "url": "https://felixbillieres.github.io/posts/llm-bug-bounty-pipeline-2026/",
+  "sourceLabel": "Elliot Belt (Felix Billières)",
+  "date": "2026-05-19",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h57-enclave-gaming-benchmark",
+  "kindLabel": "Verification",
+  "title": "Impact proof isn't path proof",
+  "headline": "Impact proof isn't path proof",
+  "body": "Yanir Tsarimi describes Enclave's AI Hacking Race: the attacker, the target and a verifier each run in isolated containers, and a win counts only when the target submits a per-run randomized flag. DeepSeek V4.1 Flash verified 11 of 11 vulnerable targets for $4.65, but 5 of those wins went around the intended bug. Enclave now threat-models the benchmark itself, adds negative tests for shortcuts, reviews the path of every success and versions the benchmark. On the fixed version the same model verified 4 of 11, but the provider route also changed, so the share of the drop due to variance is unknown.",
+  "steal": "Check that the target was compromised and that the agent used the intended weakness, and keep full traces.",
+  "url": "https://enclave.ai/blog/how-we-caught-an-ai-agent-gaming-our-hacking-benchmark",
+  "sourceLabel": "Yanir Tsarimi, Enclave",
+  "date": "2026-11-08",
+  "level": "Intermediate",
+  "topic": "Verification"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2352,6 +2386,23 @@ const CARDS = [
   "date": "2026-11-19",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h56-amine-saab-planner-directed",
+  "kindLabel": "Architecture",
+  "title": "Planner vs monolith: escalation mattered more than architecture",
+  "headline": "Planner vs monolith: escalation mattered more than architecture",
+  "body": "Amir Amine and Samer Saab Jr. describe a planner-directed system in which a persistent planner never runs commands itself and delegates on demand to short-lived, isolated specialists. On all 200 NYU CTF Bench test challenges, it got 41 accepted flags (20.5%) and 29 leak-audited genuine solves (14.5%), against 4 and 3 for a stateful single-agent baseline. Both started from the same smaller model, but only the planner could escalate to a stronger one, which it did on 199 of 200 challenges. In a budget-matched test on a pre-registered 80-challenge subset, run in two formal passes, escalating to the stronger model had a strong effect and the architecture itself had no main effect; there was also a significant interaction. Under a 340-action ceiling, the coordination cost of delegation cancelled out any planner advantage. These figures are from the abstract: the paper is open access, but the publisher's site returned a bot-check page and the body could not be retrieved.",
+  "steal": "Compare a multi-agent design with a single agent on the same budget, and audit solves for flag leaks.",
+  "url": "https://link.springer.com/article/10.1007/s10207-026-01350-x",
+  "sourceLabel": "Amir Amine and Samer Saab Jr., IJIS",
+  "date": "2026-11-05",
+  "level": "Advanced",
+  "topic": "Architecture"
  }
 ];
 
