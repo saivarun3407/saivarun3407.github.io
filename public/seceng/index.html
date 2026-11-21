@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 112 research</span>
+ <span class="metric-rest" id="metricRest">/ 116 research</span>
  </div>
  </div>
 
@@ -2764,6 +2764,66 @@ const CARDS = [
   "sourceLabel": "mnemonic",
   "date": null,
   "practice": "Expose your detection catalogue to agents so they can check coverage before drafting, and keep a human approving every merge."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-21-1password-logging-gaps",
+  "kindLabel": "Team practice",
+  "title": "Audit what your SIEM can't see before an incident does",
+  "headline": "Audit what your SIEM can't see before an incident does",
+  "body": "Sanya Kohli describes a scheduled audit at 1Password. A Python script uses APIs to pull procurement vendor lists, internal tool catalogs, SIEM log sources and tickets. The model only judges which vendors probably have security-relevant logs, and writes up each gap with its priority. The audit looks for two kinds of gap: tools that send no logs to the SIEM, and sources that look onboarded but have stopped sending or aren't parsed into searchable fields. Engineers close gaps with AI skills (instruction files that include required checks and approvals) and review every proposed action. Matching tools by name is a known limitation, because names can be ambiguous and the assessment can miss tools.",
+  "url": "https://1password.com/blog/ai-security-logging-gaps",
+  "sourceLabel": "Sanya Kohli, 1Password",
+  "date": "2026-11-18",
+  "practice": "Compare your tool inventory with your SIEM sources on a schedule, and count arriving but unparsed logs as a gap."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-21-bitrise-artex-incident",
+  "kindLabel": "Team practice",
+  "title": "One dormant account, ten hours, 919 keys rotated",
+  "headline": "One dormant account, ten hours, 919 keys rotated",
+  "body": "Between Oct 25 and Nov 18, 2026, an operator used ARTEX, an open-source AI pentest platform, against Bitrise. The agents first mapped the public surface under user agents that claimed to be an \"authorized pentest\", then came back as a customer and tried to reach other customers' files, which failed. On Nov 13 they signed in to a dormant internal test bot account that had no two-factor authentication and were using cloud keys 10 min 37 s later. For about ten hours they chained credentials to signing files, source code, infrastructure state and build logs; files in 15 customer workspaces were also accessed, and Bitrise contacted those customers. Bitrise shut the platform down, revoked all 919 cloud service-account keys, rotated every production secret it manages and rebuilt its build infrastructure. A replay on Nov 18 was refused. The report grades the evidence behind each step.",
+  "url": "https://bitrise.io/artex-incident-report",
+  "sourceLabel": "Arpad Kun and Imre Szvorenyi, Bitrise",
+  "date": "2026-11-19",
+  "practice": "Find and remove dormant test and service accounts, and require a second factor on every interactive login, including bot accounts."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-21-daylight-call-signs-canaries",
+  "kindLabel": "Team practice",
+  "title": "AI intruders leave tool marks you can hunt",
+  "headline": "AI intruders leave tool marks you can hunt",
+  "body": "Daylight Vanguard investigated an intrusion in which an operator used valid credentials on an internet-facing admin console that sat outside the site's extra authentication layer. A scripting feature in the console ran as root. Over about 105 minutes the operator ran 301 root commands and took cloud, CI/CD, SSH and TLS secrets plus source code. Daylight assesses with high confidence that most of this was done by an autonomous LLM agent, most likely several parallel workers, and does not name a framework. It lists five fingerprints: canary files signed with a call-sign, batched parallel commands, a steady machine-paced rhythm, output trimmed to fit a context window, and failed commands corrected within seconds. Human involvement in the first console session cannot be ruled out.",
+  "url": "https://daylight.ai/blog/call-signs-and-canaries-fingerprinting-an-ai-agent-intrusion",
+  "sourceLabel": "Garcia, Hau and Biderman, Daylight",
+  "date": "2026-11-16",
+  "practice": "Hunt for agent tool marks, and keep every admin console behind your auth layer."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-21-datadog-turnstile",
+  "kindLabel": "Team practice",
+  "title": "A valid signature doesn't mean a safe artifact",
+  "headline": "A valid signature doesn't mean a safe artifact",
+  "body": "Callan Lamb and Brianna Heffernen explain why a container image signature cannot catch a bad commit, a poisoned dependency or a compromised build runner, because those happen before signing. Datadog's internal Turnstile system records cryptographically signed attestations through each artifact's life cycle, including pull request approvals and the build runner's identity, and checks them at deploy time against a per-environment policy that is stricter for production and regulated environments. New policies can warn in some environments and block in others, across tens of thousands of deployments a day. The design follows the source and build integrity principles in the SLSA threat model.",
+  "url": "https://www.datadoghq.com/blog/engineering/software-supply-chain-policy-enforcement/",
+  "sourceLabel": "Callan Lamb and Brianna Heffernen, Datadog",
+  "date": "2026-10-20",
+  "practice": "At deploy time, ask whether the artifact meets this environment's policy, and start new rules in warn mode."
  }
 ];
 
