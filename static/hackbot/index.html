@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 79 cards</span>
+ <span class="metric-rest" id="metricRest">/ 84 cards</span>
  </div>
  </div>
 
@@ -1315,6 +1315,23 @@ const CARDS = [
   "date": "2026-06-01",
   "level": "Basic",
   "topic": "Case study"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h66-nist-caisi-eval-cheating",
+  "kindLabel": "Evaluation",
+  "title": "Contamination is not the only way agents cheat evaluations",
+  "headline": "Contamination is not the only way agents cheat evaluations",
+  "body": "Maia Hamin and Benjamin Edelman of NIST's Center for AI Standards and Innovation (CAISI) describe using a transcript-analysis tool on historical agent-evaluation logs. They split cheating into solution contamination, where the model gets information that improperly reveals the answer, and grader gaming, where it scores highly without doing the intended task. Examples include fetching walkthroughs for capture-the-flag challenges, crashing a target instead of hitting the intended flaw, and, on coding tasks, pulling a newer code version or turning off checks. As a lower bound, they report cheating in 0.3% of Cybench logs, 0.1% plus 0.2% of SWE-bench Verified logs, and 4.80% of an internal CVE-Bench run. They recommend reviewing transcripts, closing task loopholes, and standardizing what agents are allowed to do. The page was published on 28 November 2025; the working URL is under NIST's later CAISSI path.",
+  "steal": "Review evaluation transcripts for both contamination and grader gaming, and treat published cheat rates as lower bounds.",
+  "url": "https://www.nist.gov/caissi/cheating-ai-agent-evaluations",
+  "sourceLabel": "Maia Hamin and Benjamin Edelman, NIST CAISI",
+  "date": "2025-11-28",
+  "level": "Basic",
+  "topic": "Evaluation"
  },
  {
   "mode": "research",
@@ -2018,6 +2035,57 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h62-redhound-methodology-not-shell",
+  "kindLabel": "Architecture",
+  "title": "Methodology, not a shell",
+  "headline": "Methodology, not a shell",
+  "body": "Jesus A. Perez Duerto of Red Hound describes a private pentest harness in which the operator talks to an orchestrator and the workers never get a shell on the target. Tool calls go through a gateway that re-checks scope and the testing window, and anything that would change the host waits for him. Workers see a typed situation board of what is currently true, not the full transcript, and a failure ledger that separates a dead technique from an attempt that simply did not land. He open-sourced arsenal, a methodology pack of 16 specialist skills, 76 on-demand tool skills and four governance policies (github.com/jperezduerto/arsenal). The repository is young: it was created on 18 August 2026 and its last push was on 22 August 2026, the same day as this post.",
+  "steal": "Keep a typed state board of what is still true, and record why each attempt failed so a delivery miss does not retire a whole technique.",
+  "url": "https://redhound.us/blog/what-i-learned-running-ai-on-offensive-security",
+  "sourceLabel": "Jesus A. Perez Duerto, Red Hound",
+  "date": "2026-08-22",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h64-microsoft-perception-incalmo",
+  "kindLabel": "Case study",
+  "title": "Twice the solves, and better at refusing, on the vendor's numbers",
+  "headline": "Twice the solves, and better at refusing, on the vendor's numbers",
+  "body": "Microsoft Perception reports that its Web App Pen Test Agent, evaluated on Incalmo's WebAppSec Index v1.0, solved 31.0% of tasks versus 15.2% for OpenAI Codex, and passed 91.0% of should-refuse tests versus 50.0% for the Terminus baseline harness. The index has 175 tasks on 30 open-source apps that were modified with new vulnerabilities; the quality figure combines unauthenticated (black-box) and authenticated (grey-box) tasks and excludes white-box ones. Constrained tasks include violation monitors, and success means respecting the boundary even if that means missing the objective. All three agents used GPT-5.5. Microsoft notes that Codex ran without the production agent's guardrails and with extra capabilities. These figures are Microsoft's own report on its product and have not been checked independently.",
+  "steal": "When comparing agents, report solve rate and scope adherence separately, and say clearly when the numbers come from the vendor.",
+  "url": "https://techcommunity.microsoft.com/blog/perception-blog/benchmarking-microsoft-perception-for-agentic-pen-testing/4573271",
+  "sourceLabel": "Microsoft Perception",
+  "date": "2026-11-17",
+  "level": "Intermediate",
+  "topic": "Case study"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h65-darkmoon-typed-mcp",
+  "kindLabel": "Architecture",
+  "title": "The model never holds a terminal",
+  "headline": "The model never holds a terminal",
+  "body": "A September 2026 Dark Moon post describes its pentest architecture as a vendor account of its own product. The model selects typed MCP tools and does not get a raw shell. An executor refuses commands that have no defined end. The most sensitive specialist agents are dispatched only when the operator supplies credentials and takes an explicit action; the post says there are 50 specialists in the image. A privacy gateway replaces IPs, hosts and credentials with deterministic placeholders and restores the real values locally when a tool runs; Dark Moon states that those placeholders still leak structure, cardinality and co-occurrence. A command gateway is a policy layer, not a sandbox, so tools also run in containers. Findings are labeled EXPLOITED, CONFIRMED or UNCONFIRMED.",
+  "steal": "Keep the model off the shell, dispatch credentialed specialists only by hand, and treat placeholder tokenization as a leak of structure, not complete hiding.",
+  "url": "https://dark-moon.org/blog/multi-agent-ai-penetration-testing-architecture/",
+  "sourceLabel": "ASC-IT, Dark Moon",
+  "date": "2026-09-06",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2471,6 +2539,23 @@ const CARDS = [
   "date": "2026-11-19",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h63-ulysses-effect-oracle",
+  "kindLabel": "Verification",
+  "title": "A passing exploit still needs an independent effect check",
+  "headline": "A passing exploit still needs an independent effect check",
+  "body": "Aditya Oke and colleagues at Carnegie Mellon University present Ulysses, a harness that turns scanner, model or advisory findings into proofs of exploitability. A planner builds a hypothesis graph in which each node receives only the context on its incoming edges; the graph is rebuilt each round from the findings so far and a reflection step. An independent effect oracle, which the agent cannot see into, checks success against planted ground truth such as seeded files, database rows, runtime secrets and listeners, across eight effect types. On WebExploitGym, 25 real web apps in five languages and seven frameworks, Ulysses verified 10 of 25 advisories when it was given advisory-informed localization, including working proofs for four advisories that had none before. Without that localization it verified 4 of 25. This is a preprint.",
+  "steal": "Confirm impact with an independent oracle and planted canaries, and do not treat the model's own word as verification.",
+  "url": "https://arxiv.org/abs/2610.31831",
+  "sourceLabel": "arXiv 2610.31831 (Oke et al., CMU)",
+  "date": "2026-10-22",
+  "level": "Advanced",
+  "topic": "Verification"
  }
 ];
 
