@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 116 research</span>
+ <span class="metric-rest" id="metricRest">/ 120 research</span>
  </div>
  </div>
 
@@ -2824,6 +2824,66 @@ const CARDS = [
   "sourceLabel": "Callan Lamb and Brianna Heffernen, Datadog",
   "date": "2026-10-20",
   "practice": "At deploy time, ask whether the artifact meets this environment's policy, and start new rules in warn mode."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-22-1password-hypersage-prover",
+  "kindLabel": "Team practice",
+  "title": "Grade the reviewer against the fixes, not the emoji",
+  "headline": "Grade the reviewer against the fixes, not the emoji",
+  "body": "Megan Barker describes HyperSAGE (SAGE v3), which adds a fourth pipeline stage, the Prover, after the Finder, Critic and Judge. About two-thirds of reviewer reactions on SAGE findings were thumbs-down; going through the rejections by hand, the most common reason, about a third, was that the code was already protected elsewhere. The Prover is a read-only agent (read, search and list only) with a fixed token budget. To suppress a finding it must cite real code and pick a reason from a fixed list, and it fails open: if it cannot meet that bar, the finding is posted. 1Password graded 125 past findings by what engineers actually fixed, not by emoji: 86 false positives and 39 true positives, of which only four were real unprotected flaws and 35 were hardening. The Prover suppressed 85 of 86 false positives, kept all four real unprotected flaws, and also dropped the 26 hardening findings. The authors note that four is a small sample and that this is an internal test.",
+  "url": "https://1password.com/blog/scaling-security-reviews-agentic-pipeline",
+  "sourceLabel": "Megan Barker, 1Password",
+  "date": "2026-11-09",
+  "practice": "Grade a review agent against the fixes engineers made, and require a citation and a fixed reason before it can suppress a finding."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-22-lnbits-nov8-incident",
+  "kindLabel": "Team practice",
+  "title": "Plugins are untrusted, even after a patch ships",
+  "headline": "Plugins are untrusted, even after a patch ships",
+  "body": "On 8 November 2026, many LNbits instances were attacked, including LNbits' own infrastructure, and funds were stolen. The report, published on 16 November, says entry came through server-side request forgery in several legacy Python extensions, and through recently patched extensions that some operators had not yet updated. In the more serious cases, attackers reached the underlying servers, probed internal services such as Caddy's admin API, and deployed malicious extensions that appeared to be built for each environment. LNbits believes the activity matches autonomous AI agents, but says it cannot confirm the tools used. Earlier reviews, including audits with advanced AI models, had missed these bugs. LNbits 1.7, released on 10 November, turns public registration off by default, adds an option for automatic extension updates, and continues a move to sandboxed WebAssembly extensions that began in 1.6.",
+  "url": "https://news.lnbits.com/news/november-8th-incident-report",
+  "sourceLabel": "LNbits Team",
+  "date": "2026-11-16",
+  "practice": "Treat plugins as untrusted and sandbox them, block internal admin APIs from the app, and shorten the time from patch to deploy."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-22-ebury-iam-bridge",
+  "kindLabel": "Team practice",
+  "title": "Make keyless easier than keys",
+  "headline": "Make keyless easier than keys",
+  "body": "Nacho Rivera describes how Ebury replaced static AWS access keys and GCP service-account keys, which were shared and rarely rotated, with short-lived tokens issued through OIDC federation (STS AssumeRoleWithWebIdentity and GCP Workload Identity Federation). A dedicated hub AWS account and a dedicated hub GCP project, both owned by Security Engineering, are the only points of identity transfer between clouds, so those transfers can be audited in one place. Each application gets its own IAM entity on both sides. A team opens a GitHub Issue from a template; a pipeline validates the request, writes Terraform for both clouds, opens a pull request, and applies it after approval. A client library then wraps the token exchange in one call. The resulting credentials expire in minutes.",
+  "url": "https://eburytech.substack.com/p/goodbye-access-keys-how-we-built",
+  "sourceLabel": "Nacho Rivera, Ebury",
+  "date": "2026-03-09",
+  "practice": "Inventory static keys, and make the keyless path easier than handing out a long-lived secret."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-22-block-kube-policies-binauthz",
+  "kindLabel": "Team practice",
+  "title": "A valid signature still has to pass admission",
+  "headline": "A valid signature still has to pass admission",
+  "body": "Hardik Darji and colleagues describe BinauthZ, a plugin built into Block's existing OPA admission controller, Kube-Policies, rather than a second controller. At the Pod boundary it uses Sigstore/cosign to check a signature against an AWS KMS key, then passes signed build metadata such as the repository, commit, branch and build system to Rego. Configuration maps image patterns to a verification strategy and key. The webhook fails closed with a 10-second budget, so verification of the images in a request runs concurrently and results are cached with a one-hour TTL. Transient ECR, KMS or network errors are never cached, so a brief outage cannot linger as a denial or an allow for that hour.",
+  "url": "https://engineering.block.xyz/blog/kube-policies-binauthz-closing-the-supply-chain-gap-in-kubernetes",
+  "sourceLabel": "Darji, Gonzalez, Holliday, Donovan and Wilk, Block",
+  "date": "2026-01-20",
+  "practice": "Enforce artifact checks at admission, fail closed, and keep transient dependency errors out of the cache."
  }
 ];
 
