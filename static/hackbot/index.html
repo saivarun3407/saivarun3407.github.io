@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 84 cards</span>
+ <span class="metric-rest" id="metricRest">/ 86 cards</span>
  </div>
  </div>
 
@@ -2078,6 +2078,40 @@ const CARDS = [
   "url": "https://dark-moon.org/blog/multi-agent-ai-penetration-testing-architecture/",
   "sourceLabel": "ASC-IT, Dark Moon",
   "date": "2026-09-06",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h67-vaughan-hypotheses-over-signatures",
+  "kindLabel": "Architecture",
+  "title": "Hypotheses over signatures",
+  "headline": "Hypotheses over signatures",
+  "body": "Ashton Vaughan describes Project Triage, a solo-built bug-bounty agent that tries to hunt like a researcher rather than a scanner. It builds a picture of the target, generates hypotheses ranked by bounty value, then runs a think/act/observe/learn loop. A finding is only counted after an evidence gate; the author says the worst failure mode is a confident, well-written false report, and that ranking by bounty value is easy to say and hard to model. Around the model, ordinary code checks scope, blocks repeats, throttles, and summarizes tool output into a persistent state tree rather than a raw transcript. He reports that a repetition check cut loops by about 86% in his testing, and that offering a constrained set of actions instead of free-form generation was the other large reliability gain. The post is a practitioner write-up of his own system.",
+  "steal": "Rank work by hypothesis value, keep the think/act/observe/learn loop gated on evidence, and put loop-breaking and scope checks in code around the model.",
+  "url": "https://ashtonvaughan.com/writeups/autonomous-hypothesis-driven-pentesting/",
+  "sourceLabel": "Ashton Vaughan",
+  "date": "2026-06-08",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h68-lorikeet-lory",
+  "kindLabel": "Architecture",
+  "title": "A three-layer pentester, with a human signature on every finding",
+  "headline": "A three-layer pentester, with a human signature on every finding",
+  "body": "Lorikeet Security describes Lory as a three-layer pipeline: a stateful crawler, an LLM reasoning engine that forms hypotheses, and a sandboxed worker that tries to confirm them. A finding is not shown to the customer until a certified pentester has reviewed and countersigned it. The vendor reports an average of 39 minutes from scan start to a validated critical finding, and a 0% false-positive rate on findings delivered to engineering queues. Both figures are Lorikeet's own claims; the 0% rate is after that mandatory human sign-off, not a measure of the agent's raw output. This is a vendor post about its own product.",
+  "steal": "Don't ship a finding until a human has reproduced it, and when you quote a zero false-positive rate, say whether that is before or after that review.",
+  "url": "https://lorikeetsecurity.com/blog/inside-lory-ai-pentester-architecture-human-in-the-loop",
+  "sourceLabel": "Lorikeet Security",
+  "date": "2026-11-06",
   "level": "Intermediate",
   "topic": "Architecture"
  },
