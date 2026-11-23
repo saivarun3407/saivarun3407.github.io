@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 86 cards</span>
+ <span class="metric-rest" id="metricRest">/ 89 cards</span>
  </div>
  </div>
 
@@ -1332,6 +1332,23 @@ const CARDS = [
   "date": "2025-11-28",
   "level": "Basic",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h71-failclosed-copilot",
+  "kindLabel": "Safety & control",
+  "title": "Build the leash first",
+  "headline": "Build the leash first",
+  "body": "Ksatria Bintang Samudra describes a solo-built bug-bounty co-pilot: a thin orchestrator, narrow agents, and a table of each one's blast radius, in which only the recon and hunt agents touch the network. Scope is a deterministic function run before every outbound request, where exclusions always win and a host must positively match an include. Every scope decision and request goes to an append-only audit log. Passive work can run on its own; active testing stops for a human go/no-go, and the validator kills any \"maybe.\" He reports that letting the model make scope calls was about 99% right, which he treats as a failure here, and that auto-promoting findings produced confident, well-written nonsense.",
+  "steal": "Give each agent role an explicit blast radius, and keep scope a pure function outside the model.",
+  "url": "https://failclosed.hashnode.dev/building-an-ai-bug-bounty-co-pilot-architecture-agents-and-the-guardrails-that-keep-it-honest",
+  "sourceLabel": "Ksatria Bintang Samudra",
+  "date": "2026-07-15",
+  "level": "Basic",
+  "topic": "Safety & control"
  },
  {
   "mode": "research",
@@ -2112,6 +2129,40 @@ const CARDS = [
   "url": "https://lorikeetsecurity.com/blog/inside-lory-ai-pentester-architecture-human-in-the-loop",
   "sourceLabel": "Lorikeet Security",
   "date": "2026-11-06",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h69-certeu-vigilo",
+  "kindLabel": "Architecture",
+  "title": "Specialist reviewers, shared notes, an adversarial critic",
+  "headline": "Specialist reviewers, shared notes, an adversarial critic",
+  "body": "CERT-EU open-sourced Vigilo on 13 November 2026, its in-house harness for AI-guided security code review (github.com/certeu/vigilo, last push 20 November 2026). Instead of a single agent, specialist agents for each vulnerability class — injection, authentication, authorization, cryptography, and supply-chain dependencies — share findings through a common knowledge base. White-box mode reads source, optionally with a running instance; grey-box tests only the running app, as an external attacker with valid credentials. An adversarial critique step re-examines every finding, challenging its severity and merging duplicates, so only substantiated findings reach the report. Where source is available, confirmed findings can get a suggested patch on a separate branch for maintainer review. CERT-EU says findings and patches still need to be validated by the code owners.",
+  "steal": "Use per-class specialists writing to one shared knowledge base, and require an adversarial critique before anything reaches the report.",
+  "url": "https://www.cert.europa.eu/blog/vigilo-open-source",
+  "sourceLabel": "CERT-EU",
+  "date": "2026-11-13",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h70-bollen-haick-pi",
+  "kindLabel": "Architecture",
+  "title": "A Python loop drives the orchestrator; guardrails live in hooks",
+  "headline": "A Python loop drives the orchestrator; guardrails live in hooks",
+  "body": "Joe Bollen describes a bug-bounty agent he runs on a Raspberry Pi 5. An Opus orchestrator returns one JSON action per turn — recon, test, authenticate, research, note, or done — and never makes HTTP requests itself. Sonnet agents execute, Haiku classifies, and deterministic workers handle scans. Python owns the loop, with bounded epochs, a Postgres job queue, and a pgvector knowledge graph. Shared PreToolUse hooks block out-of-scope hosts and, after 10 repeated 5xx failures to the same host in a 60-second window, cut that host off for the rest of the session; a PostToolUse logger attaches request/response evidence to every finding. He found that the models overstated severity — often rating informational issues as medium or high — and that manual corrections feed back into the knowledge base.",
+  "steal": "Enforce scope and capture evidence in tool hooks shared by every subagent, not in prompts.",
+  "url": "https://joesec.me/articles/haick-raspberry-pi-bugbounty/",
+  "sourceLabel": "Joe Bollen",
+  "date": "2026-02-27",
   "level": "Intermediate",
   "topic": "Architecture"
  },
