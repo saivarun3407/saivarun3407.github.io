@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 89 cards</span>
+ <span class="metric-rest" id="metricRest">/ 90 cards</span>
  </div>
  </div>
 
@@ -2163,6 +2163,23 @@ const CARDS = [
   "url": "https://joesec.me/articles/haick-raspberry-pi-bugbounty/",
   "sourceLabel": "Joe Bollen",
   "date": "2026-02-27",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h72-hunterbench-engine",
+  "kindLabel": "Architecture",
+  "title": "A finding counts only if the agent can prove it",
+  "headline": "A finding counts only if the agent can prove it",
+  "body": "HunterBench describes the engine behind its public pentest-agent benchmark. This is a vendor post about its own product. Each run is a complete test in a fresh, single-use sandbox: all Linux capabilities are dropped except NET_RAW, the root filesystem is read-only, and the process runs as a non-root user with no-new-privileges. Egress is denied by default and enforced by a firewall sidecar; the agent can reach only the in-scope target, the model's API, and DNS, and the cloud metadata endpoint is always blocked. The engine runs provision, brief, recon, hunt, collect and teardown in that order. A claim becomes a finding only if the agent can demonstrate it; on the leaderboard, HunterBench also says a finding counts only if it matches a vulnerability the team already verified in the target's source code.",
+  "steal": "Run each test in a disposable, deny-by-default sandbox, and count a bug only after the agent has proved it.",
+  "url": "https://www.hunterbench.com/blog/how-the-engine-works",
+  "sourceLabel": "Vasco0x4, HunterBench",
+  "date": null,
   "level": "Intermediate",
   "topic": "Architecture"
  },
