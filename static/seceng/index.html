@@ -2890,15 +2890,15 @@ const CARDS = [
   "day": null,
   "category": "SecEng",
   "kind": "post",
-  "id": "seceng-2026-11-23-korur-container-isolation",
+  "id": "seceng-2026-11-23-korur-networkpolicy-semantics",
   "kindLabel": "Team practice",
-  "title": "Isolation is the sum of the checks",
-  "headline": "Isolation is the sum of the checks",
-  "body": "Merthan Tukuş walks four kernel mechanisms — namespaces, capabilities, seccomp and user namespaces — down to the fields they actually compare, pinned to Linux v7.2. A container, he argues, is not a kernel object: isolation is the sum of those checks, and an escape is a path that none of them looks at. He then names the boundary three documented escapes crossed (CVE-2019-5736 and CVE-2024-21626 in runc, and CVE-2022-0185 in the kernel) and what would have stopped each. Kubernetes pod user namespaces (hostUsers: false) have been stable since v1.36 and map container root away from host root, but they cannot be combined with disabling user namespaces on the node. He says isolation should be verified from kernel state inside the workload, such as the capability sets and the uid map, not from the intent in the manifest.",
-  "url": "https://korur.com/en/insights/container-isolation-syscalls",
-  "sourceLabel": "Merthan Tukuş, Korur",
+  "title": "The API stores it; your CNI decides the session",
+  "headline": "The API stores it; your CNI decides the session",
+  "body": "Berkhan Tukuş notes that Kubernetes stores NetworkPolicies but the control plane never enforces them, and they have no status field — the status was removed from the v1 type, so the API cannot tell you whether a plugin has programmed a policy. He reads the Calico v3.33.0 and Cilium v1.20.4 source to show how the same YAML compiles differently. Calico checks policy only on new connections, so removing an allow rule leaves established sessions up; Cilium drops the next packet in the original direction. An ipBlock covering pod IPs matches on Calico but not on Cilium unless --policy-cidr-match-mode is set. His rules: default-deny both ways plus DNS egress, no ipBlock for in-cluster targets, and test revocation as well as admission.",
+  "url": "https://korur.com/en/insights/kubernetes-networkpolicy-semantics",
+  "sourceLabel": "Berkhan Tukuş, Korur",
   "date": "2026-11-06",
-  "practice": "Verify isolation from the kernel state inside the workload, and require pod user namespaces plus the Restricted admission controls that can be tied to a real check."
+  "practice": "Before relying on push-deny-all to isolate, test what your CNI does to live sessions and add a step that ends them."
  },
  {
   "mode": "research",
