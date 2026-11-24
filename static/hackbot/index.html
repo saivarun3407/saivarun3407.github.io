@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 92 cards</span>
+ <span class="metric-rest" id="metricRest">/ 95 cards</span>
  </div>
  </div>
 
@@ -2205,6 +2205,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h75-zwindler-findings-factory",
+  "kindLabel": "Architecture",
+  "title": "The vulnerability factory: R0 plans, R1 audits, R2 counter-reviews",
+  "headline": "The vulnerability factory: R0 plans, R1 audits, R2 counter-reviews",
+  "body": "Denis Germain (zwindler) describes a solo bug-hunting setup that splits agents into planner, auditor and counter-reviewer roles (R0, R1, R2) and keeps a claims database of every lead, including the rejected ones, with a coded reason. His reports were almost never rejected because the bug did not exist: of those that got a verdict, half were duplicates, and others failed on a misjudged threat model or impact. He says the payoff is in triage — admission and counter-review discard bad leads early, and the database remembers why. The counter-review is enforced in the machinery to run on a different model from the one that wrote the finding; a finding cannot be marked ready if the same model reviewed itself. This is a practitioner write-up of his own system.",
+  "steal": "Split plan, audit and counter-review across roles, keep rejected leads in the claims database, and enforce that the counter-review uses a different model.",
+  "url": "https://blog.zwindler.fr/en/2026/11/12/agentic-findings-factory/",
+  "sourceLabel": "Denis Germain (zwindler)",
+  "date": "2026-11-12",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h76-dkay-found-to-fix",
+  "kindLabel": "Verification",
+  "title": "Getting Vulnerabilities Found by AI Scanners to Developers",
+  "headline": "Getting Vulnerabilities Found by AI Scanners to Developers",
+  "body": "Dongkwan Kim writes that finding a bug with an AI scanner is the start of the work, not the end. His team runs MDASH against the Linux kernel and other open-source projects, and he argues the hard part is what follows: filtering false positives, checking the threat model, proving the bug, and getting a verified patch accepted by maintainers. Cheap filters (a debate for and against the candidate, grouping duplicates, and the project's threat model) cut the list before an expensive prover tries to reproduce it; reasons for rejection are kept so later scans do not repeat the same misses. Even a patch that passes tests can still be wrong, he notes, and maintainers often disagree on whether something is a security issue. This is a practitioner post about his team's own pipeline.",
+  "steal": "Treat a finding as the start of a pipeline to a maintainer-accepted fix, not the end of the scan.",
+  "url": "https://0xdkay.me/posts/from-ai-found-bug-to-fix/",
+  "sourceLabel": "Dongkwan Kim",
+  "date": "2026-10-15",
+  "level": "Intermediate",
+  "topic": "Verification"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2692,6 +2726,23 @@ const CARDS = [
   "date": "2026-11-23",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h77-cloudflare-vuln-harness",
+  "kindLabel": "Architecture",
+  "title": "Build your own vulnerability harness",
+  "headline": "Build your own vulnerability harness",
+  "body": "Dan Jones, Alexandra Godoi and Grant Bourzikas describe how Cloudflare turned a one-off security-audit skill, first run on a single repository, into a continuous scanning pipeline across a fleet of repositories. This is a vendor post about Cloudflare's own work. Models are treated as interchangeable: one model does discovery (the vulnerability discovery harness) and a different model does validation (the vulnerability validation system), so findings are cross-checked by a second set of weights rather than graded by the model that found them. The authors say relying on a single model limits coverage, and that a fleet harness also has to trace dependencies across repositories, not just scan each repo in isolation. Cloudflare writes that going from the first skill to a fleet scanner covering 128 repositories took about six weeks.",
+  "steal": "Promote a one-off skill into a continuous fleet harness, and have a different model validate what another model found.",
+  "url": "https://blog.cloudflare.com/build-your-own-vulnerability-harness/",
+  "sourceLabel": "Dan Jones, Alexandra Godoi and Grant Bourzikas, Cloudflare",
+  "date": "2026-06-18",
+  "level": "Advanced",
+  "topic": "Architecture"
  }
 ];
 
