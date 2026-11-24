@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 122 research</span>
+ <span class="metric-rest" id="metricRest">/ 126 research</span>
  </div>
  </div>
 
@@ -2914,6 +2914,66 @@ const CARDS = [
   "sourceLabel": "Chainstack",
   "date": "2026-11-03",
   "practice": "Keep development admin tools off the public internet, change their default credentials, and never give a debug or MCP server cluster-admin or credentials that also reach production."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-24-splunk-soc-agents",
+  "kindLabel": "Team practice",
+  "title": "Match agent autonomy to the task, not the role",
+  "headline": "Match agent autonomy to the task, not the role",
+  "body": "Splunk's own SOC, which acts as Customer Zero for its security products, sorts agent work into three modes rather than by job title. Delegated: high-volume work such as triage, enrichment, evidence gathering and routine disposition runs end to end, with spot checks. Guided: an analyst steers while the agent builds playbooks or connectors. Bounded: the agent drafts detection logic and response decisions, and a person approves before anything is committed. Splunk measured these figures in its own SOC: average triage handle time fell from 15.4 to 5.6 minutes, and writing a detection fell from about two hours to under ten minutes. The lessons: escalation counts as a feature, not a failure, and clear response plans improved the agent's verdicts. This is a vendor post about Splunk's own agents in Splunk Enterprise Security.",
+  "url": "https://www.splunk.com/en_us/blog/artificial-intelligence/how-splunk-soc-uses-agents.html",
+  "sourceLabel": "Abhey Kohli, Splunk",
+  "date": "2026-11-05",
+  "practice": "Pick the autonomy mode per task, and make a person approve anything that changes detections or response."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-24-sentra-qubole-supply-chain",
+  "kindLabel": "Team practice",
+  "title": "The vendor role you forgot is still a door",
+  "headline": "The vendor role you forgot is still a door",
+  "body": "An attacker used stolen Qubole credentials to assume cross-account AWS roles that customers had granted Qubole, many of them long after the customers stopped using the service. More than a dozen organizations were hit. Every role used an ExternalId, and the attacker presented the right one each time. About 100 passwords and keys were read in 7 minutes from three stores, plus thousands of credential records in downloaded files. The post describes pulls from Secrets Manager, SSM Parameter Store, Lambda environment variables and EC2 user data, and says there were zero write actions. What gave them away was the network — a rented OVH server and the Mullvad VPN, not Qubole's — and the behavior, not the credentials. This is a vendor post.",
+  "url": "https://sentra.io/blog/breaches/inside-the-qubole-supply-chain-attack",
+  "sourceLabel": "Reiter, Drucker, Rozali and Kranz, Sentra",
+  "date": "2026-11-09",
+  "practice": "List third-party trust roles, remove dormant ones, and alert when a vendor role acts from a new network."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-24-jfrog-agent-framework-hijack",
+  "kindLabel": "Team practice",
+  "title": "Installing is not running, but the next python is",
+  "headline": "Installing is not running, but the next python is",
+  "body": "JFrog reports that Microsoft's agent-framework meta-package (about 40,000 weekly downloads) had versions 1.26.1 and 1.26.2 repacked locally and pushed to PyPI on 17 November 2026. A .pth file in site-packages runs a credential stealer whenever Python starts — including pytest, pip and IDE language servers — even if nothing imports the package. Installing the wheel does not run the stealer by itself; the next Python process in that environment does. ZIP headers showed the wheels did not come from Microsoft's release pipeline. PyPI quarantined 1.26.1 after 31 minutes, and the attacker uploaded 1.26.2 two minutes later, because quarantining a version does not revoke the publishing credential. Automated dependency bots such as Renovate were already opening upgrade PRs within six minutes of 1.26.1 landing.",
+  "url": "https://research.jfrog.com/post/agent-framework-hijack/",
+  "sourceLabel": "Shavit Satou, JFrog Security Research",
+  "date": "2026-11-18",
+  "practice": "Add a cooldown before auto-merging fresh releases, and flag new .pth files in builds."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-24-jane-vector",
+  "kindLabel": "Team practice",
+  "title": "Let the agent retest the fix, keep the verdict human",
+  "headline": "Let the agent retest the fix, keep the verdict human",
+  "body": "Mohammad Kamrani describes Vector, Jane's internal AppSec platform, with four modules: retesting reported vulnerabilities (against the running app or from the code alone), triaging scanner findings, AI-native SAST built on the open-source deepsec, and PR scanning. Each agent pulls context from Jira and GitHub and returns a verdict with evidence. The retest module uses FIXED, NOT_FIXED, PARTIALLY_FIXED or NEEDS_HUMAN_REVIEW; a person approves or overrides the verdict. Jane says static triage cut a backlog of more than 2,000 tickets by over 80%. Each repository has a context brief, and an adversarial pass tries to refute the brief before a human reads it.",
+  "url": "https://building.jane.app/vector-secure-sdlc/",
+  "sourceLabel": "Mohammad Kamrani, Jane",
+  "date": "2026-09-15",
+  "practice": "Make \"is the fix real?\" an agent retest with a human sign-off, not a manual re-run."
  }
 ];
 
