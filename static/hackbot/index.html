@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 90 cards</span>
+ <span class="metric-rest" id="metricRest">/ 92 cards</span>
  </div>
  </div>
 
@@ -2188,6 +2188,23 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h73-vercel-deepsec",
+  "kindLabel": "Open-source agent",
+  "title": "Scan, investigate, revalidate, then ticket",
+  "headline": "Scan, investigate, revalidate, then ticket",
+  "body": "Vercel open-sourced deepsec, a security harness that runs on your own infrastructure (github.com/vercel-labs/deepsec). A regex-only first pass marks security-sensitive files, coding agents then investigate each candidate for data flow and mitigations, and a second agent run revalidates the findings to cut false positives and reclassify severity. Results are enriched with git ownership metadata and exported as tickets for people or coding agents. Vercel says that, in its experience, the false-positive rate is roughly 10–20%. A classifier checks after each research step whether the model refused the task. Scans can optionally fan out to remote sandboxes. Custom regex plugins can tune it to a codebase's auth model.",
+  "steal": "Use a non-AI candidate pass, then a separate revalidation agent before anything is reported.",
+  "url": "https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base",
+  "sourceLabel": "Vercel",
+  "date": "2026-05-04",
+  "level": "Intermediate",
+  "topic": "Open-source agent"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2658,6 +2675,23 @@ const CARDS = [
   "date": "2026-10-22",
   "level": "Advanced",
   "topic": "Verification"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h74-poma-process-eval",
+  "kindLabel": "Evaluation",
+  "title": "Grade the exploitation process, not just the flag",
+  "headline": "Grade the exploitation process, not just the flag",
+  "body": "POMA, from Wuhan University and colleagues, evaluates base LLMs on exploitation under one fixed baseline: the same task inputs, tool interfaces, targets, feedback format and budget, so the model's own capability is not mixed up with the scaffold's. It measures intermediate states and transitions from runtime evidence. It tested four frontier base models (DeepSeek-v4-flash-0423, Qwen-3.6-plus, GPT-5.5 and Sonnet 5) on 55 CTF Pwn challenges and 10 real-world reproduction tasks, and reports that capability dropped at each step: from vulnerability knowledge to working code, from client-side actions to a verified target state, from locating a failure to a precise fix, and across later revisions. The catalogs, process-measurement evaluator and a sample harness are public (github.com/maple-pwn/poma-release).",
+  "steal": "Log and score each stage of a run, so you know where the chain breaks.",
+  "url": "https://arxiv.org/abs/2611.30590",
+  "sourceLabel": "Zhang, Zhao, Liu, Yan, Xiang, Ma, Tang, Zhao and Ma",
+  "date": "2026-11-23",
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
