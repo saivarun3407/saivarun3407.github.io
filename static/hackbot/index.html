@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 95 cards</span>
+ <span class="metric-rest" id="metricRest">/ 98 cards</span>
  </div>
  </div>
 
@@ -2233,6 +2233,57 @@ const CARDS = [
   "date": "2026-10-15",
   "level": "Intermediate",
   "topic": "Verification"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h78-solomatin-qyran",
+  "kindLabel": "Architecture",
+  "title": "Code for the routine, agents for the analysis",
+  "headline": "Code for the routine, agents for the analysis",
+  "body": "Anton Solomatin describes Qyran, his closed-source, self-hosted platform for bug bounty and authorized audits. He started from a Bash recon chain and now has a platform of around 150k lines, with a shared database for runs, assets and findings, and a target score recalculated from collected signals after every scan. Ten years of notes were turned into 120+ skills. Recon, scanning, deduplication, comparison with earlier runs and asset scoring stay in deterministic code; agents are brought in only where analysis or judgment is needed. Autonomous sessions are time- and budget-limited, with scope checks at the tool level and confirmation for risky actions.",
+  "steal": "Keep recon, scoring and dedup in deterministic code, and call agents only where analysis is needed; store every run in a shared database.",
+  "url": "https://solo10010.github.io/en/blog/qyran/",
+  "sourceLabel": "Anton Solomatin",
+  "date": "2026-11-02",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h79-bountyharness-how-it-works",
+  "kindLabel": "Architecture",
+  "title": "Scanner output is not a finding",
+  "headline": "Scanner output is not a finding",
+  "body": "harikp's BountyHarness documentation describes the path from a scope file to an evidence pack. This is the project's own documentation; the page itself has no publication date. A scope file defines authorization: with no scope file, there is no intrusive testing. Workflows live in inspectable skill packages, and a tool registry (the page says 99 tools) applies safety tiers and a circuit-breaker backoff. A planner ranks tests so the run is not a full sweep. An impact verifier checks preconditions and evidence and enforces that scanner output is not a finding, before reporting assembles an evidence pack.",
+  "steal": "Refuse intrusive testing without a scope file, and do not treat scanner output as a finding until a verifier has evidence.",
+  "url": "https://bounty.harikp.com/how-it-works",
+  "sourceLabel": "harikp, BountyHarness",
+  "date": null,
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h80-garner-pentestcode-readme",
+  "kindLabel": "Open-source agent",
+  "title": "Make the parser mandatory, and keep engagement state across sessions",
+  "headline": "Make the parser mandatory, and keep engagement state across sessions",
+  "body": "Micheal Garner reads the open-source PentestCode project from its README, rather than from a live engagement. (A later six-hour run of the same project is already on this page as H13.) A lead coordinator plans and dispatches work to specialist agents, but Garner argues the real differentiator is structured engagement state that persists across sessions — close the terminal and pick up the next day — and a rule that tool output must go through a dedicated parser before it can be written into that state, so the model is not updating the record from its own reading of raw output. Three operating modes (auto, free and guided) compose with a pause setting, so a run can be autonomous and still stop for review. The README's own limitations, which Garner highlights, include token cost, a tendency to rerun tools, quality that varies by model, and that the agent is not stealthy by default.",
+  "steal": "Require a parser between tool output and a session-persistent engagement store, and make autonomy a mode you can pause.",
+  "url": "https://michealgarner.co.uk/blog/ai-pentest-agents-part-2-inside-pentestcodes-coordinator-and-engagement-state/",
+  "sourceLabel": "Micheal Garner",
+  "date": "2026-07-19",
+  "level": "Intermediate",
+  "topic": "Open-source agent"
  },
  {
   "mode": "research",
