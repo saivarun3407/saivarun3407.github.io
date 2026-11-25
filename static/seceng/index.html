@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 126 research</span>
+ <span class="metric-rest" id="metricRest">/ 130 research</span>
  </div>
  </div>
 
@@ -2974,6 +2974,66 @@ const CARDS = [
   "sourceLabel": "Mohammad Kamrani, Jane",
   "date": "2026-09-15",
   "practice": "Make \"is the fix real?\" an agent retest with a human sign-off, not a manual re-run."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-25-temporal-security-compounds",
+  "kindLabel": "Team practice",
+  "title": "Give agents a written record of every trust boundary",
+  "headline": "Give agents a written record of every trust boundary",
+  "body": "Kent Gruber describes how Temporal's AppSec team keeps a Git repo of Markdown, Mermaid diagrams and Go tests. For each component it records the trust boundaries, the control guarding each one, and why. Claims cite source lines and design docs. Every tested control has at least two tests: one showing it holds and one showing the bypass fails. Agents use the record to triage researcher reports and review designs, and every job ends with a reviewed PR adding what it learned. Controls outside the model: a hook masks credentials in tool output, a CVE needs a person's signed approval, and agents can't merge without human approval. Investigations still mostly run as long-lived agent sessions.",
+  "url": "https://temporal.click/blog/security-that-compounds",
+  "sourceLabel": "Kent Gruber, Temporal",
+  "date": "2026-11-18",
+  "practice": "For each trust boundary, keep one test that the control holds and one that the bypass fails, and make agents cite them."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-25-socket-gha-hardening",
+  "kindLabel": "Practitioner write-up",
+  "title": "Nine controls for a release pipeline outsiders can't hijack",
+  "headline": "Nine controls for a release pipeline outsiders can't hijack",
+  "body": "Karlo Zanki starts from incidents in which malicious code entered legitimate packages during the release, and in most cases that release ran on GitHub Actions: tj-actions/changed-files, Nx s1ngularity, Shai-Hulud, TanStack Router and others. Each of the nine chapters gives the mistake, cases seen in the wild and the config fix: pin actions to full commit SHAs, give GITHUB_TOKEN no permissions by default, never build untrusted code in pull_request_target, stop expression injection into run blocks, close the cache trust boundary, isolate or eliminate self-hosted runners, control dependency intake, verify third-party scripts and uploaders, and restrict runner egress. It ends with where these controls stop working.",
+  "url": "https://socket.dev/blog/hardening-github-actions-against-outside-threats",
+  "sourceLabel": "Karlo Zanki, Socket",
+  "date": "2026-11-03",
+  "practice": "Audit one release workflow against all nine chapters."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-25-oracle-oci-iam-agents",
+  "kindLabel": "Team practice",
+  "title": "Agents keep the user's permissions, not a god-mode account",
+  "headline": "Agents keep the user's permissions, not a god-mode account",
+  "body": "Atul Goyal, Rajath Ravikumar and Harman Judge describe Oracle's internal AI rollout. This is a vendor post about Oracle's own products. Enterprise ChatGPT reaches internal systems through an MCP layer that carries the employee's identity (OAuth discovery, PKCE, Client ID Metadata Documents, resource indicators, user consent). The backend checks each request against that employee's own permissions, and consent to read doesn't authorize writes. Codex and operations agents get just-in-time access, least-privilege reviews and human approval for sensitive actions. Code scanners in OKE use workload identity federation instead of long-lived model API keys. Console AI uses service-specific Deny policies that block destructive operations even for broadly privileged users.",
+  "url": "https://blogs.oracle.com/cloud-infrastructure/iam-enables-ai-transformation-at-oracle",
+  "sourceLabel": "Atul Goyal, Rajath Ravikumar and Harman Judge, Oracle",
+  "date": "2026-10-16",
+  "practice": "Before you give an agent a service account, check whether it can act as the user instead, and add an explicit deny for destructive actions."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-25-aibp-sign2shell",
+  "kindLabel": "Practitioner write-up",
+  "title": "Never let a web page pick what your native helper loads",
+  "headline": "Never let a web page pick what your native helper loads",
+  "body": "James Arnott found drive-by RCEs (CVSS 3.1 9.6) in the five most-installed Brazilian digital-signing extensions, about 10 million installs together. In all five, the website could choose which DLL the vendor's native host loads, and software built to verify signatures never checked the signature of the code it loaded. Four are fixed; CertiPlugin is mitigated (its allowlist was narrowed) but not fixed. The authors' fix: load DLLs only from a fixed allowlist, verify the file's signature, and take the origin from the browser instead of parsing URLs by hand. They found the bugs with a pipeline that flags extensions passing page input to a native host.",
+  "url": "https://amibeingpwned.com/blog/how-we-hacked-brazil",
+  "sourceLabel": "James Arnott, Am I Being Pwned",
+  "date": "2026-11-17",
+  "practice": "List the browser extensions that have native messaging hosts and check which page input reaches them."
  }
 ];
 
