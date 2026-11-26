@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 102 cards</span>
+ <span class="metric-rest" id="metricRest">/ 105 cards</span>
  </div>
  </div>
 
@@ -2335,6 +2335,57 @@ const CARDS = [
   "date": "2026-11-25",
   "level": "Intermediate",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h85-redamon-xbow-101",
+  "kindLabel": "Evaluation",
+  "title": "A benchmark score is only as good as the transcript behind it",
+  "headline": "A benchmark score is only as good as the transcript behind it",
+  "body": "RedAmon reports that its agent recovered flags on 101 of XBOW's 104 validation targets, fully black-box, starting from only a URL. It says a solved target averaged about 23 minutes and about 0.75 million tokens (input plus output). This is RedAmon's own result; the page says RedAmon and XBOW are independent projects and that XBOW has not endorsed or certified the evaluation. The page was last updated on 23 November 2026 and has no other publication date. RedAmon's claimed model to copy is the evidence: it publishes an unedited agent session and a walkthrough for the solves. The live scorecard shows three unsolved targets, and one solved row (XBEN-092) still marked \"not published\" for both the session and the walkthrough.",
+  "steal": "Don't take a benchmark score without the run evidence: publish the transcript for every solve.",
+  "url": "https://www.redamon.org/docs/xbow-validation-benchmark",
+  "sourceLabel": "Samuele Giampieri, RedAmon",
+  "date": null,
+  "level": "Intermediate",
+  "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h86-sybil-vs-opensource",
+  "kindLabel": "Evaluation",
+  "title": "Precision is not the same as coverage",
+  "headline": "Precision is not the same as coverage",
+  "body": "Sybil's 24 November 2026 post is a vendor benchmark of its own product against three open-source AI pentest frameworks, on three applications, using what it says are the same methods as its earlier model comparison. Sybil reports reaching 1.8 times as many known vulnerabilities as PentAGI, 2.4 times as many as Cairn and 3.3 times as many as ARTEX, with 82% precision. ARTEX, in Sybil's figures, matched that 82% precision but reached only 20% of the known vulnerabilities. Cairn is reported at 28% recall and 64% precision, and PentAGI at 38% and 39%. The useful scoring lesson is that a clean, precise report can still leave most known issues unfound. These figures are Sybil's own.",
+  "steal": "Score a hackbot on coverage and precision together, and don't mistake a precise report for thorough coverage.",
+  "url": "https://www.runsybil.com/blog/sybil-vs-open-source-finding-what-artex-cairn-and-pentagi-miss",
+  "sourceLabel": "Sybil",
+  "date": "2026-11-24",
+  "level": "Intermediate",
+  "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h87-xalgorix-detection-is-not-proof",
+  "kindLabel": "Verification",
+  "title": "Detection is not proof until a second agent re-proves it",
+  "headline": "Detection is not proof until a second agent re-proves it",
+  "body": "The Xalgorix team describes a 22-phase test plan in which a finding is not reported until the hunting agent has demonstrated impact and a separate verifier then re-tests it from scratch. The verifier's verdict is confirmed, rejected, or inconclusive; inconclusive findings are kept and flagged for a person, never presented as validated. This is a vendor post about Xalgorix's own product, dated 6 July 2026. Help Net Security later covered an open-source release of the tool on 23 November 2026. In that interview, founder Krishna Kumar said the verifier starts from a fresh context, treats the first agent's proof as untrusted and gets read-only tools, and that the team measures false positives on internal benchmarks but has no plans yet to publish those results. This is a different product and a different lesson from CodeRabbit's coverage-ledger verifier (H81) and Jane's retest of whether a fix landed.",
+  "steal": "Have a second agent, in a fresh context, re-prove each finding before it is reported, and send anything it can neither prove nor rule out to a person.",
+  "url": "https://www.xalgorix.com/blog/detection-is-not-proof",
+  "sourceLabel": "The Xalgorix Team",
+  "date": "2026-07-06",
+  "level": "Intermediate",
+  "topic": "Verification"
  },
  {
   "mode": "research",
