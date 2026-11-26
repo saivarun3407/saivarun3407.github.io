@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 98 cards</span>
+ <span class="metric-rest" id="metricRest">/ 102 cards</span>
  </div>
  </div>
 
@@ -1349,6 +1349,23 @@ const CARDS = [
   "date": "2026-07-15",
   "level": "Basic",
   "topic": "Safety & control"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h83-pwner-scope-consent",
+  "kindLabel": "Open-source agent",
+  "title": "An agent on a leash: scope and consent outside the model",
+  "headline": "An agent on a leash: scope and consent outside the model",
+  "body": "pwner is an open-source terminal agent you talk to, running an observe, reason, act, report loop. The model asks for a tool and the tool layer decides whether it runs. Scope is locked to the named target at the tool layer, not in the prompt. Read-only discovery runs freely. Brute-force and exploitation are denied by default and need a y/N, and the agent can't approve itself. It builds a live host-port-service-finding map and runs on hosted or local models, or in a deterministic mode with no model. The project page has no publication date. The GitHub repo (0x45dd/pwner, Berk D.) is on PyPI at v0.3.3, last released 5 November 2026, and is for authorized use only. This is a distinct product from the UNST33R bounded-agent design already on this page as H14.",
+  "steal": "A deterministic no-model mode as a baseline, and consent gates the model can't reach.",
+  "url": "https://pwner.si/",
+  "sourceLabel": "Berk D., pwner",
+  "date": null,
+  "level": "Basic",
+  "topic": "Open-source agent"
  },
  {
   "mode": "research",
@@ -2290,6 +2307,40 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h81-coderabbit-security-harness",
+  "kindLabel": "Architecture",
+  "title": "Keep a coverage ledger, not just a findings list",
+  "headline": "Keep a coverage ledger, not just a findings list",
+  "body": "Ganesh Futane describes CodeRabbit's security harness, which treats scanning as a mapping and search problem. This is a vendor post about CodeRabbit's own product. The harness splits a repo into sections that fit one context window. For each assignment it records what was inspected and cites the code, and anything uncited stays open for another pass. The orchestrator sends focused follow-up questions, with the evidence so far, to fresh-context investigators, including questions that cross into shared libraries and deploy repos. An independent verifier, ideally from another model family, can accept, reject with a reason, or send a question back. A runtime check counts as inconclusive unless the app was ready and the code actually ran.",
+  "steal": "A scope / inspected / open record per assignment, so a \"no finding\" can't hide code nobody looked at.",
+  "url": "https://www.coderabbit.ai/blog/how-we-build-a-security-harness-that-finds-real-vulnerabilities",
+  "sourceLabel": "Ganesh Futane, CodeRabbit",
+  "date": "2026-11-24",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h84-microsoft-artex-defenders",
+  "kindLabel": "Architecture",
+  "title": "What an attacker-grade agent looks like from the defender's side",
+  "headline": "What an attacker-grade agent looks like from the defender's side",
+  "body": "Microsoft Threat Intelligence describes ARTEX, a public AI pentest framework released in July 2026, that it says both state-sponsored and financially motivated actors, including Storm-0940 and Storm-3358, have used. The operator sets the scope. A goals model breaks the work into verifiable objectives. A planner reads a knowledge graph of assets and findings and issues short intents; workers claim those intents, run tools, and write results back to the graph, which wakes the planner again until the goals or a time or step limit are hit. Microsoft says ARTEX does not introduce new attack techniques, that operators can rotate IPs and user agents, and that the agents can be pointed at almost any model, including ones with guardrails removed. The most durable signal, in Microsoft's view, is behavioral: a wide variety of requests in a short window, with retries and next-stage actions at machine speed. This is a broader defender briefing than Microsoft's 5 November write-up on ARTEX secret-hunting, already on /seceng, and it is distinct from the WorkOS, Bitrise and other victim-incident cards.",
+  "steal": "Hunt volume-and-speed patterns, not static network indicators, and assume a public pentest agent can be aimed at you.",
+  "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/",
+  "sourceLabel": "Microsoft Threat Intelligence",
+  "date": "2026-11-25",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2794,6 +2845,23 @@ const CARDS = [
   "date": "2026-06-18",
   "level": "Advanced",
   "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h82-rossmiller-apex-flash-harness",
+  "kindLabel": "Evaluation",
+  "title": "Test whether the harness matters before you credit it",
+  "headline": "Test whether the harness matters before you credit it",
+  "body": "Zachary Rossmiller's post is mainly a write-up on quantizing and serving a 4-bit build of Cantina's apex-flash-1 security model; the title's \"four sparks\" refers to the DGX Spark hardware he served it on, not to a fourth harness. He also checked whether the security training survived quantization and whether the harness mattered. He ran 40 Cybench tasks, three attempts each, through three harnesses: Codex, a minimal Pi harness, and OpenCode. Apex solved 78, 81 and 77 of 120 attempts against the base model's 76, 77 and 79. Pooled, that is 236 vs 232 of 360, +1.1 points (95% CI −3.6 to +5.6, from 10,000 task-level resamples). His logic: if a model leads under its training harness but not under a minimal one, the lead comes from knowing the harness rather than from security skill. No harness separated the two models.",
+  "steal": "Run every claimed improvement through a minimal harness too, and report task-level resampled intervals.",
+  "url": "https://zrresearch.org/research/apex-flash-on-four-sparks",
+  "sourceLabel": "Zachary Rossmiller, ZR Research",
+  "date": "2026-11-08",
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
