@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 130 research</span>
+ <span class="metric-rest" id="metricRest">/ 135 research</span>
  </div>
  </div>
 
@@ -3034,6 +3034,81 @@ const CARDS = [
   "sourceLabel": "James Arnott, Am I Being Pwned",
   "date": "2026-11-17",
   "practice": "List the browser extensions that have native messaging hosts and check which page input reaches them."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-26-stepsecurity-wppconnect",
+  "kindLabel": "Practitioner write-up",
+  "title": "Valid provenance, unreviewed commit, rewritten tag",
+  "headline": "Valid provenance, unreviewed commit, rewritten tag",
+  "body": "Owais Shaikh describes two WPPConnect npm releases (library 2.4.1, server 2.10.82), a nightly build and Docker images that carried a \"diagnostics\" module. It uploaded environment variables, .env and config files, and WhatsApp session tokens to a Telegram bot. Three details change the response. The code runs on import, so npm install --ignore-scripts does not stop it. The release went out through the project's own trusted-publishing workflow with valid SLSA provenance, but the commit behind it had no review. The release tag was later force-pushed to a look-alike commit, so GitHub no longer matched npm. npm recorded 155 downloads of 2.4.1; Shaikh says that figure is a floor, not a count of affected systems.",
+  "url": "https://www.stepsecurity.io/blog/wppconnect-compromised-malicious-releases-steal-secrets-and-whatsapp-sessions",
+  "sourceLabel": "Owais Shaikh, StepSecurity",
+  "date": "2026-11-16",
+  "practice": "Add a release-age delay, an egress allowlist, and a required reviewer who didn't push the tag on the publish environment."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-26-fluidkey-signoz-logs",
+  "kindLabel": "Team practice",
+  "title": "Your logging tool is part of your auth system",
+  "headline": "Your logging tool is part of your auth system",
+  "body": "Fluidkey's 19 November incident report says an attacker used two SigNoz advisories against a self-hosted install still on v0.121.1 and read internal logs from 12 to 19 November. Some services had logged session tokens. With them the attacker created and approved transfer requests on the server and raised two-factor limits. Small payments then triggered notifications, and when users unlocked the app it signed the prepared transfers. About $1.6 million was taken from 52 accounts between 17:28 and 18:05 UTC. Fluidkey says the private keys that control funds never left users' devices. Fixes: transfer requests now need the user's key, no tokens go to logs, and SigNoz's query interface is off the internet. The investigation is ongoing.",
+  "url": "https://docs.fluidkey.com/security/incident-2026-11-19/",
+  "sourceLabel": "Fluidkey",
+  "date": "2026-11-19",
+  "practice": "Search your logs for session tokens, and patch self-hosted observability like production."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-26-safedep-leadstack-hermes",
+  "kindLabel": "Practitioner write-up",
+  "title": "A malicious package can now install a whole agent",
+  "headline": "A malicious package can now install a whole agent",
+  "body": "SafeDep describes the npm package @leadstack/crm-connect, which posed as a CRM client. On install it set up Nous Research's open-source Hermes Agent, fetched the agent's keys and standing instructions from the attacker's server, wired the agent to the attacker's Telegram bot, and registered it as a systemd service under a lead-routing name, running as root when npm install ran as root. Nine versions were published on 16 November 2026. SafeDep flagged the package at 15:33 UTC, nine minutes after the last versions were published at 15:24, and npm has since removed it. Later versions dropped the agent for downloaded JavaScript or binaries.",
+  "url": "https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor",
+  "sourceLabel": "SafeDep Team",
+  "date": "2026-11-19",
+  "practice": "Never run npm install as root, and alert when new systemd units or agent runtimes appear on build and app hosts."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-26-ninelives-gigawiper-dac",
+  "kindLabel": "Practitioner write-up",
+  "title": "Turn a threat report into tested detections, with evidence levels",
+  "headline": "Turn a threat report into tested detections, with evidence levels",
+  "body": "Jerrad Dahlager turned Microsoft's GigaWiper analysis into Defender custom detections as code: a Bicep pack, KQL hunts, a GitHub Actions OIDC deploy, a safe telemetry generator and synthetic fixtures (repo j-dahl7/gigawiper-detection-as-code). He reports every result honestly. Native Sentinel Repository sync failed with a preview-provider error whose cause is unconfirmed. Three portal-native rules fired into one incident. GigaWiper itself was never run, only benign telemetry. A 14 November 2026 update moved the write path to Graph v1.0, but that path was checked offline only.",
+  "url": "https://nineliveszerotrust.com/blog/gigawiper-detections-as-code/",
+  "sourceLabel": "Jerrad Dahlager, Nine Lives",
+  "date": "2026-07-13",
+  "practice": "Label each detection's evidence as live, synthetic-fixture or untested before you call it coverage."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-26-hackingblog-gitmortem",
+  "kindLabel": "Practitioner write-up",
+  "title": "Deleting the line doesn't delete the secret",
+  "headline": "Deleting the line doesn't delete the secret",
+  "body": "Jack Barradell, writing from a red teamer's view, notes that a commit that removes a secret leaves it in history, and that a leaked cloud key lets an attacker pivot from Git into unrelated services where log correlation is weak. He built GitMortem, a Python web app that wraps secret scanners and imports their results into one place. Operators can tag each secret valid, invalid, false positive or expired, explore and search repos, and share the work across a team. His defender checklist: push protection, pre-commit hooks, scan full history, rotate rather than just remove, and watch for encoded secrets and keys stored next to encrypted ones. The GitHub repo (github.com/Jack-Barradell/GitMortem) had new commits through 25 November 2026.",
+  "url": "https://thehackingblog.com/2026/11/23/secrets-in-git-a-red-teamers-guide/",
+  "sourceLabel": "Jack Barradell, The Hacking Blog",
+  "date": "2026-11-23",
+  "practice": "When a secret leaks, rotate it first, then scrub history."
  }
 ];
 
