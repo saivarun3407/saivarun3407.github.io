@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 105 cards</span>
+ <span class="metric-rest" id="metricRest">/ 107 cards</span>
  </div>
  </div>
 
@@ -2386,6 +2386,40 @@ const CARDS = [
   "date": "2026-07-06",
   "level": "Intermediate",
   "topic": "Verification"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h88-depthfirst-vuln-chaining",
+  "kindLabel": "Architecture",
+  "title": "Chain the low-severity bugs, then prove each link is needed",
+  "headline": "Chain the low-severity bugs, then prove each link is needed",
+  "body": "Saaketh Vedantam describes how depthfirst treats chaining as its own stage. This is a vendor post about depthfirst's own product, and it reports no metrics. The post defines a vulnerability as a state transition that breaks a security invariant, and a chain as a path across several such transitions. Invariants come from editable threat models. Untuned discovery agents mostly report single, scoped bugs, which keeps reporting consistent, so chaining is a separate stage. Scanner findings go into a catalog. Longer-running agents search it for bugs reachable from earlier steps, working backward from the highest-impact endpoints. A validation step then ablates the chain so that every issue in it is needed. An explicit state graph, they found, made chains less coherent.",
+  "steal": "Keep single-bug discovery and chaining as separate stages over a shared findings catalog, and require a minimality check before reporting a chain.",
+  "url": "https://depthfirst.com/post/vulnerability-chaining",
+  "sourceLabel": "Saaketh Vedantam, depthfirst",
+  "date": "2026-11-13",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h89-visa-vvah",
+  "kindLabel": "Open-source agent",
+  "title": "Deterministic where possible, agentic where judgment is needed",
+  "headline": "Deterministic where possible, agentic where judgment is needed",
+  "body": "Visa's Apache-2.0 Vulnerability Agentic Harness (VVAH) runs in three phases: Discover (S0–S9), Remediate (S10) and Validate (S11). Deterministic stages handle repeatable work, agentic stages handle judgment, and a code graph is built once per scan. Each finding is verified adversarially and ships with evidence: location, exploit scenario, preconditions and the verifier's rationale. Findings stay triage candidates for a person to review, and an independent panel grades the fixes. Setup and cost-estimate commands run without spending model tokens. v1.6.0, published on 21 November 2026, adds an optional Docker sandbox that limits files and network to what the scan needs; Visa says the operating system enforces those limits. Output is Markdown and SARIF.",
+  "steal": "A dry-run cost estimate, a sandbox enforced by the OS, and findings handed over as candidates with evidence.",
+  "url": "https://github.com/visa/visa-vulnerability-agentic-harness",
+  "sourceLabel": "Visa",
+  "date": "2026-11-21",
+  "level": "Intermediate",
+  "topic": "Open-source agent"
  },
  {
   "mode": "research",
