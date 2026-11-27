@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 107 cards</span>
+ <span class="metric-rest" id="metricRest">/ 109 cards</span>
  </div>
  </div>
 
@@ -2947,6 +2947,40 @@ const CARDS = [
   "date": "2026-11-08",
   "level": "Advanced",
   "topic": "Evaluation"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h90-equixly-spidey-sense",
+  "kindLabel": "Architecture",
+  "title": "Rank the likely weaknesses, then ask a cheap second opinion",
+  "headline": "Rank the likely weaknesses, then ask a cheap second opinion",
+  "body": "Alessio Dalla Piazza and Giorgio Roffo describe how Equixly ranks which specialist attack agents should run on each endpoint. This is a vendor post about Equixly's own scanner. Instead of running every specialist on every operation, one small model per CWE reads the endpoint's specification and scores the weakness classes; a specialist's score is the highest probability among its CWEs. A cheap, fast LLM then gives a second opinion and adds back specialists the model dropped. Equixly says that on a full scan of a deliberately vulnerable application, this cut agent runs by 39% and tokens by 40%, and found the same vulnerabilities. They also report that the model alone, without the second opinion, kept fewer of the known cases at the same attack strength.",
+  "steal": "Rank likely weakness classes from the endpoint spec before spending a specialist run, and add back any a cheap second opinion says you dropped.",
+  "url": "https://equixly.com/blog/2026/11/26/transferring-the-pentester-s-spidey-sense-into-a-machine-learning-model/",
+  "sourceLabel": "Alessio Dalla Piazza and Giorgio Roffo, Equixly",
+  "date": "2026-11-26",
+  "level": "Advanced",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h91-casco-xnu-harness",
+  "kindLabel": "Vuln research",
+  "title": "Let a script confirm the crash, not the agent that found it",
+  "headline": "Let a script confirm the crash, not the agent that found it",
+  "body": "Tim Michaud, writing on Casco's blog, describes a macOS kernel bug-hunting harness he built for XNU. Two principles: each task gets exactly one decision, and the more determinism the better. A virtual machine reproduces each crash. A script, not the agent, confirms the bug; the agent does not get to call that confirmation. The harness proposed 141 findings; he reported 17. He explains why the rest failed: the code did not match what the model said, a check already prevented the bug, the math did not hold, the assumed semantics were wrong, or the function was not reachable from a useful caller. These figures are his own count.",
+  "steal": "Give each task one decision, reproduce crashes in a VM, and let a script—not the agent—confirm the bug.",
+  "url": "https://casco.com/blog/walking-into-guard-pages-xnu-harness",
+  "sourceLabel": "Tim Michaud, Casco",
+  "date": "2026-11-03",
+  "level": "Advanced",
+  "topic": "Vuln research"
  }
 ];
 
