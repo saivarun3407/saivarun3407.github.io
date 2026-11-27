@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 135 research</span>
+ <span class="metric-rest" id="metricRest">/ 139 research</span>
  </div>
  </div>
 
@@ -3109,6 +3109,66 @@ const CARDS = [
   "sourceLabel": "Jack Barradell, The Hacking Blog",
   "date": "2026-11-23",
   "practice": "When a secret leaks, rotate it first, then scrub history."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-27-defang-dev-github-app",
+  "kindLabel": "Team practice",
+  "title": "A dev-only app with production reach",
+  "headline": "A dev-only app with production reach",
+  "body": "On 12 November 2026 an attacker used Defang's separate development GitHub App. It was installed on two of Defang's own repos with more permissions than it needed, including changing deployment environments. The attacker pushed a commit and tagged it as a release. Production trusted release tags, so the code ran in CI with production credentials, which were copied, and then the main database was copied. Stored GitHub tokens were encrypted, but the encryption key was taken too. A routine scan caught it on 23 November. Defang says some logs aren't detailed enough to rule out later use.",
+  "url": "https://defang.io/blog/post/security-incident-november-2026/",
+  "sourceLabel": "Defang",
+  "date": "2026-11-24",
+  "practice": "Treat test and dev apps as production identities, and bind deploy credentials to protected branches or environments, not to any tag."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-27-purplelog-sigma-testing",
+  "kindLabel": "Practitioner write-up",
+  "title": "Freeze expected hit counts and let CI fail the rule",
+  "headline": "Freeze expected hit counts and let CI fail the rule",
+  "body": "Broken detection rules fail silently. The author (Chabnco) converts Sigma rules to SQL with pySigma's SQLite backend and replays them over 196,869 Windows events from 29 OTRF lateral-movement datasets. Hit counts are checked against an expectations file versioned with the rules, and a difference in either direction fails the test. A harmless-looking \"tightening\" of a PowerShell pattern dropped the rule from 6 detections to 0, and the test caught it. Labeled synthetic fixtures cover variants the corpus lacks. Stated limits: no field mapping, case-sensitive SQLite matching, and no real false-positive rate.",
+  "url": "https://purple-log.com/en/blog/testing-sigma-rules-like-code/",
+  "sourceLabel": "Chabnco, PurpleLog",
+  "date": "2026-11-10",
+  "practice": "Keep an expectations file next to every rule and block merges on any change in hit count."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-27-tarreau-ai-bug-reports",
+  "kindLabel": "Practitioner write-up",
+  "title": "What a maintainer needs from an AI bug report",
+  "headline": "What a maintainer needs from an AI bug report",
+  "body": "HAProxy lead developer Willy Tarreau, who is also on the Linux kernel security team, says he has seen hundreds of AI-assisted reports with no reproducer or patch. After he documented threat models for HAProxy and Linux, low-value reports dropped. Two batches of 30 to 50 Mythos-generated reports came with no code excerpts, reproducers, fixes or tested commit ID. After rework, about a third of the fixes proposed from them were merged. His list: write a reusable reproducer against unmodified code, write fix candidates from the same session, use those fixes to weed out false positives, and add regression tests. This is a personal opinion piece.",
+  "url": "https://www.haproxy.com/blog/on-the-use-of-ai-based-tools-to-find-bugs-in-open-source-software",
+  "sourceLabel": "Willy Tarreau, HAProxy",
+  "date": "2026-11-19",
+  "practice": "Never file without the commit ID, a reproducer and a candidate fix."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-27-coinbase-governance-first",
+  "kindLabel": "Team practice",
+  "title": "Put the agent inside the controls you already enforce",
+  "headline": "Put the agent inside the controls you already enforce",
+  "body": "Brindal Patel and Teja Prakash Dadi describe how Coinbase adapted Control Center, its governed internal operations platform, for agents instead of building a separate AI platform. This is a vendor post about Coinbase's own work. It started with summaries switched on in config, then added a bounded, read-only agent loop with a step cap. The agent's tools are existing platform operations. Each call is permission-checked at run time against the person the agent acts for. Each workflow declares its tool allowlist in config, so nothing typed or generated can widen it. A tool that fails reaches the model as \"unavailable\", not as empty. Coinbase says agent calls grew 25x in four months.",
+  "url": "https://www.coinbase.com/blog/governance-first-an-architecture-for-ai-agents-in-sensitive-operations",
+  "sourceLabel": "Brindal Patel and Teja Prakash Dadi, Coinbase",
+  "date": "2026-11-23",
+  "practice": "Agents act as the user, from a config allowlist, with checks at execution."
  }
 ];
 
