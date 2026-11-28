@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 111 cards</span>
+ <span class="metric-rest" id="metricRest">/ 112 cards</span>
  </div>
  </div>
 
@@ -2435,6 +2435,23 @@ const CARDS = [
   "url": "https://strobes.co/blog/ai-harness-offensive-security-llm-pentest-architecture/",
   "sourceLabel": "Strobes Security",
   "date": "2026-03-22",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h94-pentagi-stay-in-control",
+  "kindLabel": "Architecture",
+  "title": "Brakes that don't depend on the model behaving",
+  "headline": "Brakes that don't depend on the model behaving",
+  "body": "The VXControl team's PentAGI post follows a flow from the first message to the report. This is a vendor post. A generator splits a task into up to 15 subtasks, a refiner re-plans after each one, and a reporter writes it up. Limits that work without the model's cooperation cap tool calls at 100 for the main agents and 20 for the others; from the third identical call the previous answer is returned, and the seventh ends the chain; a reflector stops the chain after three rounds with no tool call. Some parts, including the planner's agent-profile pick, execution monitoring and default time budgets, are Enterprise-only. PentAGI does not restrict targets on its own. The post says this does not replace a tester's judgment, and two runs of the same task can differ.",
+  "steal": "Put hard limits on tool calls and repeats outside the model, and enforce scope at the network, not only in the prompt.",
+  "url": "https://pentagi.com/blog/start-autonomous-pentest-stay-in-control/",
+  "sourceLabel": "PentAGI / VXControl",
+  "date": "2026-11-25",
   "level": "Intermediate",
   "topic": "Architecture"
  },
