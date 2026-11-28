@@ -1024,7 +1024,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 139 research</span>
+ <span class="metric-rest" id="metricRest">/ 143 research</span>
  </div>
  </div>
 
@@ -2324,7 +2324,7 @@ const CARDS = [
   "kindLabel": "Team practice",
   "title": "Valid provenance, malicious package",
   "headline": "Valid provenance, malicious package",
-  "body": "An attacker had a maintainer account (with force-push to an unprotected master) and the release-bot account. With them they rewrote a version script into a postinstall loader and let the project's own trusted-publishing CI ship it. The malicious npm 13.3.0 carried genuine SLSA provenance, and the desktop app was built, signed, notarized and pushed through auto-update. Two days earlier the same actor had failed to dump CI secrets. npm removed the package in about 75 minutes; the desktop release stayed up about 8.5 hours. Commit author fields are client-set, so push logs and signatures are the real evidence.",
+  "body": "An attacker had a maintainer account (with force-push to an unprotected master) and the release-bot account. With them they rewrote a version script into a postinstall loader and let the project's own trusted-publishing CI ship it. The malicious npm 13.3.0 carried genuine SLSA provenance, and the desktop app was built, signed, notarized and pushed through auto-update. Two days earlier the same actor had failed to dump CI secrets. npm removed the package in about 75 minutes; the desktop release stayed up about 8.5 hours. CGSEC later separated those clocks: the desktop release was available for about 8.5 hours in total, and nearly eight of those hours were after npm had already pulled the package, while the public thread read as contained. The same write-up says a watcher flagged the npm release 14 minutes after it was published, because it was the first install hook in 177 settled versions; the still-live desktop release was found later by following the release-bot identity rather than the package. Commit author fields are client-set, so push logs and signatures are the real evidence.",
   "url": "https://socket.dev/blog/bee-js-compromise",
   "sourceLabel": "Socket Research Team",
   "date": "2026-11-13",
@@ -3169,6 +3169,66 @@ const CARDS = [
   "sourceLabel": "Brindal Patel and Teja Prakash Dadi, Coinbase",
   "date": "2026-11-23",
   "practice": "Agents act as the user, from a config allowlist, with checks at execution."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-28-guidry-commit-to-containment",
+  "kindLabel": "Practitioner write-up",
+  "title": "Make every deploy and every alert joinable by release",
+  "headline": "Make every deploy and every alert joinable by release",
+  "body": "Ian Guidry describes a solo AWS lab where each push runs eight gates: tests, SAST, dependency audit, secrets, IaC checks, image scan, SBOM evidence and DAST. Third-party Actions are pinned to commit SHAs. Images are pushed by digest and signed keylessly with cosign, and deploys verify that the signature came from this workflow on main. The pipeline uses OIDC and holds no AWS keys. The key idea is that the release version is stamped on the image, the deploy record and every log line, so an alert in CloudWatch can be traced to the exact build and its scan results.",
+  "url": "https://ianguidry.com/projects/2026/09/29/from-commit-to-containment.html",
+  "sourceLabel": "Ian Guidry",
+  "date": "2026-09-29",
+  "practice": "Put the release id in every runtime log so incident responders can join alerts to builds."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-28-aws-getscopedcredentials",
+  "kindLabel": "Team practice",
+  "title": "Hand each agent a narrower copy of your credentials",
+  "headline": "Hand each agent a narrower copy of your credentials",
+  "body": "Vaishnavi Merugu and Ryan Peng announce GetScopedCredentials, a new STS API (20 November 2026) that narrows temporary credentials you already hold. This is an AWS feature announcement. You pass a scope-down policy, a shorter duration, or both. The new permissions are the intersection with the caller's own, so they can only shrink, and you can call it again to narrow further. AWS shows two uses. One is an orchestrator giving each sub-agent less access than itself. The other is a credential broker that limits a multi-tenant worker to the authenticated tenant's S3 prefix, even though the role itself covers every tenant.",
+  "url": "https://aws.amazon.com/blogs/security/scope-down-permissions-of-existing-sessions-using-aws-sts-getscopedcredentials/",
+  "sourceLabel": "Vaishnavi Merugu and Ryan Peng, AWS",
+  "date": "2026-11-20",
+  "practice": "Scope credentials per agent and per request at runtime instead of passing the full role down."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-28-zaky-six-days-thirty-six-tests",
+  "kindLabel": "Practitioner write-up",
+  "title": "A scanner doesn't know your scope",
+  "headline": "A scanner doesn't know your scope",
+  "body": "Fady Basem Zaky writes up a six-day bug bounty engagement in four phases: recon and scope mapping, a breadth pass, deep testing, and a cross-tenant pass with reporting. About 150 \"live\" hosts fell to 45 once they were checked by hand against the written scope, so about 70% were out of scope. An early access-control matrix used only one tenant, and the author flagged that as weak evidence until a second independent org existed. Both real findings came from reading the shipped frontend bundles. The result was one paid High and about 30 negative tests, logged honestly. Target details are anonymized in the post.",
+  "url": "https://medium.com/@SilentN0va/six-days-one-target-thirty-six-tests-a-bug-bounty-bootcamp-from-recon-to-report-16cbf55b1cd6",
+  "sourceLabel": "Fady Basem Zaky",
+  "date": "2026-11-22",
+  "practice": "Check recon output against the written scope, and test access control with two real tenants."
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "SecEng",
+  "kind": "post",
+  "id": "seceng-2026-11-28-aws-continuum-deploy-gate",
+  "kindLabel": "Team practice",
+  "title": "Pentest only the change, on every deploy",
+  "headline": "Pentest only the change, on every deploy",
+  "body": "Jigar Bhatt and Benjamin Li describe using AWS Continuum (formerly AWS Security Agent) as a gate after deploying to staging. This is a vendor post. Each run tests only the commit range since the last passing gate, which makes it fast enough to run on every deploy. A run returns in scope, scoped out, or scope conflict, and you decide whether a conflict blocks. Promotion is blocked only by findings validated as exploitable at or above your severity threshold. The pipeline authenticates through OIDC with a tightly scoped trust policy, so there are no stored keys.",
+  "url": "https://aws.amazon.com/blogs/security/penetration-testing-every-deployment-with-aws-continuum/",
+  "sourceLabel": "Jigar Bhatt and Benjamin Li, AWS",
+  "date": "2026-10-14",
+  "practice": "Gate promotion on validated, change-scoped findings rather than on pattern matches."
  }
 ];
 
