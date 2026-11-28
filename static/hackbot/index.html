@@ -1070,7 +1070,7 @@ body { background: #000 !important; color: #fff; font-family: "JetBrains Mono", 
  </div>
  <div class="metric" aria-live="polite">
  <span class="metric-num" id="metricRead">0</span>
- <span class="metric-rest" id="metricRest">/ 109 cards</span>
+ <span class="metric-rest" id="metricRest">/ 111 cards</span>
  </div>
  </div>
 
@@ -2426,6 +2426,23 @@ const CARDS = [
   "day": null,
   "category": "Hackbot",
   "kind": "post",
+  "id": "hackbot-h93-strobes-ai-harness",
+  "kindLabel": "Architecture",
+  "title": "The harness is the other 80%",
+  "headline": "The harness is the other 80%",
+  "body": "Strobes describes its production pentest harness. This is a vendor post. A single all-tools agent was overwhelmed on complex targets, so they split the work into specialists: web, API, network recon, threat intel, triage, report writing and code review. Each specialist has its own prompt, tools and context. An orchestrator decomposes the task and delegates but never executes. Middleware checks inputs for prompt injection, including text coming from the target. The post names failure modes such as an expired session's 401s being read as \"no vuln\" and a generic 500 being reported as a finding. The post itself states that the model is perhaps 20% of the problem and the harness the other 80%.",
+  "steal": "Detect session loss explicitly, require confirmation before reporting, and treat target output as hostile input.",
+  "url": "https://strobes.co/blog/ai-harness-offensive-security-llm-pentest-architecture/",
+  "sourceLabel": "Strobes Security",
+  "date": "2026-03-22",
+  "level": "Intermediate",
+  "topic": "Architecture"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
   "kindLabel": "Case study",
   "headline": "Teach the bot skepticism, and watch the token bill",
   "id": "hackbot-s11-rez0-hackbot",
@@ -2981,6 +2998,23 @@ const CARDS = [
   "date": "2026-11-03",
   "level": "Advanced",
   "topic": "Vuln research"
+ },
+ {
+  "mode": "research",
+  "day": null,
+  "category": "Hackbot",
+  "kind": "post",
+  "id": "hackbot-h92-sultan-backbone-architecture",
+  "kindLabel": "Evaluation",
+  "title": "Same model, different scaffold, 0 to 49 solves",
+  "headline": "Same model, different scaffold, 0 to 49 solves",
+  "body": "Zeeshan Sultan's self-published study, with a repo and paper, runs a controlled comparison on the XBOW 104 web CTFs: 9 scaffolds × 10 backbones, over 2,700 runs, scored by exact match on an unguessable per-challenge flag. These figures are his own. With the model held fixed, swapping the scaffold moved solves from 0 to 49. In an ablation, a bespoke planner scored 72 against 90 for a lean agent because it kept searching after capturing the flag. One swarm produced 93 fabricated flags and no real solves. All 142 solved transcripts were audited for leakage. The work is not peer-reviewed. It contrasts with H82's finding of no harness effect.",
+  "steal": "Score on unguessable, verifiable proof, stop when the objective is met, and test scaffold changes with the model held fixed.",
+  "url": "https://github.com/ZeeshanSultan/pentest-agent-vs-llm-benchmark-effectiveness",
+  "sourceLabel": "Zeeshan Sultan",
+  "date": null,
+  "level": "Advanced",
+  "topic": "Evaluation"
  }
 ];
 
